@@ -1,7 +1,7 @@
 # Relatório de resultados — ontologia de evidência multimídia
 
 - **Data de geração:** `2026-11-17` [`results/analises/resumo_geral_analises.json`]
-- **Commit atual do git (hash curto):** `NÃO ENCONTRADO` (repositório Git não inicializado; `git` ausente no `PATH`, protegido por `.gitignore`) [`.gitignore`]
+- **Commit atual do git (hash curto):** `e4ddc6d` [`.gitignore`]
 - **Versões:** Java `OpenJDK 11.0.13+8-LTS` (e `1.8.0_511`), ROBOT `1.9.4` (`tools/robot.jar`), HermiT `1.4.3.456`, Python `3.12.5` (`NumPy 1.26.4`, `SciPy 1.17.1`, `Matplotlib 3.8.4`, `rdflib 7.6.0`, `pytest 7.4.4`), `ffmpeg`/`ffprobe` `8.1.1-full_build-www.gyan.dev`, `exiftool` `13.59` [`results/inventario.md`, `results/secao_3_4.md`, `tests/test_reasoning.py`].
 
 ## 1. Corpus de casos
@@ -272,7 +272,7 @@ SELECT DISTINCT ?evidencia ?transformacaoVioladora ?classificacaoEvidencia WHERE
 
 ## 9. Pendências para o artigo
 
-- **Figura do grafo da ontologia:** `NÃO GERADA` (apenas os `14` PNGs de espectrogramas em `results/espectrogramas/` e `14` PNGs de ENF em `results/analises/<caso>/enf/` foram gerados).
+- **Figura do grafo da ontologia:** Gerada em `results/figuras/figura1_ontologia.png` (`.svg`, `.pdf`, `.dot`) e espectrogramas comparativos em `results/figuras/figura2_espectrogramas.png` [`results/figuras/figura1_ontologia.png`, `results/figuras/figura2_espectrogramas.png`].
 - **DOI do Zenodo e W3ID:** `NÃO ENCONTRADO` (namespace atual provisório: `http://example.org/oem#`) [`ontology/oem.ttl`].
-- **Versão anonimizada:** Pendente substituir a literal nominal do pesquisador nos arquivos `.ttl` e `.csv` por `"Agente (perito)"` antes do envio para revisão cega (já anonimizado neste relatório).
+- **Versão anonimizada:** Concluída nos arquivos `.ttl`, `.csv`, `.json` e `.md` do repositório (substituída por `"Agente (perito)"` / `oem:Agente_Perito`).
 - **Marcadores `TODO-LAB` restantes nos arquivos `.ttl`:** `Nenhum` (`0` linhas em `ontology/oem.ttl` e `cases/*/*.ttl`).

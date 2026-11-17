@@ -1,0 +1,81 @@
+# Core TBox Slice for Figure 1 (ISKO-Brasil 2027)
+# Contains 20 core classes currently declared in ontology/oem.ttl (13 specific subclasses omitted),
+# plus optional physical carrier classes (SuporteFisico, DispositivoDeArmazenamento) that are
+# automatically included in the "Evidência" cluster if later added to ontology/oem.ttl.
+
+ontology_path: "ontology/oem.ttl"
+namespace: "http://example.org/oem#"
+total_tbox_classes: 33
+included_core_classes_count: 20
+omitted_classes_count: 13
+
+clusters:
+  evidencia:
+    title: "Evidência (unidade documentária)"
+    classes:
+      - "EvidenciaMultimidia"
+      - "EvidenciaIntegra"
+      - "EvidenciaComConteudoAlterado"
+      - "EvidenciaComCadeiaQuebrada"
+    optional_classes_if_present:
+      - "SuporteFisico"
+      - "DispositivoDeArmazenamento"
+      - "UnidadeFisica"
+
+  transformacoes:
+    title: "Transformações"
+    classes:
+      - "Transformacao"
+      - "TransformacaoPreservadora"
+      - "TransformacaoIsomorfica"
+      - "TransformacaoHomomorfica"
+      - "TransformacaoGenerativa"
+      - "TransformacaoDeclarada"
+      - "TransformacaoNaoDeclarada"
+      - "TransformacaoPreservadoraDeclarada"
+
+  custodia:
+    title: "Custódia"
+    classes:
+      - "RegistroDeCustodia"
+      - "ValorHash"
+      - "Agente"
+
+  exame_achado:
+    title: "Exame e achado (conteúdo)"
+    classes:
+      - "ExamePericial"
+      - "AchadoPericial"
+      - "IndicioDeEdicao"
+      - "DescontinuidadeENF"
+      - "IndicioDeRecodificacao"
+
+omitted_classes:
+  - "ArtefatoAnalitico"
+  - "RecodificacaoDeTransmissao"
+  - "ExtracaoDeAudio"
+  - "GeracaoDeEspectrograma"
+  - "ExtracaoDeCurvaENF"
+  - "ExameENF"
+  - "ExameMetadadosContainerGOP"
+  - "DivergenciaDeResolucaoOuOrientacao"
+  - "DivergenciaDeTaxaDeQuadros"
+  - "DivergenciaDeEstruturaGOP"
+  - "DivergenciaDeTimeBaseVideo"
+  - "InconsistenciaSampleRateTimeBaseAudio"
+  - "DivergenciaDeBitrate"
+
+object_properties_display:
+  - property: "sofreu"
+    inverse_note: "(inv. temSaida)"
+  - property: "temEntrada"
+    inverse_note: ""
+  - property: "registradaEm"
+    inverse_note: "(inv. documentaTransformacao)"
+  - property: "verificadaPor"
+    domain_fallback: "Transformacao"
+    inverse_note: ""
+  - property: "atestadoPor"
+    inverse_note: ""
+  - property: "geraAchado"
+    inverse_note: ""
