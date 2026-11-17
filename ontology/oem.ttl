@@ -1,0 +1,510 @@
+@prefix oem: <http://example.org/oem#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.org/oem> a owl:Ontology ;
+    rdfs:label "Ontologia de Evidências Multimídia (OEM)"@pt ,
+               "Ontology of Multimedia Evidence (OEM)"@en ;
+    skos:definition "Ontologia OWL 2 DL para representação da cadeia de custódia, transformações isomórficas, homomórficas e generativas, e avaliação formal de integridade de evidências multimídia sob pressuposição de mundo aberto (OWA)."@pt ,
+                    "OWL 2 DL ontology for representing chain of custody, isomorphic, homomorphic, and generative transformations, and formal integrity assessment of multimedia evidence under the Open World Assumption (OWA)."@en .
+
+# =============================================================================
+# Propriedades de Anotação (SKOS)
+# =============================================================================
+
+skos:definition a owl:AnnotationProperty .
+
+# =============================================================================
+# Classes Principais: Evidências Multimídia e Classificações de Integridade
+# =============================================================================
+
+oem:EvidenciaMultimidia a owl:Class ;
+    rdfs:label "Evidência Multimídia"@pt , "Multimedia Evidence"@en ;
+    skos:definition "Qualquer gravação ou artefato de áudio, imagem ou vídeo submetido à custódia e à análise pericial."@pt ,
+                    "Any audio, image, or video recording or artifact submitted to custody and forensic analysis."@en .
+
+oem:ArtefatoAnalitico a owl:Class ;
+    rdfs:subClassOf oem:EvidenciaMultimidia ;
+    rdfs:label "Artefato Analítico Derivado"@pt , "Derived Analytical Artifact"@en ;
+    skos:definition "Representação visual ou numérica derivada de uma evidência multimídia por redução controlada (como um espectrograma ou curva de frequência)."@pt ,
+                    "Visual or numerical representation derived from multimedia evidence through controlled reduction (such as a spectrogram or frequency curve)."@en .
+
+oem:EvidenciaIntegra a owl:Class ;
+    rdfs:subClassOf oem:EvidenciaMultimidia ;
+    rdfs:label "Evidência Íntegra"@pt , "Intact Multimedia Evidence"@en ;
+    skos:definition "Evidência multimídia cujo percurso de custódia está formalmente fechado e que sofreu apenas transformações preservadoras (isomórficas ou homomórficas) devidamente declaradas em registros de custódia."@pt ,
+                    "Multimedia evidence whose custody path is formally closed and that underwent only preserving transformations (isomorphic or homomorphic) duly declared in custody records."@en ;
+    owl:equivalentClass [
+        a owl:Class ;
+        owl:intersectionOf (
+            oem:EvidenciaMultimidia
+            [
+                a owl:Restriction ;
+                owl:onProperty oem:sofreu ;
+                owl:someValuesFrom oem:TransformacaoPreservadoraDeclarada
+            ]
+            [
+                a owl:Restriction ;
+                owl:onProperty oem:sofreu ;
+                owl:allValuesFrom oem:TransformacaoPreservadoraDeclarada
+            ]
+        )
+    ] .
+
+oem:EvidenciaComConteudoAlterado a owl:Class ;
+    rdfs:subClassOf oem:EvidenciaMultimidia ;
+    rdfs:label "Evidência com Conteúdo Alterado"@pt , "Content-Altered Evidence"@en ;
+    skos:definition "Evidência multimídia que sofreu ao menos uma transformação generativa (edição ou síntese de voz ou rosto), alterando o conteúdo informacional que a evidência afirma."@pt ,
+                    "Multimedia evidence that underwent at least one generative transformation (editing or voice/face synthesis), altering the informational content asserted by the evidence."@en ;
+    owl:equivalentClass [
+        a owl:Class ;
+        owl:intersectionOf (
+            oem:EvidenciaMultimidia
+            [
+                a owl:Restriction ;
+                owl:onProperty oem:sofreu ;
+                owl:someValuesFrom oem:TransformacaoGenerativa
+            ]
+        )
+    ] .
+
+oem:EvidenciaComCadeiaQuebrada a owl:Class ;
+    rdfs:subClassOf oem:EvidenciaMultimidia ;
+    rdfs:label "Evidência com Cadeia de Custódia Quebrada"@pt , "Broken Chain of Custody Evidence"@en ;
+    skos:definition "Evidência multimídia que sofreu uma transformação comprovadamente desprovida de registro formal na cadeia de custódia."@pt ,
+                    "Multimedia evidence that underwent a transformation proven to lack a formal record in the chain of custody."@en ;
+    owl:equivalentClass [
+        a owl:Class ;
+        owl:intersectionOf (
+            oem:EvidenciaMultimidia
+            [
+                a owl:Restriction ;
+                owl:onProperty oem:sofreu ;
+                owl:someValuesFrom oem:TransformacaoNaoDeclarada
+            ]
+        )
+    ] .
+
+# Disjunções de Integridade: Evidência Íntegra é disjunta de Conteúdo Alterado e de Cadeia Quebrada
+oem:EvidenciaIntegra owl:disjointWith oem:EvidenciaComConteudoAlterado ,
+                                      oem:EvidenciaComCadeiaQuebrada .
+
+# =============================================================================
+# Classes de Transformação
+# =============================================================================
+
+oem:Transformacao a owl:Class ;
+    rdfs:label "Transformação"@pt , "Transformation"@en ;
+    skos:definition "Operação técnica ou manuseio aplicado a uma evidência multimídia que produz uma cópia, derivado ou modificação."@pt ,
+                    "Technical operation or handling applied to multimedia evidence that produces a copy, derivative, or modification."@en .
+
+oem:TransformacaoPreservadora a owl:Class ;
+    rdfs:subClassOf oem:Transformacao ;
+    rdfs:label "Transformação Preservadora"@pt , "Preserving Transformation"@en ;
+    skos:definition "Transformação que preserva a integridade probatória da evidência por ser isomórfica (cópia bit a bit verificada por hash) ou homomórfica (redução analítica controlada)."@pt ,
+                    "Transformation that preserves the evidentiary integrity of the item by being either isomorphic (hash-verified bit-by-bit copy) or homomorphic (controlled analytical reduction)."@en ;
+    owl:equivalentClass [
+        a owl:Class ;
+        owl:unionOf (
+            oem:TransformacaoIsomorfica
+            oem:TransformacaoHomomorfica
+        )
+    ] .
+
+oem:TransformacaoIsomorfica a owl:Class ;
+    rdfs:subClassOf oem:TransformacaoPreservadora ;
+    rdfs:label "Transformação Isomórfica"@pt , "Isomorphic Transformation"@en ;
+    skos:definition "Cópia forense que mantém exatamente a mesma sequência de bits do arquivo de origem, atestada pela coincidência do hash criptográfico."@pt ,
+                    "Forensic copy that keeps the exact same bit sequence as the source file, attested by cryptographic hash equality."@en .
+
+oem:TransformacaoHomomorfica a owl:Class ;
+    rdfs:subClassOf oem:TransformacaoPreservadora ;
+    rdfs:label "Transformação Homomórfica"@pt , "Homomorphic Transformation"@en ;
+    skos:definition "Redução analítica controlada (como extração de áudio PCM sem reamostragem, geração de espectrograma ou extração de curva de ENF) que projeta propriedades do sinal sem inventar conteúdo."@pt ,
+                    "Controlled analytical reduction (such as unresampled PCM audio extraction, spectrogram generation, or ENF curve extraction) that projects signal properties without inventing content."@en .
+
+oem:TransformacaoGenerativa a owl:Class ;
+    rdfs:subClassOf oem:Transformacao ;
+    rdfs:label "Transformação Generativa"@pt , "Generative Transformation"@en ;
+    skos:definition "Operação de edição, montagem ou síntese neural (como deepfake de voz ou rosto) que introduz ou modifica conteúdo semântico na evidência."@pt ,
+                    "Editing, splicing, or neural synthesis operation (such as voice or face deepfake) that introduces or modifies semantic content in the evidence."@en .
+
+oem:RecodificacaoDeTransmissao a owl:Class ;
+    rdfs:subClassOf oem:Transformacao ;
+    rdfs:label "Recodificação de Transmissão"@pt , "Transmission Re-encoding"@en ;
+    skos:definition "Recompressão com perdas e remoção de metadados aplicada automaticamente por aplicativos de mensageria ou plataformas de compartilhamento."@pt ,
+                    "Lossy recompression and metadata stripping automatically applied by messaging applications or sharing platforms."@en .
+
+# Disjunção mútua entre os tipos fundamentais de transformação
+[] a owl:AllDisjointClasses ;
+    owl:members (
+        oem:TransformacaoIsomorfica
+        oem:TransformacaoHomomorfica
+        oem:TransformacaoGenerativa
+    ) .
+
+oem:TransformacaoPreservadora owl:disjointWith oem:TransformacaoGenerativa .
+
+# Transformações Declaradas vs Não Declaradas na Cadeia de Custódia
+oem:TransformacaoDeclarada a owl:Class ;
+    rdfs:subClassOf oem:Transformacao ;
+    rdfs:label "Transformação Declarada"@pt , "Declared Transformation"@en ;
+    skos:definition "Transformação que possui registro formal na cadeia de custódia atestado por um agente identificado."@pt ,
+                    "Transformation that has a formal record in the chain of custody attested by an identified agent."@en ;
+    owl:equivalentClass [
+        a owl:Class ;
+        owl:intersectionOf (
+            oem:Transformacao
+            [
+                a owl:Restriction ;
+                owl:onProperty oem:registradaEm ;
+                owl:someValuesFrom oem:RegistroDeCustodia
+            ]
+        )
+    ] .
+
+oem:TransformacaoNaoDeclarada a owl:Class ;
+    rdfs:subClassOf oem:Transformacao ;
+    rdfs:label "Transformação Não Declarada"@pt , "Undeclared Transformation"@en ;
+    skos:definition "Transformação para a qual se constatou formalmente a inexistência de qualquer registro na cadeia de custódia."@pt ,
+                    "Transformation for which the absence of any record in the chain of custody has been formally established."@en ;
+    owl:equivalentClass [
+        a owl:Class ;
+        owl:intersectionOf (
+            oem:Transformacao
+            [
+                a owl:Restriction ;
+                owl:onProperty oem:registradaEm ;
+                owl:maxQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                owl:onClass oem:RegistroDeCustodia
+            ]
+        )
+    ] .
+
+oem:TransformacaoDeclarada owl:disjointWith oem:TransformacaoNaoDeclarada .
+
+oem:TransformacaoPreservadoraDeclarada a owl:Class ;
+    rdfs:subClassOf oem:TransformacaoPreservadora , oem:TransformacaoDeclarada ;
+    rdfs:label "Transformação Preservadora Declarada"@pt , "Declared Preserving Transformation"@en ;
+    skos:definition "Transformação simultaneamente preservadora (isomórfica ou homomórfica) e formalmente registrada na cadeia de custódia."@pt ,
+                    "Transformation that is simultaneously preserving (isomorphic or homomorphic) and formally recorded in the chain of custody."@en ;
+    owl:equivalentClass [
+        a owl:Class ;
+        owl:intersectionOf (
+            oem:TransformacaoPreservadora
+            oem:TransformacaoDeclarada
+        )
+    ] .
+
+# =============================================================================
+# Subclasses de Transformação Homomórfica e Exames Periciais
+# =============================================================================
+
+oem:ExtracaoDeAudio a owl:Class ;
+    rdfs:subClassOf oem:TransformacaoHomomorfica ;
+    rdfs:label "Extração de Áudio"@pt , "Audio Extraction"@en ;
+    skos:definition "Operação homomórfica que separa e decodifica a trilha sonora de um vídeo para áudio PCM sem reamostragem."@pt ,
+                    "Homomorphic operation that separates and decodes the audio track of a video into unresampled PCM audio."@en .
+
+oem:GeracaoDeEspectrograma a owl:Class ;
+    rdfs:subClassOf oem:TransformacaoHomomorfica ;
+    rdfs:label "Geração de Espectrograma"@pt , "Spectrogram Generation"@en ;
+    skos:definition "Operação homomórfica que calcula e representa graficamente a densidade espectral de potência de um áudio ao longo do tempo."@pt ,
+                    "Homomorphic operation that computes and plots the power spectral density of an audio signal over time."@en .
+
+oem:ExtracaoDeCurvaENF a owl:Class ;
+    rdfs:subClassOf oem:TransformacaoHomomorfica ;
+    rdfs:label "Extração de Curva ENF"@pt , "ENF Curve Extraction"@en ;
+    skos:definition "Operação homomórfica que isola a variação temporal da frequência da rede elétrica (60 Hz ou 120 Hz) presente no áudio."@pt ,
+                    "Homomorphic operation that isolates the temporal variation of the power grid frequency (60 Hz or 120 Hz) present in the audio."@en .
+
+oem:ExamePericial a owl:Class ;
+    rdfs:subClassOf oem:TransformacaoHomomorfica ;
+    rdfs:label "Exame Pericial"@pt , "Forensic Examination"@en ;
+    skos:definition "Procedimento técnico documentado que analisa sinais ou metadados de uma evidência multimídia para produzir um laudo ou relatório analítico."@pt ,
+                    "Documented technical procedure that analyzes signals or metadata of multimedia evidence to produce a forensic report."@en .
+
+oem:ExameENF a owl:Class ;
+    rdfs:subClassOf oem:ExamePericial ;
+    rdfs:label "Exame de Frequência da Rede Elétrica (ENF)"@pt , "Electrical Network Frequency (ENF) Examination"@en ;
+    skos:definition "Exame pericial acústico que verifica a presença e a continuidade do zumbido da rede elétrica brasileira (60 Hz e harmônico de 120 Hz)."@pt ,
+                    "Acoustic forensic examination that checks the presence and continuity of the Brazilian power grid hum (60 Hz and 120 Hz harmonic)."@en .
+
+oem:ExameMetadadosContainerGOP a owl:Class ;
+    rdfs:subClassOf oem:ExamePericial ;
+    rdfs:label "Exame de Metadados de Contêiner e Estrutura de GOP"@pt , "Container Metadata and GOP Structure Examination"@en ;
+    skos:definition "Exame pericial que inspeciona cabeçalhos do arquivo de vídeo e a sequência de quadros I, P e B em comparação com uma referência."@pt ,
+                    "Forensic examination that inspects video file headers and the sequence of I, P, and B frames compared against a reference."@en .
+
+# =============================================================================
+# Cadeia de Custódia, Hash e Agentes
+# =============================================================================
+
+oem:RegistroDeCustodia a owl:Class ;
+    rdfs:label "Registro de Custódia"@pt , "Custody Record"@en ;
+    skos:definition "Documento ou entrada formal na cadeia de custódia que atesta a execução de uma transformação por um agente identificado em data e hora determinadas."@pt ,
+                    "Document or formal entry in the chain of custody attesting the execution of a transformation by an identified agent at a specific date and time."@en .
+
+oem:ValorHash a owl:Class ;
+    rdfs:label "Valor de Hash"@pt , "Hash Value"@en ;
+    skos:definition "Código alfanumérico de tamanho fixo (como SHA-256) que funciona como impressão digital única dos bytes de um arquivo."@pt ,
+                    "Fixed-length alphanumeric code (such as SHA-256) acting as a unique digital fingerprint of a file's bytes."@en .
+
+oem:Agente a owl:Class ;
+    rdfs:label "Agente"@pt , "Agent"@en ;
+    skos:definition "Perito, analista ou operador responsável por conduzir e atestar atos na cadeia de custódia."@pt ,
+                    "Forensic expert, analyst, or operator responsible for conducting and attesting acts in the chain of custody."@en .
+
+# =============================================================================
+# Achados Periciais e Subclasses de Indício de Edição (Adicionadas no Prompt 14)
+# =============================================================================
+
+oem:AchadoPericial a owl:Class ;
+    rdfs:label "Achado Pericial"@pt , "Forensic Finding"@en ;
+    skos:definition "Observação técnica objetiva registrada durante um exame pericial em uma evidência multimídia."@pt ,
+                    "Objective technical observation recorded during a forensic examination of multimedia evidence."@en .
+
+oem:IndicioDeEdicao a owl:Class ;
+    rdfs:subClassOf oem:AchadoPericial ;
+    rdfs:label "Indício de Edição"@pt , "Editing Indicator"@en ;
+    skos:definition "Sinal técnico observado no áudio, vídeo ou metadados que sugere possível reprocessamento ou corte, sem constituir isoladamente prova conclusiva de fraude."@pt ,
+                    "Technical sign observed in audio, video, or metadata suggesting possible reprocessing or splicing, without constituting by itself conclusive proof of fraud."@en .
+
+oem:DescontinuidadeENF a owl:Class ;
+    rdfs:subClassOf oem:IndicioDeEdicao ;
+    rdfs:label "Descontinuidade de ENF"@pt , "ENF Discontinuity"@en ;
+    skos:definition "Mudança brusca na frequência da rede elétrica captada na gravação, indicando possível ponto de corte ou inserção no áudio."@pt ,
+                    "Abrupt shift in the power grid frequency captured in the recording, indicating a possible cut or insertion point in the audio."@en .
+
+oem:IndicioDeRecodificacao a owl:Class ;
+    rdfs:subClassOf oem:IndicioDeEdicao ;
+    rdfs:label "Indício de Recodificação"@pt , "Re-encoding Indicator"@en ;
+    skos:definition "Divergência nos parâmetros de compressão ou contêiner que aponta que o vídeo ou áudio foi salvo ou comprimido novamente após a captura original."@pt ,
+                    "Divergence in compression or container parameters indicating that the video or audio was saved or recompressed after original capture."@en .
+
+oem:DivergenciaDeResolucaoOuOrientacao a owl:Class ;
+    rdfs:subClassOf oem:IndicioDeRecodificacao ;
+    rdfs:label "Divergência de Resolução ou Orientação"@pt , "Resolution or Orientation Divergence"@en ;
+    skos:definition "Alteração nas dimensões em pixels (largura e altura) ou na orientação espacial do vídeo em comparação com a gravação de referência."@pt ,
+                    "Change in pixel dimensions (width and height) or spatial orientation of the video compared to the reference recording."@en .
+
+oem:DivergenciaDeTaxaDeQuadros a owl:Class ;
+    rdfs:subClassOf oem:IndicioDeRecodificacao ;
+    rdfs:label "Divergência de Taxa de Quadros"@pt , "Frame Rate Divergence"@en ;
+    skos:definition "Mudança na quantidade de quadros exibidos por segundo (fps) em relação ao vídeo original de referência."@pt ,
+                    "Change in the number of frames displayed per second (fps) relative to the reference original video."@en .
+
+oem:DivergenciaDeEstruturaGOP a owl:Class ;
+    rdfs:subClassOf oem:IndicioDeRecodificacao ;
+    rdfs:label "Divergência de Estrutura de GOP"@pt , "GOP Structure Divergence"@en ;
+    skos:definition "Alteração no padrão de agrupamento de quadros (I, P e B) da compressão de vídeo, indicando que o fluxo visual foi recodificado."@pt ,
+                    "Alteration in the Group of Pictures (I, P, and B frames) compression pattern, indicating that the visual stream was re-encoded."@en .
+
+oem:DivergenciaDeTimeBaseVideo a owl:Class ;
+    rdfs:subClassOf oem:IndicioDeRecodificacao ;
+    rdfs:label "Divergência de Base de Tempo de Vídeo"@pt , "Video Time Base Divergence"@en ;
+    skos:definition "Diferença na escala de relógio interno usada para marcar o tempo dos quadros de vídeo no contêiner multimídia."@pt ,
+                    "Difference in the internal clock scale used to timestamp video frames within the multimedia container."@en .
+
+oem:InconsistenciaSampleRateTimeBaseAudio a owl:Class ;
+    rdfs:subClassOf oem:IndicioDeRecodificacao ;
+    rdfs:label "Inconsistência entre Taxa de Amostragem e Base de Tempo de Áudio"@pt , "Audio Sample Rate and Time Base Inconsistency"@en ;
+    skos:definition "Descompasso interno no contêiner em que a escala de tempo da trilha sonora não coincide com a taxa de amostragem do áudio."@pt ,
+                    "Internal container mismatch where the audio track time scale does not match the audio sample rate."@en .
+
+oem:DivergenciaDeBitrate a owl:Class ;
+    rdfs:subClassOf oem:IndicioDeRecodificacao ;
+    rdfs:label "Divergência de Taxa de Bits"@pt , "Bitrate Divergence"@en ;
+    skos:definition "Variação acentuada no volume de dados por segundo (bitrate) do vídeo ou do áudio em relação à gravação de referência."@pt ,
+                    "Marked variation in the data rate per second (bitrate) of video or audio relative to the reference recording."@en .
+
+# =============================================================================
+# Propriedades de Objeto (Object Properties)
+# =============================================================================
+
+oem:sofreu a owl:ObjectProperty ;
+    rdfs:domain oem:EvidenciaMultimidia ;
+    rdfs:range oem:Transformacao ;
+    rdfs:label "sofreu transformação"@pt , "underwent transformation"@en ;
+    skos:definition "Relaciona uma evidência multimídia a cada transformação pela qual ela passou até seu estado atual ou durante sua análise."@pt ,
+                    "Relates multimedia evidence to each transformation it underwent up to its current state or during its analysis."@en .
+
+oem:temEntrada a owl:ObjectProperty ;
+    rdfs:domain oem:Transformacao ;
+    rdfs:range oem:EvidenciaMultimidia ;
+    rdfs:label "tem entrada"@pt , "has input"@en ;
+    skos:definition "Indica a evidência multimídia que serviu de insumo para uma transformação."@pt ,
+                    "Indicates the multimedia evidence that served as input to a transformation."@en .
+
+oem:temSaida a owl:ObjectProperty ;
+    rdfs:domain oem:Transformacao ;
+    rdfs:range oem:EvidenciaMultimidia ;
+    owl:inverseOf oem:sofreu ;
+    rdfs:label "tem saída"@pt , "has output"@en ;
+    skos:definition "Indica o artefato ou cópia resultante de uma transformação."@pt ,
+                    "Indicates the artifact or copy resulting from a transformation."@en .
+
+oem:registradaEm a owl:ObjectProperty ;
+    rdfs:domain oem:Transformacao ;
+    rdfs:range oem:RegistroDeCustodia ;
+    rdfs:label "registrada em"@pt , "recorded in"@en ;
+    skos:definition "Vincula uma transformação ao seu respectivo registro formal na cadeia de custódia."@pt ,
+                    "Links a transformation to its corresponding formal record in the chain of custody."@en .
+
+oem:documentaTransformacao a owl:ObjectProperty ;
+    rdfs:domain oem:RegistroDeCustodia ;
+    rdfs:range oem:Transformacao ;
+    owl:inverseOf oem:registradaEm ;
+    rdfs:label "documenta transformação"@pt , "documents transformation"@en ;
+    skos:definition "Vincula um registro de custódia à transformação técnica por ele documentada."@pt ,
+                    "Links a custody record to the technical transformation it documents."@en .
+
+oem:verificadaPor a owl:ObjectProperty ;
+    rdfs:range oem:ValorHash ;
+    rdfs:label "verificada por"@pt , "verified by"@en ;
+    skos:definition "Associa uma transformação ou registro de custódia ao valor de hash criptográfico que garante a integridade do arquivo."@pt ,
+                    "Associates a transformation or custody record with the cryptographic hash value guaranteeing file integrity."@en .
+
+oem:atestadoPor a owl:ObjectProperty ;
+    rdfs:domain oem:RegistroDeCustodia ;
+    rdfs:range oem:Agente ;
+    rdfs:label "atestado por"@pt , "attested by"@en ;
+    skos:definition "Indica o agente responsável que assina ou atesta o registro na cadeia de custódia."@pt ,
+                    "Indicates the responsible agent who signs or attests the record in the chain of custody."@en .
+
+oem:temValorHash a owl:ObjectProperty ;
+    rdfs:domain oem:EvidenciaMultimidia ;
+    rdfs:range oem:ValorHash ;
+    rdfs:label "tem valor de hash"@pt , "has hash value"@en ;
+    skos:definition "Associa uma evidência multimídia ao seu resumo criptográfico SHA-256."@pt ,
+                    "Associates multimedia evidence with its SHA-256 cryptographic digest."@en .
+
+oem:geraAchado a owl:ObjectProperty ;
+    rdfs:domain oem:ExamePericial ;
+    rdfs:range oem:AchadoPericial ;
+    rdfs:label "gera achado"@pt , "generates finding"@en ;
+    skos:definition "Relaciona um exame pericial a um achado ou indício técnico nele observado."@pt ,
+                    "Relates a forensic examination to a technical finding or indicator observed therein."@en .
+
+oem:comparadoComReferencia a owl:ObjectProperty ;
+    rdfs:domain oem:ExamePericial ;
+    rdfs:range oem:EvidenciaMultimidia ;
+    rdfs:label "comparado com referência"@pt , "compared with reference"@en ;
+    skos:definition "Indica a evidência original usada como padrão de comparação em um exame pericial."@pt ,
+                    "Indicates the original evidence used as a comparison baseline in a forensic examination."@en .
+
+# =============================================================================
+# Propriedades de Dados (Datatype Properties)
+# =============================================================================
+
+oem:algoritmoHash a owl:DatatypeProperty ;
+    rdfs:domain oem:ValorHash ;
+    rdfs:range xsd:string ;
+    rdfs:label "algoritmo de hash"@pt , "hash algorithm"@en .
+
+oem:valorHashHex a owl:DatatypeProperty ;
+    rdfs:domain oem:ValorHash ;
+    rdfs:range xsd:string ;
+    rdfs:label "valor hexadecimal do hash"@pt , "hexadecimal hash value"@en .
+
+oem:dataHora a owl:DatatypeProperty ;
+    rdfs:range xsd:dateTime ;
+    rdfs:label "data e hora"@pt , "date and time"@en .
+
+oem:caminhoArquivo a owl:DatatypeProperty ;
+    rdfs:domain oem:EvidenciaMultimidia ;
+    rdfs:range xsd:string ;
+    rdfs:label "caminho do arquivo"@pt , "file path"@en .
+
+oem:tamanhoBytes a owl:DatatypeProperty ;
+    rdfs:domain oem:EvidenciaMultimidia ;
+    rdfs:range xsd:integer ;
+    rdfs:label "tamanho em bytes"@pt , "size in bytes"@en .
+
+oem:somenteLeitura a owl:DatatypeProperty ;
+    rdfs:domain oem:EvidenciaMultimidia ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "somente leitura"@pt , "read-only"@en .
+
+oem:nomeAgente a owl:DatatypeProperty ;
+    rdfs:domain oem:Agente ;
+    rdfs:range xsd:string ;
+    rdfs:label "nome do agente"@pt , "agent name"@en .
+
+oem:comandoExecutado a owl:DatatypeProperty ;
+    rdfs:domain oem:Transformacao ;
+    rdfs:range xsd:string ;
+    rdfs:label "comando executado"@pt , "executed command"@en .
+
+oem:versaoFerramenta a owl:DatatypeProperty ;
+    rdfs:domain oem:Transformacao ;
+    rdfs:range xsd:string ;
+    rdfs:label "versão da ferramenta"@pt , "tool version"@en .
+
+oem:parametrosTransformacao a owl:DatatypeProperty ;
+    rdfs:domain oem:Transformacao ;
+    rdfs:range xsd:string ;
+    rdfs:label "parâmetros da transformação"@pt , "transformation parameters"@en .
+
+oem:metodoDownmixMono a owl:DatatypeProperty ;
+    rdfs:domain oem:Transformacao ;
+    rdfs:range xsd:string ;
+    rdfs:label "método de conversão para mono"@pt , "mono downmix method"@en .
+
+oem:taxaAmostragemHz a owl:DatatypeProperty ;
+    rdfs:domain oem:EvidenciaMultimidia ;
+    rdfs:range xsd:integer ;
+    rdfs:label "taxa de amostragem (Hz)"@pt , "sample rate (Hz)"@en .
+
+oem:numeroCanais a owl:DatatypeProperty ;
+    rdfs:domain oem:EvidenciaMultimidia ;
+    rdfs:range xsd:integer ;
+    rdfs:label "número de canais"@pt , "number of channels"@en .
+
+oem:resultadoExame a owl:DatatypeProperty ;
+    rdfs:domain oem:ExamePericial ;
+    rdfs:range xsd:string ;
+    rdfs:label "resultado do exame"@pt , "examination result"@en .
+
+oem:snrMedio60Hz_dB a owl:DatatypeProperty ;
+    rdfs:domain oem:ExameENF ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "SNR médio em 60 Hz (dB)"@pt , "mean SNR at 60 Hz (dB)"@en .
+
+oem:snrMedio120Hz_dB a owl:DatatypeProperty ;
+    rdfs:domain oem:ExameENF ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "SNR médio em 120 Hz (dB)"@pt , "mean SNR at 120 Hz (dB)"@en .
+
+oem:limiarSNR_dB a owl:DatatypeProperty ;
+    rdfs:domain oem:ExameENF ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "limiar de SNR configurado (dB)"@pt , "configured SNR threshold (dB)"@en .
+
+oem:desvioPadraoFreqNormalizadoHz a owl:DatatypeProperty ;
+    rdfs:domain oem:ExameENF ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "desvio padrão de frequência normalizado (Hz)"@pt , "normalized frequency standard deviation (Hz)"@en .
+
+oem:instanteSegundos a owl:DatatypeProperty ;
+    rdfs:domain oem:DescontinuidadeENF ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "instante em segundos"@pt , "instant in seconds"@en .
+
+oem:estruturaGOPResumo a owl:DatatypeProperty ;
+    rdfs:domain oem:ExameMetadadosContainerGOP ;
+    rdfs:range xsd:string ;
+    rdfs:label "resumo da estrutura de GOP"@pt , "GOP structure summary"@en .
+
+oem:valorReferencia a owl:DatatypeProperty ;
+    rdfs:domain oem:AchadoPericial ;
+    rdfs:range xsd:string ;
+    rdfs:label "valor na referência"@pt , "reference value"@en .
+
+oem:valorObservado a owl:DatatypeProperty ;
+    rdfs:domain oem:AchadoPericial ;
+    rdfs:range xsd:string ;
+    rdfs:label "valor observado"@pt , "observed value"@en .

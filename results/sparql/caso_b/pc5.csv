@@ -1,0 +1,9 @@
+evidencia,transformacaoVioladora,classificacaoEvidencia
+http://example.org/oem#Evidencia_Sintetico_1_1_Raw,http://example.org/oem#SinteseDeepfake_1_1,http://example.org/oem#EvidenciaComConteudoAlterado
+http://example.org/oem#Evidencia_Sintetico_1_1_Work,http://example.org/oem#SinteseDeepfake_1_1,http://example.org/oem#EvidenciaComConteudoAlterado
+http://example.org/oem#Evidencia_Sintetico_1_2_Raw,http://example.org/oem#SinteseDeepfake_1_2,http://example.org/oem#EvidenciaComConteudoAlterado
+http://example.org/oem#Evidencia_Sintetico_1_2_Work,http://example.org/oem#SinteseDeepfake_1_2,http://example.org/oem#EvidenciaComConteudoAlterado
+http://example.org/oem#Evidencia_Sintetico_2_1_Raw,http://example.org/oem#SinteseDeepfake_2_1,http://example.org/oem#EvidenciaComConteudoAlterado
+http://example.org/oem#Evidencia_Sintetico_2_1_Work,http://example.org/oem#SinteseDeepfake_2_1,http://example.org/oem#EvidenciaComConteudoAlterado
+http://example.org/oem#Evidencia_Sintetico_2_2_Raw,http://example.org/oem#SinteseDeepfake_2_2,http://example.org/oem#EvidenciaComConteudoAlterado
+http://example.org/oem#Evidencia_Sintetico_2_2_Work,http://example.org/oem#SinteseDeepfake_2_2,http://example.org/oem#EvidenciaComConteudoAlterado

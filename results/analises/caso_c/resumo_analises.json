@@ -1,0 +1,290 @@
+{
+  "spectrograms": [
+    {
+      "input_wav": "data/work/caso_c/video_recodificado_mensageiro_1.wav",
+      "input_wav_sha256": "5dd05a685402ef19edc9fdd82fb4cfd74b1bf41aaa2b2224ca74d9c9196a87c4",
+      "output_png_case": "results/analises/caso_c/espectrogramas/espectrograma_video_recodificado_mensageiro_1.png",
+      "output_png_global": "results/espectrogramas/espectrograma_video_recodificado_mensageiro_1.png",
+      "output_png_sha256": "dd2ec5a3bb7645166ef18147f3d6bbaed6d157900fa3b29cb6b644a20f32e4ce",
+      "output_png_size_bytes": 867782,
+      "sample_rate_hz": 44100,
+      "channels_input": 2,
+      "duration_s": 7.244626,
+      "parameters": {
+        "window_type": "hann",
+        "nperseg": 4096,
+        "noverlap": 3072,
+        "nfft": 4096,
+        "scaling": "density",
+        "cmap": "viridis",
+        "dpi": 150,
+        "fmax_display_hz": 8000.0
+      },
+      "timestamp": "2026-11-17T13:01:15-03:00"
+    },
+    {
+      "input_wav": "data/work/caso_c/video_recodificado_mensageiro_1_mono.wav",
+      "input_wav_sha256": "05edd4148340e20cc9d714c2b461809576677c0db6f91371e259c8f6741d1f82",
+      "output_png_case": "results/analises/caso_c/espectrogramas/espectrograma_video_recodificado_mensageiro_1_mono.png",
+      "output_png_global": "results/espectrogramas/espectrograma_video_recodificado_mensageiro_1_mono.png",
+      "output_png_sha256": "5a5ed92134361157652084251c1d2b439cb147850604d9f1d850be0b46c75d74",
+      "output_png_size_bytes": 869551,
+      "sample_rate_hz": 44100,
+      "channels_input": 1,
+      "duration_s": 7.244626,
+      "parameters": {
+        "window_type": "hann",
+        "nperseg": 4096,
+        "noverlap": 3072,
+        "nfft": 4096,
+        "scaling": "density",
+        "cmap": "viridis",
+        "dpi": 150,
+        "fmax_display_hz": 8000.0
+      },
+      "timestamp": "2026-11-17T13:01:17-03:00"
+    }
+  ],
+  "enf_exams": [
+    {
+      "input_wav": "data/work/caso_c/video_recodificado_mensageiro_1.wav",
+      "input_wav_sha256": "5dd05a685402ef19edc9fdd82fb4cfd74b1bf41aaa2b2224ca74d9c9196a87c4",
+      "sample_rate_hz": 44100,
+      "channels": 2,
+      "snr_threshold_db": 6.0,
+      "band_60hz": {
+        "target_freq_hz": 60.0,
+        "decimated_fs_hz": 1191.8918918918919,
+        "num_windows": 4,
+        "times_s": [
+          2.0,
+          3.0,
+          4.0,
+          5.0
+        ],
+        "instantaneous_freqs_hz": [
+          60.20327,
+          59.45767,
+          59.59909,
+          60.35006
+        ],
+        "instantaneous_snr_db": [
+          5.098,
+          4.173,
+          3.213,
+          4.683
+        ],
+        "mean_snr_db": 4.292,
+        "median_snr_db": 4.428,
+        "above_threshold_ratio": 0.0,
+        "freq_mean_hz": 59.90252,
+        "freq_std_hz": 0.38102,
+        "normalized_freq_std_hz": 0.38102,
+        "detected_stable": false,
+        "discontinuities": []
+      },
+      "band_120hz": {
+        "target_freq_hz": 120.0,
+        "decimated_fs_hz": 1191.8918918918919,
+        "num_windows": 4,
+        "times_s": [
+          2.0,
+          3.0,
+          4.0,
+          5.0
+        ],
+        "instantaneous_freqs_hz": [
+          119.94777,
+          119.93729,
+          120.07092,
+          119.97702
+        ],
+        "instantaneous_snr_db": [
+          6.186,
+          7.426,
+          8.856,
+          13.396
+        ],
+        "mean_snr_db": 8.966,
+        "median_snr_db": 8.141,
+        "above_threshold_ratio": 1.0,
+        "freq_mean_hz": 119.98325,
+        "freq_std_hz": 0.05267,
+        "normalized_freq_std_hz": 0.02633,
+        "detected_stable": true,
+        "discontinuities": []
+      },
+      "enf_detectable": true,
+      "exam_result": "ENF detectável",
+      "discontinuities": [],
+      "curve_csv": "results/analises/caso_c/enf/enf_video_recodificado_mensageiro_1.csv",
+      "curve_csv_sha256": "53f55af0cd3e73a21f24f0e7126e35cf6bc79ef7973e227237590cca8bf53d3f",
+      "diagnostic_png": "results/analises/caso_c/enf/enf_video_recodificado_mensageiro_1.png",
+      "diagnostic_png_sha256": "0b7ab847da6e09f2790ab6a8c1b66b9cf3f84b3b94990c6f57fcafbd68f9bbe5",
+      "timestamp": "2026-11-17T13:01:15-03:00"
+    },
+    {
+      "input_wav": "data/work/caso_c/video_recodificado_mensageiro_1_mono.wav",
+      "input_wav_sha256": "05edd4148340e20cc9d714c2b461809576677c0db6f91371e259c8f6741d1f82",
+      "sample_rate_hz": 44100,
+      "channels": 1,
+      "snr_threshold_db": 6.0,
+      "band_60hz": {
+        "target_freq_hz": 60.0,
+        "decimated_fs_hz": 1191.8918918918919,
+        "num_windows": 4,
+        "times_s": [
+          2.0,
+          3.0,
+          4.0,
+          5.0
+        ],
+        "instantaneous_freqs_hz": [
+          60.20287,
+          59.45786,
+          59.5978,
+          60.35024
+        ],
+        "instantaneous_snr_db": [
+          5.117,
+          4.15,
+          3.195,
+          4.687
+        ],
+        "mean_snr_db": 4.287,
+        "median_snr_db": 4.418,
+        "above_threshold_ratio": 0.0,
+        "freq_mean_hz": 59.90219,
+        "freq_std_hz": 0.3812,
+        "normalized_freq_std_hz": 0.3812,
+        "detected_stable": false,
+        "discontinuities": []
+      },
+      "band_120hz": {
+        "target_freq_hz": 120.0,
+        "decimated_fs_hz": 1191.8918918918919,
+        "num_windows": 4,
+        "times_s": [
+          2.0,
+          3.0,
+          4.0,
+          5.0
+        ],
+        "instantaneous_freqs_hz": [
+          119.94777,
+          119.9373,
+          120.07093,
+          119.97703
+        ],
+        "instantaneous_snr_db": [
+          6.186,
+          7.426,
+          8.856,
+          13.395
+        ],
+        "mean_snr_db": 8.966,
+        "median_snr_db": 8.141,
+        "above_threshold_ratio": 1.0,
+        "freq_mean_hz": 119.98326,
+        "freq_std_hz": 0.05267,
+        "normalized_freq_std_hz": 0.02634,
+        "detected_stable": true,
+        "discontinuities": []
+      },
+      "enf_detectable": true,
+      "exam_result": "ENF detectável",
+      "discontinuities": [],
+      "curve_csv": "results/analises/caso_c/enf/enf_video_recodificado_mensageiro_1_mono.csv",
+      "curve_csv_sha256": "1452d0d1ca91176e697c0933503c65e409c47da4636bfd44758f422fd6423e9d",
+      "diagnostic_png": "results/analises/caso_c/enf/enf_video_recodificado_mensageiro_1_mono.png",
+      "diagnostic_png_sha256": "70d64db9c6081186d15b053724c6cfa4cd40e809a1a9fbd674f37887980e7cb5",
+      "timestamp": "2026-11-17T13:01:17-03:00"
+    }
+  ],
+  "container_gop": [
+    {
+      "video_path": "data/work/caso_c/video_recodificado_mensageiro_1.mp4",
+      "sha256": "361fa834338c76bbc239589c46cc896cd0c524c0fe63a5d5a93f22728a00f3fd",
+      "size_bytes": 925087,
+      "duration_s": 7.246009,
+      "total_bitrate_bps": 1021347,
+      "major_brand": "isom",
+      "compatible_brands": "isomiso2avc1mp41",
+      "encoder": "Lavf62.12.101",
+      "video_codec": "h264",
+      "video_profile": "Main",
+      "video_level": 31,
+      "width": 476,
+      "height": 848,
+      "fps": "30/1",
+      "video_time_base": "1/15360",
+      "has_b_frames": 2,
+      "video_bitrate_bps": 916790,
+      "extradata_size": 44,
+      "audio_codec": "aac",
+      "audio_profile": "LC",
+      "audio_sample_rate_hz": 44100,
+      "audio_time_base": "1/44100",
+      "audio_bitrate_bps": 95586,
+      "gop": {
+        "total_frames": 217,
+        "I_frames": 1,
+        "P_frames": 63,
+        "B_frames": 153,
+        "num_gops": 1,
+        "gop_lengths": [
+          217
+        ],
+        "min_gop": 217,
+        "max_gop": 217,
+        "mean_gop": 217.0,
+        "pattern_prefix": "IBBBPBBBPBBBPBBBPBBB"
+      },
+      "timestamp": "2026-11-17T13:01:13-03:00",
+      "gop_json_path": "results\\analises\\caso_c\\container_gop\\gop_video_recodificado_mensageiro_1.json",
+      "gop_json_sha256": "09f7705d69702b738960dddfada3352e10b4169670f6f4728b202d3ff82ef67c"
+    }
+  ],
+  "container_indicios": [
+    {
+      "target_video": "data/work/caso_c/video_recodificado_mensageiro_1.mp4",
+      "reference_video": "data/work/caso_a/video_original_1.mp4",
+      "indicios_count": 4,
+      "indicios": [
+        {
+          "type": "oem:IndicioDeRecodificacao",
+          "subtype": "DivergenciaDeResolucaoOuOrientacao",
+          "description_pt": "Mudança de resolução/orientação em relação à referência (478x850 -> 476x848).",
+          "description_en": "Resolution/orientation change relative to reference (478x850 -> 476x848).",
+          "ref_value": "478x850",
+          "target_value": "476x848"
+        },
+        {
+          "type": "oem:IndicioDeRecodificacao",
+          "subtype": "DivergenciaDeEstruturaGOP",
+          "description_pt": "Alteração na estrutura de GOP (Referência: I=1, P=216, B=0, maxGOP=217, padrão='IPPPPPPPPPPPPPPPPPPP' vs Alvo: I=1, P=63, B=153, maxGOP=217, padrão='IBBBPBBBPBBBPBBBPBBB').",
+          "description_en": "GOP structure alteration (Reference: I=1, P=216, B=0, maxGOP=217, pattern='IPPPPPPPPPPPPPPPPPPP' vs Target: I=1, P=63, B=153, maxGOP=217, pattern='IBBBPBBBPBBBPBBBPBBB').",
+          "ref_value": "B=0,maxGOP=217,pat=IPPPPPPPPP",
+          "target_value": "B=153,maxGOP=217,pat=IBBBPBBBPB"
+        },
+        {
+          "type": "oem:IndicioDeRecodificacao",
+          "subtype": "DivergenciaDeTimeBaseVideo",
+          "description_pt": "Mudança de time_base da stream de vídeo (1/90000 -> 1/15360).",
+          "description_en": "Video stream time_base change (1/90000 -> 1/15360).",
+          "ref_value": "1/90000",
+          "target_value": "1/15360"
+        },
+        {
+          "type": "oem:IndicioDeRecodificacao",
+          "subtype": "DivergenciaDeBitrate",
+          "description_pt": "Variação acentuada de taxa de bits em relação à referência (Vídeo: 1577083 -> 916790 bps [41.9%]; Áudio: 319352 -> 95586 bps [70.1%]).",
+          "description_en": "Marked bitrate variation relative to reference (Video: 1577083 -> 916790 bps [41.9%]; Audio: 319352 -> 95586 bps [70.1%]).",
+          "ref_value": "v=1577083,a=319352",
+          "target_value": "v=916790,a=95586"
+        }
+      ],
+      "timestamp": "2026-11-17T13:01:17-03:00"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+PREFIX oem: <http://example.org/oem#>
+
+SELECT DISTINCT ?exame ?audioEntrada ?resultado ?snr60 ?snr120 ?limiar
+WHERE {
+    ?exame a oem:ExameENF ;
+           oem:temEntrada ?audioEntrada ;
+           oem:resultadoExame ?resultado ;
+           oem:snrMedio60Hz_dB ?snr60 ;
+           oem:snrMedio120Hz_dB ?snr120 ;
+           oem:limiarSNR_dB ?limiar .
+}
+ORDER BY ?exame

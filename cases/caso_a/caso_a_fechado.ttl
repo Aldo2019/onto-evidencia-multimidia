@@ -1,0 +1,54 @@
+@prefix oem: <http://example.org/oem#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.org/oem/cases/caso_a_fechado> a owl:Ontology ;
+    owl:imports <http://example.org/oem> ,
+                <http://example.org/oem/cases/caso_a> ;
+    rdfs:label "Caso A (Fechado) - Atestação Pericial de Fechamento da Cadeia de Custódia"@pt ,
+               "Case A (Closed) - Forensic Expert Closure Attestation of the Chain of Custody"@en ;
+    skos:definition "Adiciona os axiomas de fechamento de mundo (universal restrictions em oem:sofreu) atestando que as cópias de trabalho do Caso A sofreram exclusivamente as transformações isomórficas registradas na cadeia de custódia."@pt ,
+                    "Adds closure axioms (universal restrictions on oem:sofreu) attesting that the working copies in Case A underwent exclusively the isomorphic transformations recorded in the chain of custody."@en .
+
+# =============================================================================
+# Axiomas de Fechamento Pericial (Closure Axioms on oem:sofreu)
+# =============================================================================
+
+oem:Evidencia_Original_1_Work a [
+    a owl:Restriction ;
+    owl:onProperty oem:sofreu ;
+    owl:allValuesFrom [
+        a owl:Class ;
+        owl:oneOf ( oem:CopiaForense_video_original_1 )
+    ]
+] .
+
+oem:Evidencia_Original_2_Work a [
+    a owl:Restriction ;
+    owl:onProperty oem:sofreu ;
+    owl:allValuesFrom [
+        a owl:Class ;
+        owl:oneOf ( oem:CopiaForense_Video_original_2 )
+    ]
+] .
+
+oem:Evidencia_Audio_Original_1_Stereo a [
+    a owl:Restriction ;
+    owl:onProperty oem:sofreu ;
+    owl:allValuesFrom [
+        a owl:Class ;
+        owl:oneOf ( oem:ExtracaoDeAudio_video_original_1_Stereo )
+    ]
+] .
+
+oem:Evidencia_Audio_Original_2_Stereo a [
+    a owl:Restriction ;
+    owl:onProperty oem:sofreu ;
+    owl:allValuesFrom [
+        a owl:Class ;
+        owl:oneOf ( oem:ExtracaoDeAudio_Video_original_2_Stereo )
+    ]
+] .

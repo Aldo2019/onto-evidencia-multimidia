@@ -1,0 +1,37 @@
+# Configuration for Forensic Multimedia Analysis (ISKO-Brasil 2027)
+# Do not modify thresholds after running analyses without explicit justification and custody record.
+
+spectrogram:
+  window_type: "hann"
+  nperseg: 4096
+  noverlap: 3072
+  nfft: 4096
+  scaling: "density"
+  cmap: "viridis"
+  dpi: 150
+  fmax_display_hz: 8000
+
+enf:
+  nominal_grid_freq_hz: 60.0
+  harmonics_hz:
+    - 60.0
+    - 120.0
+  target_fs_hz: 1200
+  bandpass_half_width_hz: 1.0
+  noise_band_inner_offset_hz: 2.0
+  noise_band_outer_offset_hz: 10.0
+  stft_window_sec: 4.0
+  stft_hop_sec: 1.0
+  zero_padding_factor: 8
+  snr_threshold_db: 6.0
+  min_stable_windows_ratio: 0.60
+  max_freq_std_hz: 0.15
+  discontinuity_step_threshold_hz: 0.08
+  discontinuity_zscore_threshold: 3.5
+
+container_comparison:
+  reference_case: "caso_a"
+  reference_files:
+    conjunto_1: "data/work/caso_a/video_original_1.mp4"
+    conjunto_2: "data/work/caso_a/Video_original_2.mp4"
+  bitrate_relative_diff_threshold: 0.15

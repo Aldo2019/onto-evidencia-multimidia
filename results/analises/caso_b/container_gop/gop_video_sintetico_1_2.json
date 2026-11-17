@@ -1,0 +1,40 @@
+{
+  "video_path": "data/work/caso_b/video_sintetico_1_2.mp4",
+  "sha256": "a55dc991a06c7811a4f3b0f18a687db86143dab82390845eac441651b47304b1",
+  "size_bytes": 2128149,
+  "duration_s": 10.026667,
+  "total_bitrate_bps": 1697991,
+  "major_brand": "mp42",
+  "compatible_brands": "mp42isom",
+  "encoder": null,
+  "video_codec": "h264",
+  "video_profile": "High",
+  "video_level": 31,
+  "width": 848,
+  "height": 478,
+  "fps": "24/1",
+  "video_time_base": "1/90000",
+  "has_b_frames": 0,
+  "video_bitrate_bps": 1570271,
+  "extradata_size": 38,
+  "audio_codec": "aac",
+  "audio_profile": "LC",
+  "audio_sample_rate_hz": 48000,
+  "audio_time_base": "1/48000",
+  "audio_bitrate_bps": 128305,
+  "gop": {
+    "total_frames": 240,
+    "I_frames": 1,
+    "P_frames": 239,
+    "B_frames": 0,
+    "num_gops": 1,
+    "gop_lengths": [
+      240
+    ],
+    "min_gop": 240,
+    "max_gop": 240,
+    "mean_gop": 240.0,
+    "pattern_prefix": "IPPPPPPPPPPPPPPPPPPP"
+  },
+  "timestamp": "2026-11-17T12:46:34-03:00"
+}

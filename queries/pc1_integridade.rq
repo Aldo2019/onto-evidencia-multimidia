@@ -1,0 +1,14 @@
+PREFIX oem: <http://example.org/oem#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT DISTINCT ?evidencia ?classeIntegridade
+WHERE {
+    ?evidencia a oem:EvidenciaMultimidia .
+    VALUES ?classeIntegridade {
+        oem:EvidenciaIntegra
+        oem:EvidenciaComConteudoAlterado
+        oem:EvidenciaComCadeiaQuebrada
+    }
+    ?evidencia a ?classeIntegridade .
+}
+ORDER BY ?evidencia ?classeIntegridade

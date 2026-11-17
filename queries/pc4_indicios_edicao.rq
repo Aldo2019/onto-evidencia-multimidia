@@ -1,0 +1,13 @@
+PREFIX oem: <http://example.org/oem#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?evidencia ?exame ?achado ?subclasse ?valorRef ?valorObs
+WHERE {
+    ?exame oem:temEntrada ?evidencia ;
+           oem:geraAchado ?achado .
+    ?achado a ?subclasse ;
+            oem:valorReferencia ?valorRef ;
+            oem:valorObservado ?valorObs .
+    FILTER(?subclasse != oem:AchadoPericial && ?subclasse != oem:IndicioDeEdicao && ?subclasse != <http://www.w3.org/2002/07/owl#NamedIndividual> && ?subclasse != <http://www.w3.org/2002/07/owl#Thing>)
+}
+ORDER BY ?evidencia ?achado ?subclasse

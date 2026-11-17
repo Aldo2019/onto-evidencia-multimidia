@@ -1,0 +1,3 @@
+evidencia,transformacao,tipoDeclaracao,registro,hashValor
+http://example.org/oem#Evidencia_Audio_Recodificado_1_Stereo,http://example.org/oem#ExtracaoDeAudio_video_recodificado_1_Stereo,http://example.org/oem#TransformacaoPreservadoraDeclarada,http://example.org/oem#RegistroCustodia_ExtracaoAudio_video_recodificado_1_Stereo,5dd05a685402ef19edc9fdd82fb4cfd74b1bf41aaa2b2224ca74d9c9196a87c4
+http://example.org/oem#Evidencia_Recodificado_Mensageiro_1_Work,http://example.org/oem#TransmissaoMensageiro_video_1,http://example.org/oem#TransformacaoNaoDeclarada,,

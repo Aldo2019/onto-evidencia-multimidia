@@ -1,0 +1,1465 @@
+@prefix oem: <http://example.org/oem#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.org/oem/cases/caso_b> a owl:Ontology ;
+    owl:imports <http://example.org/oem> ;
+    rdfs:label "Caso B - Evidências Sintéticas (Deepfake), Aquisição Isomórfica e Extração de Áudio"@pt ,
+               "Case B - Synthetic Evidence (Deepfake), Isomorphic Acquisition, and Audio Extraction"@en ;
+    skos:definition "Instâncias e registros de cadeia de custódia referentes ao Caso B (aquisição isomórfica verificada por hash SHA-256 dos vídeos sintéticos e extração homomórfica das trilhas de áudio em PCM 16-bit)."@pt ,
+                    "Instances and chain of custody records for Case B (SHA-256 hash-verified isomorphic acquisition of synthetic videos and homomorphic extraction of 16-bit PCM audio tracks)."@en .
+
+# =============================================================================
+# Transformações Generativas (Síntese Neural / Deepfake) que deram origem às Matrizes do Caso B
+# =============================================================================
+
+oem:SinteseDeepfake_1_1 a owl:NamedIndividual , oem:TransformacaoGenerativa ;
+    rdfs:label "Síntese Neural (Deepfake) geradora de video_sintetico_1_1.mp4"@pt ,
+               "Neural Synthesis (Deepfake) generating video_sintetico_1_1.mp4"@en ;
+    oem:temSaida oem:Evidencia_Sintetico_1_1_Raw , oem:Evidencia_Sintetico_1_1_Work .
+
+oem:SinteseDeepfake_1_2 a owl:NamedIndividual , oem:TransformacaoGenerativa ;
+    rdfs:label "Síntese Neural (Deepfake) geradora de video_sintetico_1_2.mp4"@pt ,
+               "Neural Synthesis (Deepfake) generating video_sintetico_1_2.mp4"@en ;
+    oem:temSaida oem:Evidencia_Sintetico_1_2_Raw , oem:Evidencia_Sintetico_1_2_Work .
+
+oem:SinteseDeepfake_2_1 a owl:NamedIndividual , oem:TransformacaoGenerativa ;
+    rdfs:label "Síntese Neural (Deepfake) geradora de video_sintetico_2_1.mp4"@pt ,
+               "Neural Synthesis (Deepfake) generating video_sintetico_2_1.mp4"@en ;
+    oem:temSaida oem:Evidencia_Sintetico_2_1_Raw , oem:Evidencia_Sintetico_2_1_Work .
+
+oem:SinteseDeepfake_2_2 a owl:NamedIndividual , oem:TransformacaoGenerativa ;
+    rdfs:label "Síntese Neural (Deepfake) geradora de video_sintetico_2_2.mp4"@pt ,
+               "Neural Synthesis (Deepfake) generating video_sintetico_2_2.mp4"@en ;
+    oem:temSaida oem:Evidencia_Sintetico_2_2_Raw , oem:Evidencia_Sintetico_2_2_Work .
+
+# =============================================================================
+# Declarações de Vocabulário (OWL 2 DL Declarations)
+# =============================================================================
+
+oem:EvidenciaMultimidia a owl:Class ;
+    rdfs:label "Evidência Multimídia"@pt , "Multimedia Evidence"@en ;
+    skos:definition "Qualquer item de áudio, imagem ou vídeo submetido a exame ou custódia pericial."@pt ,
+                    "Any audio, image, or video item submitted to forensic examination or custody."@en .
+
+oem:Transformacao a owl:Class ;
+    rdfs:label "Transformação"@pt , "Transformation"@en ;
+    skos:definition "Operação técnica ou manuseio aplicado sobre uma evidência multimídia que gera um novo artefato ou estado."@pt ,
+                    "Technical operation or handling applied to multimedia evidence producing a new artifact or state."@en .
+
+oem:TransformacaoIsomorfica a owl:Class ;
+    rdfs:subClassOf oem:Transformacao ;
+    rdfs:label "Transformação Isomórfica"@pt , "Isomorphic Transformation"@en ;
+    skos:definition "Transformação que preserva integralmente a sequência de bits da evidência original, comprovada pela igualdade do valor de hash criptográfico."@pt ,
+                    "Transformation that strictly preserves the bit sequence of the original evidence, proven by cryptographic hash equality."@en .
+
+oem:TransformacaoHomomorfica a owl:Class ;
+    rdfs:subClassOf oem:Transformacao ;
+    rdfs:label "Transformação Homomórfica"@pt , "Homomorphic Transformation"@en ;
+    skos:definition "Transformação redutora controlada (como extração de áudio sem reamostragem, geração de espectrograma ou extração de curva ENF) que preserva as propriedades periciais relevantes sem introduzir conteúdo sintético."@pt ,
+                    "Controlled reductive transformation (such as unresampled audio extraction, spectrogram generation, or ENF curve extraction) that preserves relevant forensic properties without introducing synthetic content."@en .
+
+oem:ExtracaoDeAudio a owl:Class ;
+    rdfs:subClassOf oem:TransformacaoHomomorfica ;
+    rdfs:label "Extração de Áudio"@pt , "Audio Extraction"@en ;
+    skos:definition "Operação homomórfica que isola e decodifica a trilha sonora de um contêiner de vídeo para formato de áudio sem compressão com perdas, mantendo a taxa de amostragem original."@pt ,
+                    "Homomorphic operation that isolates and decodes the audio track from a video container into an uncompressed audio format while preserving the original sample rate."@en .
+
+oem:ValorHash a owl:Class ;
+    rdfs:label "Valor de Hash"@pt , "Hash Value"@en ;
+    skos:definition "Resumo criptográfico calculado sobre um arquivo para comprovar que seu conteúdo binário permaneceu inalterado."@pt ,
+                    "Cryptographic digest computed over a file to prove its binary content remained unchanged."@en .
+
+oem:RegistroDeCustodia a owl:Class ;
+    rdfs:label "Registro de Custódia"@pt , "Custody Record"@en ;
+    skos:definition "Assento formal na cadeia de custódia que documenta quem realizou determinada transformação ou manuseio, quando e sob quais garantias."@pt ,
+                    "Formal entry in the chain of custody documenting who performed a given transformation or handling, when, and under which guarantees."@en .
+
+oem:Agente a owl:Class ;
+    rdfs:label "Agente"@pt , "Agent"@en ;
+    skos:definition "Pessoa ou sistema responsável por executar ou atestar um ato na cadeia de custódia."@pt ,
+                    "Person or system responsible for executing or attesting an act in the chain of custody."@en .
+
+oem:temEntrada a owl:ObjectProperty ;
+    rdfs:label "tem entrada"@pt , "has input"@en .
+
+oem:temSaida a owl:ObjectProperty ;
+    rdfs:label "tem saída"@pt , "has output"@en .
+
+oem:verificadaPor a owl:ObjectProperty ;
+    rdfs:label "verificada por"@pt , "verified by"@en .
+
+oem:registradaEm a owl:ObjectProperty ;
+    rdfs:label "registrada em"@pt , "recorded in"@en .
+
+oem:documentaTransformacao a owl:ObjectProperty ;
+    rdfs:label "documenta transformação"@pt , "documents transformation"@en .
+
+oem:atestadoPor a owl:ObjectProperty ;
+    rdfs:label "atestado por"@pt , "attested by"@en .
+
+oem:temValorHash a owl:ObjectProperty ;
+    rdfs:label "tem valor de hash"@pt , "has hash value"@en .
+
+oem:algoritmoHash a owl:DatatypeProperty ;
+    rdfs:label "algoritmo de hash"@pt , "hash algorithm"@en .
+
+oem:valorHashHex a owl:DatatypeProperty ;
+    rdfs:label "valor hexadecimal do hash"@pt , "hexadecimal hash value"@en .
+
+oem:dataHora a owl:DatatypeProperty ;
+    rdfs:label "data e hora"@pt , "date and time"@en .
+
+oem:caminhoArquivo a owl:DatatypeProperty ;
+    rdfs:label "caminho do arquivo"@pt , "file path"@en .
+
+oem:tamanhoBytes a owl:DatatypeProperty ;
+    rdfs:label "tamanho em bytes"@pt , "size in bytes"@en .
+
+oem:somenteLeitura a owl:DatatypeProperty ;
+    rdfs:label "somente leitura"@pt , "read-only"@en .
+
+oem:nomeAgente a owl:DatatypeProperty ;
+    rdfs:label "nome do agente"@pt , "agent name"@en .
+
+oem:comandoExecutado a owl:DatatypeProperty ;
+    rdfs:label "comando executado"@pt , "executed command"@en .
+
+oem:versaoFerramenta a owl:DatatypeProperty ;
+    rdfs:label "versão da ferramenta"@pt , "tool version"@en .
+
+oem:parametrosTransformacao a owl:DatatypeProperty ;
+    rdfs:label "parâmetros da transformação"@pt , "transformation parameters"@en .
+
+oem:metodoDownmixMono a owl:DatatypeProperty ;
+    rdfs:label "método de conversão para mono"@pt , "mono downmix method"@en .
+
+oem:taxaAmostragemHz a owl:DatatypeProperty ;
+    rdfs:label "taxa de amostragem (Hz)"@pt , "sample rate (Hz)"@en .
+
+oem:numeroCanais a owl:DatatypeProperty ;
+    rdfs:label "número de canais"@pt , "number of channels"@en .
+
+# =============================================================================
+# Agente Responsável (Perito / Pesquisador)
+# =============================================================================
+
+oem:Agente_Perito a owl:NamedIndividual , oem:Agente ;
+    rdfs:label "Agente (perito)"@pt , "Agente (perito)"@en ;
+    oem:nomeAgente "Agente (perito)"^^xsd:string .
+
+# =============================================================================
+# Item 1: video_sintetico_1_1.mp4 -> data/work/caso_b/video_sintetico_1_1.mp4
+# =============================================================================
+
+oem:Evidencia_Sintetico_1_1_Raw a owl:NamedIndividual , oem:EvidenciaMultimidia ;
+    rdfs:label "Vídeo Sintético 1_1 ( Matriz Somente Leitura )"@pt ,
+               "Synthetic Video 1_1 ( Read-Only Master )"@en ;
+    oem:caminhoArquivo "Vídeos/Vídeo_1/video_sintetico_1_1.mp4"^^xsd:string ;
+    oem:tamanhoBytes 2116260 ;
+    oem:somenteLeitura true ;
+    oem:temValorHash oem:Hash_video_sintetico_1_1 .
+
+oem:Evidencia_Sintetico_1_1_Work a owl:NamedIndividual , oem:EvidenciaMultimidia ;
+    rdfs:label "Vídeo Sintético 1_1 ( Cópia Forense de Trabalho - Caso B )"@pt ,
+               "Synthetic Video 1_1 ( Working Forensic Copy - Case B )"@en ;
+    oem:caminhoArquivo "data/work/caso_b/video_sintetico_1_1.mp4"^^xsd:string ;
+    oem:tamanhoBytes 2116260 ;
+    oem:somenteLeitura false ;
+    oem:temValorHash oem:Hash_video_sintetico_1_1 .
+
+oem:Hash_video_sintetico_1_1 a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de video_sintetico_1_1.mp4"@pt ,
+               "SHA-256 Hash of video_sintetico_1_1.mp4"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "11fc8dfd6061cda11f308419cd3bb091571521f4976fceaa53f735e3893bd76a"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:29:13-03:00"^^xsd:dateTime .
+
+oem:CopiaForense_video_sintetico_1_1 a owl:NamedIndividual , oem:TransformacaoIsomorfica ;
+    rdfs:label "Cópia Forense Isomórfica de video_sintetico_1_1.mp4"@pt ,
+               "Isomorphic Forensic Copy of video_sintetico_1_1.mp4"@en ;
+    oem:temEntrada oem:Evidencia_Sintetico_1_1_Raw ;
+    oem:temSaida oem:Evidencia_Sintetico_1_1_Work ;
+    oem:verificadaPor oem:Hash_video_sintetico_1_1 ;
+    oem:registradaEm oem:RegistroCustodia_video_sintetico_1_1 ;
+    oem:dataHora "2026-11-17T12:29:13-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_video_sintetico_1_1 a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Cópia Forense de video_sintetico_1_1.mp4"@pt ,
+               "Custody Record - Forensic Copy of video_sintetico_1_1.mp4"@en ;
+    oem:documentaTransformacao oem:CopiaForense_video_sintetico_1_1 ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_video_sintetico_1_1 ;
+    oem:dataHora "2026-11-17T12:29:13-03:00"^^xsd:dateTime .
+
+# --- Extração de Áudio Estéreo (Sem Reamostragem) de video_sintetico_1_1.mp4 ---
+
+oem:Evidencia_Audio_Sintetico_1_1_Stereo a owl:NamedIndividual , oem:EvidenciaMultimidia ;
+    rdfs:label "Áudio Extraído Estéreo de video_sintetico_1_1.mp4"@pt ,
+               "Extracted Stereo Audio of video_sintetico_1_1.mp4"@en ;
+    oem:caminhoArquivo "data/work/caso_b/video_sintetico_1_1.wav"^^xsd:string ;
+    oem:tamanhoBytes 1925198 ;
+    oem:taxaAmostragemHz 48000 ;
+    oem:numeroCanais 2 ;
+    oem:temValorHash oem:Hash_video_sintetico_1_1_wav .
+
+oem:Hash_video_sintetico_1_1_wav a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de video_sintetico_1_1.wav"@pt ,
+               "SHA-256 Hash of video_sintetico_1_1.wav"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "345abd0cf1749f8b68de8bb9716e4b6d064bc499b7dcc45c632c059379a32895"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:32:17-03:00"^^xsd:dateTime .
+
+oem:ExtracaoDeAudio_video_sintetico_1_1_Stereo a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExtracaoDeAudio ;
+    rdfs:label "Extração de Áudio (Estéreo Original) - video_sintetico_1_1"@pt ,
+               "Audio Extraction (Original Stereo) - video_sintetico_1_1"@en ;
+    oem:temEntrada oem:Evidencia_Sintetico_1_1_Work ;
+    oem:temSaida oem:Evidencia_Audio_Sintetico_1_1_Stereo ;
+    oem:verificadaPor oem:Hash_video_sintetico_1_1_wav ;
+    oem:registradaEm oem:RegistroCustodia_ExtracaoAudio_video_sintetico_1_1_Stereo ;
+    oem:comandoExecutado "ffmpeg -i data/work/caso_b/video_sintetico_1_1.mp4 -vn -map 0:a:0 -c:a pcm_s16le data/work/caso_b/video_sintetico_1_1.wav"^^xsd:string ;
+    oem:versaoFerramenta "ffmpeg version 8.1.1-full_build-www.gyan.dev (built with gcc 15.2.0)"^^xsd:string ;
+    oem:parametrosTransformacao "-vn -map 0:a:0 -c:a pcm_s16le (48000 Hz preserved, 2 channels stereo)"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:32:17-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExtracaoAudio_video_sintetico_1_1_Stereo a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Extração de Áudio Estéreo de video_sintetico_1_1.mp4"@pt ,
+               "Custody Record - Stereo Audio Extraction of video_sintetico_1_1.mp4"@en ;
+    oem:documentaTransformacao oem:ExtracaoDeAudio_video_sintetico_1_1_Stereo ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_video_sintetico_1_1_wav ;
+    oem:dataHora "2026-11-17T12:32:17-03:00"^^xsd:dateTime .
+
+# --- Extração de Áudio Mono (Downmix) de video_sintetico_1_1.mp4 ---
+
+oem:Evidencia_Audio_Sintetico_1_1_Mono a owl:NamedIndividual , oem:EvidenciaMultimidia ;
+    rdfs:label "Áudio Extraído Mono de video_sintetico_1_1.mp4"@pt ,
+               "Extracted Mono Audio of video_sintetico_1_1.mp4"@en ;
+    oem:caminhoArquivo "data/work/caso_b/video_sintetico_1_1_mono.wav"^^xsd:string ;
+    oem:tamanhoBytes 962638 ;
+    oem:taxaAmostragemHz 48000 ;
+    oem:numeroCanais 1 ;
+    oem:temValorHash oem:Hash_video_sintetico_1_1_mono_wav .
+
+oem:Hash_video_sintetico_1_1_mono_wav a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de video_sintetico_1_1_mono.wav"@pt ,
+               "SHA-256 Hash of video_sintetico_1_1_mono.wav"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "9f2f7e3d56cdfb6ff517140ee2c037a767c9ba9418a1c4059bf2f88e3b4186ae"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:32:17-03:00"^^xsd:dateTime .
+
+oem:ExtracaoDeAudio_video_sintetico_1_1_Mono a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExtracaoDeAudio ;
+    rdfs:label "Extração de Áudio (Downmix Mono) - video_sintetico_1_1"@pt ,
+               "Audio Extraction (Mono Downmix) - video_sintetico_1_1"@en ;
+    oem:temEntrada oem:Evidencia_Sintetico_1_1_Work ;
+    oem:temSaida oem:Evidencia_Audio_Sintetico_1_1_Mono ;
+    oem:verificadaPor oem:Hash_video_sintetico_1_1_mono_wav ;
+    oem:registradaEm oem:RegistroCustodia_ExtracaoAudio_video_sintetico_1_1_Mono ;
+    oem:comandoExecutado "ffmpeg -i data/work/caso_b/video_sintetico_1_1.mp4 -vn -map 0:a:0 -ac 1 -c:a pcm_s16le data/work/caso_b/video_sintetico_1_1_mono.wav"^^xsd:string ;
+    oem:versaoFerramenta "ffmpeg version 8.1.1-full_build-www.gyan.dev (built with gcc 15.2.0)"^^xsd:string ;
+    oem:parametrosTransformacao "-vn -map 0:a:0 -ac 1 -c:a pcm_s16le (48000 Hz preserved, 1 channel mono)"^^xsd:string ;
+    oem:metodoDownmixMono "FFmpeg libswresample default stereo-to-mono downmix (-ac 1): M = 0.5*L + 0.5*R (equal-weight linear channel averaging prior to pcm_s16le quantization)"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:32:17-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExtracaoAudio_video_sintetico_1_1_Mono a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Extração de Áudio Mono de video_sintetico_1_1.mp4"@pt ,
+               "Custody Record - Mono Audio Extraction of video_sintetico_1_1.mp4"@en ;
+    oem:documentaTransformacao oem:ExtracaoDeAudio_video_sintetico_1_1_Mono ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_video_sintetico_1_1_mono_wav ;
+    oem:dataHora "2026-11-17T12:32:17-03:00"^^xsd:dateTime .
+
+# =============================================================================
+# Item 2: video_sintetico_1_2.mp4 -> data/work/caso_b/video_sintetico_1_2.mp4
+# =============================================================================
+
+oem:Evidencia_Sintetico_1_2_Raw a owl:NamedIndividual , oem:EvidenciaMultimidia ;
+    rdfs:label "Vídeo Sintético 1_2 ( Matriz Somente Leitura )"@pt ,
+               "Synthetic Video 1_2 ( Read-Only Master )"@en ;
+    oem:caminhoArquivo "Vídeos/Vídeo_1/video_sintetico_1_2.mp4"^^xsd:string ;
+    oem:tamanhoBytes 2128149 ;
+    oem:somenteLeitura true ;
+    oem:temValorHash oem:Hash_video_sintetico_1_2 .
+
+oem:Evidencia_Sintetico_1_2_Work a owl:NamedIndividual , oem:EvidenciaMultimidia ;
+    rdfs:label "Vídeo Sintético 1_2 ( Cópia Forense de Trabalho - Caso B )"@pt ,
+               "Synthetic Video 1_2 ( Working Forensic Copy - Case B )"@en ;
+    oem:caminhoArquivo "data/work/caso_b/video_sintetico_1_2.mp4"^^xsd:string ;
+    oem:tamanhoBytes 2128149 ;
+    oem:somenteLeitura false ;
+    oem:temValorHash oem:Hash_video_sintetico_1_2 .
+
+oem:Hash_video_sintetico_1_2 a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de video_sintetico_1_2.mp4"@pt ,
+               "SHA-256 Hash of video_sintetico_1_2.mp4"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "a55dc991a06c7811a4f3b0f18a687db86143dab82390845eac441651b47304b1"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:29:13-03:00"^^xsd:dateTime .
+
+oem:CopiaForense_video_sintetico_1_2 a owl:NamedIndividual , oem:TransformacaoIsomorfica ;
+    rdfs:label "Cópia Forense Isomórfica de video_sintetico_1_2.mp4"@pt ,
+               "Isomorphic Forensic Copy of video_sintetico_1_2.mp4"@en ;
+    oem:temEntrada oem:Evidencia_Sintetico_1_2_Raw ;
+    oem:temSaida oem:Evidencia_Sintetico_1_2_Work ;
+    oem:verificadaPor oem:Hash_video_sintetico_1_2 ;
+    oem:registradaEm oem:RegistroCustodia_video_sintetico_1_2 ;
+    oem:dataHora "2026-11-17T12:29:13-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_video_sintetico_1_2 a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Cópia Forense de video_sintetico_1_2.mp4"@pt ,
+               "Custody Record - Forensic Copy of video_sintetico_1_2.mp4"@en ;
+    oem:documentaTransformacao oem:CopiaForense_video_sintetico_1_2 ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_video_sintetico_1_2 ;
+    oem:dataHora "2026-11-17T12:29:13-03:00"^^xsd:dateTime .
+
+# --- Extração de Áudio Estéreo (Sem Reamostragem) de video_sintetico_1_2.mp4 ---
+
+oem:Evidencia_Audio_Sintetico_1_2_Stereo a owl:NamedIndividual , oem:EvidenciaMultimidia ;
+    rdfs:label "Áudio Extraído Estéreo de video_sintetico_1_2.mp4"@pt ,
+               "Extracted Stereo Audio of video_sintetico_1_2.mp4"@en ;
+    oem:caminhoArquivo "data/work/caso_b/video_sintetico_1_2.wav"^^xsd:string ;
+    oem:tamanhoBytes 1925198 ;
+    oem:taxaAmostragemHz 48000 ;
+    oem:numeroCanais 2 ;
+    oem:temValorHash oem:Hash_video_sintetico_1_2_wav .
+
+oem:Hash_video_sintetico_1_2_wav a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de video_sintetico_1_2.wav"@pt ,
+               "SHA-256 Hash of video_sintetico_1_2.wav"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "e2c374f1436d12e379680225efe0d89710cd2f8d756aa3deaa4f69341085b1dc"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:32:18-03:00"^^xsd:dateTime .
+
+oem:ExtracaoDeAudio_video_sintetico_1_2_Stereo a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExtracaoDeAudio ;
+    rdfs:label "Extração de Áudio (Estéreo Original) - video_sintetico_1_2"@pt ,
+               "Audio Extraction (Original Stereo) - video_sintetico_1_2"@en ;
+    oem:temEntrada oem:Evidencia_Sintetico_1_2_Work ;
+    oem:temSaida oem:Evidencia_Audio_Sintetico_1_2_Stereo ;
+    oem:verificadaPor oem:Hash_video_sintetico_1_2_wav ;
+    oem:registradaEm oem:RegistroCustodia_ExtracaoAudio_video_sintetico_1_2_Stereo ;
+    oem:comandoExecutado "ffmpeg -i data/work/caso_b/video_sintetico_1_2.mp4 -vn -map 0:a:0 -c:a pcm_s16le data/work/caso_b/video_sintetico_1_2.wav"^^xsd:string ;
+    oem:versaoFerramenta "ffmpeg version 8.1.1-full_build-www.gyan.dev (built with gcc 15.2.0)"^^xsd:string ;
+    oem:parametrosTransformacao "-vn -map 0:a:0 -c:a pcm_s16le (48000 Hz preserved, 2 channels stereo)"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:32:18-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExtracaoAudio_video_sintetico_1_2_Stereo a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Extração de Áudio Estéreo de video_sintetico_1_2.mp4"@pt ,
+               "Custody Record - Stereo Audio Extraction of video_sintetico_1_2.mp4"@en ;
+    oem:documentaTransformacao oem:ExtracaoDeAudio_video_sintetico_1_2_Stereo ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_video_sintetico_1_2_wav ;
+    oem:dataHora "2026-11-17T12:32:18-03:00"^^xsd:dateTime .
+
+# --- Extração de Áudio Mono (Downmix) de video_sintetico_1_2.mp4 ---
+
+oem:Evidencia_Audio_Sintetico_1_2_Mono a owl:NamedIndividual , oem:EvidenciaMultimidia ;
+    rdfs:label "Áudio Extraído Mono de video_sintetico_1_2.mp4"@pt ,
+               "Extracted Mono Audio of video_sintetico_1_2.mp4"@en ;
+    oem:caminhoArquivo "data/work/caso_b/video_sintetico_1_2_mono.wav"^^xsd:string ;
+    oem:tamanhoBytes 962638 ;
+    oem:taxaAmostragemHz 48000 ;
+    oem:numeroCanais 1 ;
+    oem:temValorHash oem:Hash_video_sintetico_1_2_mono_wav .
+
+oem:Hash_video_sintetico_1_2_mono_wav a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de video_sintetico_1_2_mono.wav"@pt ,
+               "SHA-256 Hash of video_sintetico_1_2_mono.wav"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "035b8cf4c21f9251e5f8cee335efe18ac29bef023873ef3c4b3f5d5d89372d81"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:32:18-03:00"^^xsd:dateTime .
+
+oem:ExtracaoDeAudio_video_sintetico_1_2_Mono a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExtracaoDeAudio ;
+    rdfs:label "Extração de Áudio (Downmix Mono) - video_sintetico_1_2"@pt ,
+               "Audio Extraction (Mono Downmix) - video_sintetico_1_2"@en ;
+    oem:temEntrada oem:Evidencia_Sintetico_1_2_Work ;
+    oem:temSaida oem:Evidencia_Audio_Sintetico_1_2_Mono ;
+    oem:verificadaPor oem:Hash_video_sintetico_1_2_mono_wav ;
+    oem:registradaEm oem:RegistroCustodia_ExtracaoAudio_video_sintetico_1_2_Mono ;
+    oem:comandoExecutado "ffmpeg -i data/work/caso_b/video_sintetico_1_2.mp4 -vn -map 0:a:0 -ac 1 -c:a pcm_s16le data/work/caso_b/video_sintetico_1_2_mono.wav"^^xsd:string ;
+    oem:versaoFerramenta "ffmpeg version 8.1.1-full_build-www.gyan.dev (built with gcc 15.2.0)"^^xsd:string ;
+    oem:parametrosTransformacao "-vn -map 0:a:0 -ac 1 -c:a pcm_s16le (48000 Hz preserved, 1 channel mono)"^^xsd:string ;
+    oem:metodoDownmixMono "FFmpeg libswresample default stereo-to-mono downmix (-ac 1): M = 0.5*L + 0.5*R (equal-weight linear channel averaging prior to pcm_s16le quantization)"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:32:18-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExtracaoAudio_video_sintetico_1_2_Mono a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Extração de Áudio Mono de video_sintetico_1_2.mp4"@pt ,
+               "Custody Record - Mono Audio Extraction of video_sintetico_1_2.mp4"@en ;
+    oem:documentaTransformacao oem:ExtracaoDeAudio_video_sintetico_1_2_Mono ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_video_sintetico_1_2_mono_wav ;
+    oem:dataHora "2026-11-17T12:32:18-03:00"^^xsd:dateTime .
+
+# =============================================================================
+# Item 3: video_sintetico_2_1.mp4 -> data/work/caso_b/video_sintetico_2_1.mp4
+# =============================================================================
+
+oem:Evidencia_Sintetico_2_1_Raw a owl:NamedIndividual , oem:EvidenciaMultimidia ;
+    rdfs:label "Vídeo Sintético 2_1 ( Matriz Somente Leitura )"@pt ,
+               "Synthetic Video 2_1 ( Read-Only Master )"@en ;
+    oem:caminhoArquivo "Vídeos/Vídeo_2/video_sintetico_2_1.mp4"^^xsd:string ;
+    oem:tamanhoBytes 3026983 ;
+    oem:somenteLeitura true ;
+    oem:temValorHash oem:Hash_video_sintetico_2_1 .
+
+oem:Evidencia_Sintetico_2_1_Work a owl:NamedIndividual , oem:EvidenciaMultimidia ;
+    rdfs:label "Vídeo Sintético 2_1 ( Cópia Forense de Trabalho - Caso B )"@pt ,
+               "Synthetic Video 2_1 ( Working Forensic Copy - Case B )"@en ;
+    oem:caminhoArquivo "data/work/caso_b/video_sintetico_2_1.mp4"^^xsd:string ;
+    oem:tamanhoBytes 3026983 ;
+    oem:somenteLeitura false ;
+    oem:temValorHash oem:Hash_video_sintetico_2_1 .
+
+oem:Hash_video_sintetico_2_1 a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de video_sintetico_2_1.mp4"@pt ,
+               "SHA-256 Hash of video_sintetico_2_1.mp4"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "843837539c8aa52c039240016fdfcec1696f301978962004a1e10905498501a6"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:29:13-03:00"^^xsd:dateTime .
+
+oem:CopiaForense_video_sintetico_2_1 a owl:NamedIndividual , oem:TransformacaoIsomorfica ;
+    rdfs:label "Cópia Forense Isomórfica de video_sintetico_2_1.mp4"@pt ,
+               "Isomorphic Forensic Copy of video_sintetico_2_1.mp4"@en ;
+    oem:temEntrada oem:Evidencia_Sintetico_2_1_Raw ;
+    oem:temSaida oem:Evidencia_Sintetico_2_1_Work ;
+    oem:verificadaPor oem:Hash_video_sintetico_2_1 ;
+    oem:registradaEm oem:RegistroCustodia_video_sintetico_2_1 ;
+    oem:dataHora "2026-11-17T12:29:13-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_video_sintetico_2_1 a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Cópia Forense de video_sintetico_2_1.mp4"@pt ,
+               "Custody Record - Forensic Copy of video_sintetico_2_1.mp4"@en ;
+    oem:documentaTransformacao oem:CopiaForense_video_sintetico_2_1 ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_video_sintetico_2_1 ;
+    oem:dataHora "2026-11-17T12:29:13-03:00"^^xsd:dateTime .
+
+# --- Extração de Áudio Estéreo (Sem Reamostragem) de video_sintetico_2_1.mp4 ---
+
+oem:Evidencia_Audio_Sintetico_2_1_Stereo a owl:NamedIndividual , oem:EvidenciaMultimidia ;
+    rdfs:label "Áudio Extraído Estéreo de video_sintetico_2_1.mp4"@pt ,
+               "Extracted Stereo Audio of video_sintetico_2_1.mp4"@en ;
+    oem:caminhoArquivo "data/work/caso_b/video_sintetico_2_1.wav"^^xsd:string ;
+    oem:tamanhoBytes 2941006 ;
+    oem:taxaAmostragemHz 44100 ;
+    oem:numeroCanais 2 ;
+    oem:temValorHash oem:Hash_video_sintetico_2_1_wav .
+
+oem:Hash_video_sintetico_2_1_wav a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de video_sintetico_2_1.wav"@pt ,
+               "SHA-256 Hash of video_sintetico_2_1.wav"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "5423b5c5c7fc6826c77791bd779571174a33e8dc0a5716aebdc87e0aac43220d"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:32:18-03:00"^^xsd:dateTime .
+
+oem:ExtracaoDeAudio_video_sintetico_2_1_Stereo a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExtracaoDeAudio ;
+    rdfs:label "Extração de Áudio (Estéreo Original) - video_sintetico_2_1"@pt ,
+               "Audio Extraction (Original Stereo) - video_sintetico_2_1"@en ;
+    oem:temEntrada oem:Evidencia_Sintetico_2_1_Work ;
+    oem:temSaida oem:Evidencia_Audio_Sintetico_2_1_Stereo ;
+    oem:verificadaPor oem:Hash_video_sintetico_2_1_wav ;
+    oem:registradaEm oem:RegistroCustodia_ExtracaoAudio_video_sintetico_2_1_Stereo ;
+    oem:comandoExecutado "ffmpeg -i data/work/caso_b/video_sintetico_2_1.mp4 -vn -map 0:a:0 -c:a pcm_s16le data/work/caso_b/video_sintetico_2_1.wav"^^xsd:string ;
+    oem:versaoFerramenta "ffmpeg version 8.1.1-full_build-www.gyan.dev (built with gcc 15.2.0)"^^xsd:string ;
+    oem:parametrosTransformacao "-vn -map 0:a:0 -c:a pcm_s16le (44100 Hz preserved, 2 channels stereo)"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:32:18-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExtracaoAudio_video_sintetico_2_1_Stereo a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Extração de Áudio Estéreo de video_sintetico_2_1.mp4"@pt ,
+               "Custody Record - Stereo Audio Extraction of video_sintetico_2_1.mp4"@en ;
+    oem:documentaTransformacao oem:ExtracaoDeAudio_video_sintetico_2_1_Stereo ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_video_sintetico_2_1_wav ;
+    oem:dataHora "2026-11-17T12:32:18-03:00"^^xsd:dateTime .
+
+# --- Extração de Áudio Mono (Downmix) de video_sintetico_2_1.mp4 ---
+
+oem:Evidencia_Audio_Sintetico_2_1_Mono a owl:NamedIndividual , oem:EvidenciaMultimidia ;
+    rdfs:label "Áudio Extraído Mono de video_sintetico_2_1.mp4"@pt ,
+               "Extracted Mono Audio of video_sintetico_2_1.mp4"@en ;
+    oem:caminhoArquivo "data/work/caso_b/video_sintetico_2_1_mono.wav"^^xsd:string ;
+    oem:tamanhoBytes 1470542 ;
+    oem:taxaAmostragemHz 44100 ;
+    oem:numeroCanais 1 ;
+    oem:temValorHash oem:Hash_video_sintetico_2_1_mono_wav .
+
+oem:Hash_video_sintetico_2_1_mono_wav a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de video_sintetico_2_1_mono.wav"@pt ,
+               "SHA-256 Hash of video_sintetico_2_1_mono.wav"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "ef6d7306e62dd750ce5ed73d57de1e552077f62b6541cb8f262f2f22d10648ee"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:32:18-03:00"^^xsd:dateTime .
+
+oem:ExtracaoDeAudio_video_sintetico_2_1_Mono a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExtracaoDeAudio ;
+    rdfs:label "Extração de Áudio (Downmix Mono) - video_sintetico_2_1"@pt ,
+               "Audio Extraction (Mono Downmix) - video_sintetico_2_1"@en ;
+    oem:temEntrada oem:Evidencia_Sintetico_2_1_Work ;
+    oem:temSaida oem:Evidencia_Audio_Sintetico_2_1_Mono ;
+    oem:verificadaPor oem:Hash_video_sintetico_2_1_mono_wav ;
+    oem:registradaEm oem:RegistroCustodia_ExtracaoAudio_video_sintetico_2_1_Mono ;
+    oem:comandoExecutado "ffmpeg -i data/work/caso_b/video_sintetico_2_1.mp4 -vn -map 0:a:0 -ac 1 -c:a pcm_s16le data/work/caso_b/video_sintetico_2_1_mono.wav"^^xsd:string ;
+    oem:versaoFerramenta "ffmpeg version 8.1.1-full_build-www.gyan.dev (built with gcc 15.2.0)"^^xsd:string ;
+    oem:parametrosTransformacao "-vn -map 0:a:0 -ac 1 -c:a pcm_s16le (44100 Hz preserved, 1 channel mono)"^^xsd:string ;
+    oem:metodoDownmixMono "FFmpeg libswresample default stereo-to-mono downmix (-ac 1): M = 0.5*L + 0.5*R (equal-weight linear channel averaging prior to pcm_s16le quantization)"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:32:18-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExtracaoAudio_video_sintetico_2_1_Mono a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Extração de Áudio Mono de video_sintetico_2_1.mp4"@pt ,
+               "Custody Record - Mono Audio Extraction of video_sintetico_2_1.mp4"@en ;
+    oem:documentaTransformacao oem:ExtracaoDeAudio_video_sintetico_2_1_Mono ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_video_sintetico_2_1_mono_wav ;
+    oem:dataHora "2026-11-17T12:32:18-03:00"^^xsd:dateTime .
+
+# =============================================================================
+# Item 4: video_sintetico_2_2.mp4 -> data/work/caso_b/video_sintetico_2_2.mp4
+# =============================================================================
+
+oem:Evidencia_Sintetico_2_2_Raw a owl:NamedIndividual , oem:EvidenciaMultimidia ;
+    rdfs:label "Vídeo Sintético 2_2 ( Matriz Somente Leitura )"@pt ,
+               "Synthetic Video 2_2 ( Read-Only Master )"@en ;
+    oem:caminhoArquivo "Vídeos/Vídeo_2/video_sintetico_2_2.mp4"^^xsd:string ;
+    oem:tamanhoBytes 2514403 ;
+    oem:somenteLeitura true ;
+    oem:temValorHash oem:Hash_video_sintetico_2_2 .
+
+oem:Evidencia_Sintetico_2_2_Work a owl:NamedIndividual , oem:EvidenciaMultimidia ;
+    rdfs:label "Vídeo Sintético 2_2 ( Cópia Forense de Trabalho - Caso B )"@pt ,
+               "Synthetic Video 2_2 ( Working Forensic Copy - Case B )"@en ;
+    oem:caminhoArquivo "data/work/caso_b/video_sintetico_2_2.mp4"^^xsd:string ;
+    oem:tamanhoBytes 2514403 ;
+    oem:somenteLeitura false ;
+    oem:temValorHash oem:Hash_video_sintetico_2_2 .
+
+oem:Hash_video_sintetico_2_2 a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de video_sintetico_2_2.mp4"@pt ,
+               "SHA-256 Hash of video_sintetico_2_2.mp4"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "9e361c539f2ae78207bad6f067e8488dbcf549e9005d5f37dbe3f4daa0ba0969"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:29:13-03:00"^^xsd:dateTime .
+
+oem:CopiaForense_video_sintetico_2_2 a owl:NamedIndividual , oem:TransformacaoIsomorfica ;
+    rdfs:label "Cópia Forense Isomórfica de video_sintetico_2_2.mp4"@pt ,
+               "Isomorphic Forensic Copy of video_sintetico_2_2.mp4"@en ;
+    oem:temEntrada oem:Evidencia_Sintetico_2_2_Raw ;
+    oem:temSaida oem:Evidencia_Sintetico_2_2_Work ;
+    oem:verificadaPor oem:Hash_video_sintetico_2_2 ;
+    oem:registradaEm oem:RegistroCustodia_video_sintetico_2_2 ;
+    oem:dataHora "2026-11-17T12:29:13-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_video_sintetico_2_2 a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Cópia Forense de video_sintetico_2_2.mp4"@pt ,
+               "Custody Record - Forensic Copy of video_sintetico_2_2.mp4"@en ;
+    oem:documentaTransformacao oem:CopiaForense_video_sintetico_2_2 ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_video_sintetico_2_2 ;
+    oem:dataHora "2026-11-17T12:29:13-03:00"^^xsd:dateTime .
+
+# --- Extração de Áudio Estéreo (Sem Reamostragem) de video_sintetico_2_2.mp4 ---
+
+oem:Evidencia_Audio_Sintetico_2_2_Stereo a owl:NamedIndividual , oem:EvidenciaMultimidia ;
+    rdfs:label "Áudio Extraído Estéreo de video_sintetico_2_2.mp4"@pt ,
+               "Extracted Stereo Audio of video_sintetico_2_2.mp4"@en ;
+    oem:caminhoArquivo "data/work/caso_b/video_sintetico_2_2.wav"^^xsd:string ;
+    oem:tamanhoBytes 2289742 ;
+    oem:taxaAmostragemHz 44100 ;
+    oem:numeroCanais 2 ;
+    oem:temValorHash oem:Hash_video_sintetico_2_2_wav .
+
+oem:Hash_video_sintetico_2_2_wav a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de video_sintetico_2_2.wav"@pt ,
+               "SHA-256 Hash of video_sintetico_2_2.wav"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "063409b41b3f4103fc22451c9f768261687cb26b2141c78d74b999db7c7e40a3"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:32:18-03:00"^^xsd:dateTime .
+
+oem:ExtracaoDeAudio_video_sintetico_2_2_Stereo a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExtracaoDeAudio ;
+    rdfs:label "Extração de Áudio (Estéreo Original) - video_sintetico_2_2"@pt ,
+               "Audio Extraction (Original Stereo) - video_sintetico_2_2"@en ;
+    oem:temEntrada oem:Evidencia_Sintetico_2_2_Work ;
+    oem:temSaida oem:Evidencia_Audio_Sintetico_2_2_Stereo ;
+    oem:verificadaPor oem:Hash_video_sintetico_2_2_wav ;
+    oem:registradaEm oem:RegistroCustodia_ExtracaoAudio_video_sintetico_2_2_Stereo ;
+    oem:comandoExecutado "ffmpeg -i data/work/caso_b/video_sintetico_2_2.mp4 -vn -map 0:a:0 -c:a pcm_s16le data/work/caso_b/video_sintetico_2_2.wav"^^xsd:string ;
+    oem:versaoFerramenta "ffmpeg version 8.1.1-full_build-www.gyan.dev (built with gcc 15.2.0)"^^xsd:string ;
+    oem:parametrosTransformacao "-vn -map 0:a:0 -c:a pcm_s16le (44100 Hz preserved, 2 channels stereo)"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:32:18-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExtracaoAudio_video_sintetico_2_2_Stereo a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Extração de Áudio Estéreo de video_sintetico_2_2.mp4"@pt ,
+               "Custody Record - Stereo Audio Extraction of video_sintetico_2_2.mp4"@en ;
+    oem:documentaTransformacao oem:ExtracaoDeAudio_video_sintetico_2_2_Stereo ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_video_sintetico_2_2_wav ;
+    oem:dataHora "2026-11-17T12:32:18-03:00"^^xsd:dateTime .
+
+# --- Extração de Áudio Mono (Downmix) de video_sintetico_2_2.mp4 ---
+
+oem:Evidencia_Audio_Sintetico_2_2_Mono a owl:NamedIndividual , oem:EvidenciaMultimidia ;
+    rdfs:label "Áudio Extraído Mono de video_sintetico_2_2.mp4"@pt ,
+               "Extracted Mono Audio of video_sintetico_2_2.mp4"@en ;
+    oem:caminhoArquivo "data/work/caso_b/video_sintetico_2_2_mono.wav"^^xsd:string ;
+    oem:tamanhoBytes 1144910 ;
+    oem:taxaAmostragemHz 44100 ;
+    oem:numeroCanais 1 ;
+    oem:temValorHash oem:Hash_video_sintetico_2_2_mono_wav .
+
+oem:Hash_video_sintetico_2_2_mono_wav a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de video_sintetico_2_2_mono.wav"@pt ,
+               "SHA-256 Hash of video_sintetico_2_2_mono.wav"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "3b9ecaa587599e7ab251f96e8113b68c359d7c9e4dbacdff5041e409d46b3f4b"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:32:18-03:00"^^xsd:dateTime .
+
+oem:ExtracaoDeAudio_video_sintetico_2_2_Mono a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExtracaoDeAudio ;
+    rdfs:label "Extração de Áudio (Downmix Mono) - video_sintetico_2_2"@pt ,
+               "Audio Extraction (Mono Downmix) - video_sintetico_2_2"@en ;
+    oem:temEntrada oem:Evidencia_Sintetico_2_2_Work ;
+    oem:temSaida oem:Evidencia_Audio_Sintetico_2_2_Mono ;
+    oem:verificadaPor oem:Hash_video_sintetico_2_2_mono_wav ;
+    oem:registradaEm oem:RegistroCustodia_ExtracaoAudio_video_sintetico_2_2_Mono ;
+    oem:comandoExecutado "ffmpeg -i data/work/caso_b/video_sintetico_2_2.mp4 -vn -map 0:a:0 -ac 1 -c:a pcm_s16le data/work/caso_b/video_sintetico_2_2_mono.wav"^^xsd:string ;
+    oem:versaoFerramenta "ffmpeg version 8.1.1-full_build-www.gyan.dev (built with gcc 15.2.0)"^^xsd:string ;
+    oem:parametrosTransformacao "-vn -map 0:a:0 -ac 1 -c:a pcm_s16le (44100 Hz preserved, 1 channel mono)"^^xsd:string ;
+    oem:metodoDownmixMono "FFmpeg libswresample default stereo-to-mono downmix (-ac 1): M = 0.5*L + 0.5*R (equal-weight linear channel averaging prior to pcm_s16le quantization)"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:32:18-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExtracaoAudio_video_sintetico_2_2_Mono a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Extração de Áudio Mono de video_sintetico_2_2.mp4"@pt ,
+               "Custody Record - Mono Audio Extraction of video_sintetico_2_2.mp4"@en ;
+    oem:documentaTransformacao oem:ExtracaoDeAudio_video_sintetico_2_2_Mono ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_video_sintetico_2_2_mono_wav ;
+    oem:dataHora "2026-11-17T12:32:18-03:00"^^xsd:dateTime .
+
+
+# =============================================================================
+# Extensão de Vocabulário para Análises Periciais (Espectrograma, ENF, GOP)
+# =============================================================================
+
+oem:GeracaoDeEspectrograma a owl:Class ;
+    rdfs:subClassOf oem:TransformacaoHomomorfica ;
+    rdfs:label "Geração de Espectrograma"@pt , "Spectrogram Generation"@en ;
+    skos:definition "Transformação homomórfica que projeta um sinal de áudio no domínio tempo-frequência (densidade espectral de potência) sem alterar a evidência de entrada."@pt ,
+                    "Homomorphic transformation that projects an audio signal into the time-frequency domain (power spectral density) without altering the input evidence."@en .
+
+oem:ExtracaoDeCurvaENF a owl:Class ;
+    rdfs:subClassOf oem:TransformacaoHomomorfica ;
+    rdfs:label "Extração de Curva ENF"@pt , "ENF Curve Extraction"@en ;
+    skos:definition "Transformação homomórfica que extrai a série temporal da frequência da rede elétrica (60 Hz ou harmônicos) a partir de um sinal de áudio."@pt ,
+                    "Homomorphic transformation that extracts the Electrical Network Frequency (60 Hz or harmonics) time series from an audio signal."@en .
+
+oem:ArtefatoAnalitico a owl:Class ;
+    rdfs:subClassOf oem:EvidenciaMultimidia ;
+    rdfs:label "Artefato Analítico Derivado"@pt , "Derived Analytical Artifact"@en ;
+    skos:definition "Representação visual ou numérica (como um espectrograma ou curva de frequência) produzida por uma transformação homomórfica controlada."@pt ,
+                    "Visual or numerical representation (such as a spectrogram or frequency curve) produced by a controlled homomorphic transformation."@en .
+
+oem:ExamePericial a owl:Class ;
+    rdfs:subClassOf oem:TransformacaoHomomorfica ;
+    rdfs:label "Exame Pericial"@pt , "Forensic Examination"@en ;
+    skos:definition "Procedimento técnico-pericial documentado que inspeciona propriedades físicas, acústicas ou estruturais de uma evidência multimídia."@pt ,
+                    "Documented technical forensic procedure that inspects physical, acoustic, or structural properties of multimedia evidence."@en .
+
+oem:ExameENF a owl:Class ;
+    rdfs:subClassOf oem:ExamePericial ;
+    rdfs:label "Exame de Frequência da Rede Elétrica (ENF)"@pt , "Electrical Network Frequency (ENF) Examination"@en ;
+    skos:definition "Exame pericial que busca a componente da rede elétrica (60 Hz no Brasil e seu harmônico de 120 Hz) para avaliar estabilidade e eventuais descontinuidades de fase ou frequência."@pt ,
+                    "Forensic examination that searches for the power grid component (60 Hz in Brazil and its 120 Hz harmonic) to assess stability and potential phase or frequency discontinuities."@en .
+
+oem:ExameMetadadosContainerGOP a owl:Class ;
+    rdfs:subClassOf oem:ExamePericial ;
+    rdfs:label "Exame de Metadados de Contêiner e Estrutura de GOP"@pt , "Container Metadata and GOP Structure Examination"@en ;
+    skos:definition "Exame pericial que compara parâmetros de codificação, contêiner e sequência de quadros (I, P, B) de um vídeo com uma referência conhecida."@pt ,
+                    "Forensic examination comparing encoding parameters, container metadata, and frame sequence (I, P, B) of a video against a known reference."@en .
+
+oem:AchadoPericial a owl:Class ;
+    rdfs:label "Achado Pericial"@pt , "Forensic Finding"@en ;
+    skos:definition "Elemento técnico objetivamente observado durante um exame pericial."@pt ,
+                    "Technical element objectively observed during a forensic examination."@en .
+
+oem:IndicioDeEdicao a owl:Class ;
+    rdfs:subClassOf oem:AchadoPericial ;
+    rdfs:label "Indício de Edição"@pt , "Editing Indicator"@en ;
+    skos:definition "Achado técnico que aponta divergência estrutural, acústica ou de codificação compatível com reprocessamento ou edição, sem constituir por si só conclusão de adulteração."@pt ,
+                    "Technical finding pointing to structural, acoustic, or encoding divergence compatible with reprocessing or editing, without constituting by itself a conclusion of tampering."@en .
+
+oem:IndicioDeRecodificacao a owl:Class ;
+    rdfs:subClassOf oem:IndicioDeEdicao ;
+    rdfs:label "Indício de Recodificação"@pt , "Re-encoding Indicator"@en ;
+    skos:definition "Indício técnico de que o arquivo de vídeo ou áudio passou por nova etapa de compressão, mudança de resolução, taxa de quadros, estrutura de GOP ou taxa de bits."@pt ,
+                    "Technical indicator that the video or audio file underwent a new compression stage, resolution change, frame rate change, GOP structure alteration, or bitrate change."@en .
+
+oem:DescontinuidadeENF a owl:Class ;
+    rdfs:subClassOf oem:IndicioDeEdicao ;
+    rdfs:label "Descontinuidade de ENF"@pt , "ENF Discontinuity"@en ;
+    skos:definition "Salto abrupto estatisticamente significativo na curva da frequência da rede elétrica (ENF) em um instante específico do áudio."@pt ,
+                    "Statistically significant abrupt jump in the Electrical Network Frequency (ENF) curve at a specific audio instant."@en .
+
+oem:geraAchado a owl:ObjectProperty ;
+    rdfs:label "gera achado"@pt , "generates finding"@en .
+
+oem:comparadoComReferencia a owl:ObjectProperty ;
+    rdfs:label "comparado com referência"@pt , "compared with reference"@en .
+
+oem:resultadoExame a owl:DatatypeProperty ;
+    rdfs:label "resultado do exame"@pt , "examination result"@en .
+
+oem:snrMedio60Hz_dB a owl:DatatypeProperty ;
+    rdfs:label "SNR médio em 60 Hz (dB)"@pt , "mean SNR at 60 Hz (dB)"@en .
+
+oem:snrMedio120Hz_dB a owl:DatatypeProperty ;
+    rdfs:label "SNR médio em 120 Hz (dB)"@pt , "mean SNR at 120 Hz (dB)"@en .
+
+oem:limiarSNR_dB a owl:DatatypeProperty ;
+    rdfs:label "limiar de SNR configurado (dB)"@pt , "configured SNR threshold (dB)"@en .
+
+oem:desvioPadraoFreqNormalizadoHz a owl:DatatypeProperty ;
+    rdfs:label "desvio padrão de frequência normalizado (Hz)"@pt , "normalized frequency standard deviation (Hz)"@en .
+
+oem:instanteSegundos a owl:DatatypeProperty ;
+    rdfs:label "instante em segundos"@pt , "instant in seconds"@en .
+
+oem:estruturaGOPResumo a owl:DatatypeProperty ;
+    rdfs:label "resumo da estrutura de GOP"@pt , "GOP structure summary"@en .
+
+oem:valorReferencia a owl:DatatypeProperty ;
+    rdfs:label "valor na referência"@pt , "reference value"@en .
+
+oem:valorObservado a owl:DatatypeProperty ;
+    rdfs:label "valor observado"@pt , "observed value"@en .
+
+# =============================================================================
+# 1. Transformações Homomórficas: Geração de Espectrogramas
+# =============================================================================
+
+oem:Espectrograma_video_sintetico_1_1 a owl:NamedIndividual , oem:ArtefatoAnalitico ;
+    rdfs:label "Espectrograma PSD de video_sintetico_1_1.wav"@pt , "PSD Spectrogram of video_sintetico_1_1.wav"@en ;
+    oem:caminhoArquivo "results/analises/caso_b/espectrogramas/espectrograma_video_sintetico_1_1.png"^^xsd:string ;
+    oem:tamanhoBytes 949785 ;
+    oem:temValorHash oem:Hash_Espectrograma_video_sintetico_1_1 .
+
+oem:Hash_Espectrograma_video_sintetico_1_1 a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de espectrograma_video_sintetico_1_1.png"@pt , "SHA-256 Hash of espectrograma_video_sintetico_1_1.png"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "a3127c6fb6e871a32e353c19f3f6962d523bbd867fba719ace9639cce4a07e5a"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:31-03:00"^^xsd:dateTime .
+
+oem:GeracaoEspectrograma_video_sintetico_1_1 a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:GeracaoDeEspectrograma ;
+    rdfs:label "Geração Homomórfica de Espectrograma - video_sintetico_1_1"@pt , "Homomorphic Spectrogram Generation - video_sintetico_1_1"@en ;
+    oem:temEntrada oem:Evidencia_Audio_Sintetico_1_1_Stereo ;
+    oem:temSaida oem:Espectrograma_video_sintetico_1_1 ;
+    oem:verificadaPor oem:Hash_Espectrograma_video_sintetico_1_1 ;
+    oem:registradaEm oem:RegistroCustodia_Espectrograma_video_sintetico_1_1 ;
+    oem:versaoFerramenta "Python 3.12.5 / SciPy 1.17.1 / Matplotlib 3.8.4"^^xsd:string ;
+    oem:parametrosTransformacao "scipy.signal.spectrogram(window='hann', nperseg=4096, noverlap=3072, nfft=4096, scaling='density', mode='psd', cmap='viridis', dpi=150, fmax_display_hz=8000.0)"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:31-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_Espectrograma_video_sintetico_1_1 a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Espectrograma de video_sintetico_1_1.wav"@pt , "Custody Record - Spectrogram of video_sintetico_1_1.wav"@en ;
+    oem:documentaTransformacao oem:GeracaoEspectrograma_video_sintetico_1_1 ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_Espectrograma_video_sintetico_1_1 ;
+    oem:dataHora "2026-11-17T12:46:31-03:00"^^xsd:dateTime .
+
+oem:Espectrograma_video_sintetico_1_1_mono a owl:NamedIndividual , oem:ArtefatoAnalitico ;
+    rdfs:label "Espectrograma PSD de video_sintetico_1_1_mono.wav"@pt , "PSD Spectrogram of video_sintetico_1_1_mono.wav"@en ;
+    oem:caminhoArquivo "results/analises/caso_b/espectrogramas/espectrograma_video_sintetico_1_1_mono.png"^^xsd:string ;
+    oem:tamanhoBytes 949791 ;
+    oem:temValorHash oem:Hash_Espectrograma_video_sintetico_1_1_mono .
+
+oem:Hash_Espectrograma_video_sintetico_1_1_mono a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de espectrograma_video_sintetico_1_1_mono.png"@pt , "SHA-256 Hash of espectrograma_video_sintetico_1_1_mono.png"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "875029e38d98a235f8c955fc3eb305dbaf97d7c93f467d2226206619e7c8548a"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:34-03:00"^^xsd:dateTime .
+
+oem:GeracaoEspectrograma_video_sintetico_1_1_mono a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:GeracaoDeEspectrograma ;
+    rdfs:label "Geração Homomórfica de Espectrograma - video_sintetico_1_1_mono"@pt , "Homomorphic Spectrogram Generation - video_sintetico_1_1_mono"@en ;
+    oem:temEntrada oem:Evidencia_Audio_Sintetico_1_1_Mono ;
+    oem:temSaida oem:Espectrograma_video_sintetico_1_1_mono ;
+    oem:verificadaPor oem:Hash_Espectrograma_video_sintetico_1_1_mono ;
+    oem:registradaEm oem:RegistroCustodia_Espectrograma_video_sintetico_1_1_mono ;
+    oem:versaoFerramenta "Python 3.12.5 / SciPy 1.17.1 / Matplotlib 3.8.4"^^xsd:string ;
+    oem:parametrosTransformacao "scipy.signal.spectrogram(window='hann', nperseg=4096, noverlap=3072, nfft=4096, scaling='density', mode='psd', cmap='viridis', dpi=150, fmax_display_hz=8000.0)"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:34-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_Espectrograma_video_sintetico_1_1_mono a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Espectrograma de video_sintetico_1_1_mono.wav"@pt , "Custody Record - Spectrogram of video_sintetico_1_1_mono.wav"@en ;
+    oem:documentaTransformacao oem:GeracaoEspectrograma_video_sintetico_1_1_mono ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_Espectrograma_video_sintetico_1_1_mono ;
+    oem:dataHora "2026-11-17T12:46:34-03:00"^^xsd:dateTime .
+
+oem:Espectrograma_video_sintetico_1_2 a owl:NamedIndividual , oem:ArtefatoAnalitico ;
+    rdfs:label "Espectrograma PSD de video_sintetico_1_2.wav"@pt , "PSD Spectrogram of video_sintetico_1_2.wav"@en ;
+    oem:caminhoArquivo "results/analises/caso_b/espectrogramas/espectrograma_video_sintetico_1_2.png"^^xsd:string ;
+    oem:tamanhoBytes 948062 ;
+    oem:temValorHash oem:Hash_Espectrograma_video_sintetico_1_2 .
+
+oem:Hash_Espectrograma_video_sintetico_1_2 a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de espectrograma_video_sintetico_1_2.png"@pt , "SHA-256 Hash of espectrograma_video_sintetico_1_2.png"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "77e1604e2186297f2e0f19073f5217f5c122a4b77cf9512ff20888856680b43f"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:36-03:00"^^xsd:dateTime .
+
+oem:GeracaoEspectrograma_video_sintetico_1_2 a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:GeracaoDeEspectrograma ;
+    rdfs:label "Geração Homomórfica de Espectrograma - video_sintetico_1_2"@pt , "Homomorphic Spectrogram Generation - video_sintetico_1_2"@en ;
+    oem:temEntrada oem:Evidencia_Audio_Sintetico_1_2_Stereo ;
+    oem:temSaida oem:Espectrograma_video_sintetico_1_2 ;
+    oem:verificadaPor oem:Hash_Espectrograma_video_sintetico_1_2 ;
+    oem:registradaEm oem:RegistroCustodia_Espectrograma_video_sintetico_1_2 ;
+    oem:versaoFerramenta "Python 3.12.5 / SciPy 1.17.1 / Matplotlib 3.8.4"^^xsd:string ;
+    oem:parametrosTransformacao "scipy.signal.spectrogram(window='hann', nperseg=4096, noverlap=3072, nfft=4096, scaling='density', mode='psd', cmap='viridis', dpi=150, fmax_display_hz=8000.0)"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:36-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_Espectrograma_video_sintetico_1_2 a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Espectrograma de video_sintetico_1_2.wav"@pt , "Custody Record - Spectrogram of video_sintetico_1_2.wav"@en ;
+    oem:documentaTransformacao oem:GeracaoEspectrograma_video_sintetico_1_2 ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_Espectrograma_video_sintetico_1_2 ;
+    oem:dataHora "2026-11-17T12:46:36-03:00"^^xsd:dateTime .
+
+oem:Espectrograma_video_sintetico_1_2_mono a owl:NamedIndividual , oem:ArtefatoAnalitico ;
+    rdfs:label "Espectrograma PSD de video_sintetico_1_2_mono.wav"@pt , "PSD Spectrogram of video_sintetico_1_2_mono.wav"@en ;
+    oem:caminhoArquivo "results/analises/caso_b/espectrogramas/espectrograma_video_sintetico_1_2_mono.png"^^xsd:string ;
+    oem:tamanhoBytes 951940 ;
+    oem:temValorHash oem:Hash_Espectrograma_video_sintetico_1_2_mono .
+
+oem:Hash_Espectrograma_video_sintetico_1_2_mono a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de espectrograma_video_sintetico_1_2_mono.png"@pt , "SHA-256 Hash of espectrograma_video_sintetico_1_2_mono.png"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "4ca1401939a273a76a891a499324d8cf8835f64f74ab667aa55aad6a0da225f6"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:39-03:00"^^xsd:dateTime .
+
+oem:GeracaoEspectrograma_video_sintetico_1_2_mono a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:GeracaoDeEspectrograma ;
+    rdfs:label "Geração Homomórfica de Espectrograma - video_sintetico_1_2_mono"@pt , "Homomorphic Spectrogram Generation - video_sintetico_1_2_mono"@en ;
+    oem:temEntrada oem:Evidencia_Audio_Sintetico_1_2_Mono ;
+    oem:temSaida oem:Espectrograma_video_sintetico_1_2_mono ;
+    oem:verificadaPor oem:Hash_Espectrograma_video_sintetico_1_2_mono ;
+    oem:registradaEm oem:RegistroCustodia_Espectrograma_video_sintetico_1_2_mono ;
+    oem:versaoFerramenta "Python 3.12.5 / SciPy 1.17.1 / Matplotlib 3.8.4"^^xsd:string ;
+    oem:parametrosTransformacao "scipy.signal.spectrogram(window='hann', nperseg=4096, noverlap=3072, nfft=4096, scaling='density', mode='psd', cmap='viridis', dpi=150, fmax_display_hz=8000.0)"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:39-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_Espectrograma_video_sintetico_1_2_mono a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Espectrograma de video_sintetico_1_2_mono.wav"@pt , "Custody Record - Spectrogram of video_sintetico_1_2_mono.wav"@en ;
+    oem:documentaTransformacao oem:GeracaoEspectrograma_video_sintetico_1_2_mono ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_Espectrograma_video_sintetico_1_2_mono ;
+    oem:dataHora "2026-11-17T12:46:39-03:00"^^xsd:dateTime .
+
+oem:Espectrograma_video_sintetico_2_1 a owl:NamedIndividual , oem:ArtefatoAnalitico ;
+    rdfs:label "Espectrograma PSD de video_sintetico_2_1.wav"@pt , "PSD Spectrogram of video_sintetico_2_1.wav"@en ;
+    oem:caminhoArquivo "results/analises/caso_b/espectrogramas/espectrograma_video_sintetico_2_1.png"^^xsd:string ;
+    oem:tamanhoBytes 1109474 ;
+    oem:temValorHash oem:Hash_Espectrograma_video_sintetico_2_1 .
+
+oem:Hash_Espectrograma_video_sintetico_2_1 a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de espectrograma_video_sintetico_2_1.png"@pt , "SHA-256 Hash of espectrograma_video_sintetico_2_1.png"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "6b1118e5ba4b270f584dea031cc4fe05a8ab436dd4145584f0fad73d0bfe463a"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:43-03:00"^^xsd:dateTime .
+
+oem:GeracaoEspectrograma_video_sintetico_2_1 a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:GeracaoDeEspectrograma ;
+    rdfs:label "Geração Homomórfica de Espectrograma - video_sintetico_2_1"@pt , "Homomorphic Spectrogram Generation - video_sintetico_2_1"@en ;
+    oem:temEntrada oem:Evidencia_Audio_Sintetico_2_1_Stereo ;
+    oem:temSaida oem:Espectrograma_video_sintetico_2_1 ;
+    oem:verificadaPor oem:Hash_Espectrograma_video_sintetico_2_1 ;
+    oem:registradaEm oem:RegistroCustodia_Espectrograma_video_sintetico_2_1 ;
+    oem:versaoFerramenta "Python 3.12.5 / SciPy 1.17.1 / Matplotlib 3.8.4"^^xsd:string ;
+    oem:parametrosTransformacao "scipy.signal.spectrogram(window='hann', nperseg=4096, noverlap=3072, nfft=4096, scaling='density', mode='psd', cmap='viridis', dpi=150, fmax_display_hz=8000.0)"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:43-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_Espectrograma_video_sintetico_2_1 a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Espectrograma de video_sintetico_2_1.wav"@pt , "Custody Record - Spectrogram of video_sintetico_2_1.wav"@en ;
+    oem:documentaTransformacao oem:GeracaoEspectrograma_video_sintetico_2_1 ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_Espectrograma_video_sintetico_2_1 ;
+    oem:dataHora "2026-11-17T12:46:43-03:00"^^xsd:dateTime .
+
+oem:Espectrograma_video_sintetico_2_1_mono a owl:NamedIndividual , oem:ArtefatoAnalitico ;
+    rdfs:label "Espectrograma PSD de video_sintetico_2_1_mono.wav"@pt , "PSD Spectrogram of video_sintetico_2_1_mono.wav"@en ;
+    oem:caminhoArquivo "results/analises/caso_b/espectrogramas/espectrograma_video_sintetico_2_1_mono.png"^^xsd:string ;
+    oem:tamanhoBytes 1110002 ;
+    oem:temValorHash oem:Hash_Espectrograma_video_sintetico_2_1_mono .
+
+oem:Hash_Espectrograma_video_sintetico_2_1_mono a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de espectrograma_video_sintetico_2_1_mono.png"@pt , "SHA-256 Hash of espectrograma_video_sintetico_2_1_mono.png"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "ead9a566e09bcc140919fe4ce5c32d36e5959c3cb6b6cfc792eaf4cc444637c3"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:46-03:00"^^xsd:dateTime .
+
+oem:GeracaoEspectrograma_video_sintetico_2_1_mono a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:GeracaoDeEspectrograma ;
+    rdfs:label "Geração Homomórfica de Espectrograma - video_sintetico_2_1_mono"@pt , "Homomorphic Spectrogram Generation - video_sintetico_2_1_mono"@en ;
+    oem:temEntrada oem:Evidencia_Audio_Sintetico_2_1_Mono ;
+    oem:temSaida oem:Espectrograma_video_sintetico_2_1_mono ;
+    oem:verificadaPor oem:Hash_Espectrograma_video_sintetico_2_1_mono ;
+    oem:registradaEm oem:RegistroCustodia_Espectrograma_video_sintetico_2_1_mono ;
+    oem:versaoFerramenta "Python 3.12.5 / SciPy 1.17.1 / Matplotlib 3.8.4"^^xsd:string ;
+    oem:parametrosTransformacao "scipy.signal.spectrogram(window='hann', nperseg=4096, noverlap=3072, nfft=4096, scaling='density', mode='psd', cmap='viridis', dpi=150, fmax_display_hz=8000.0)"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:46-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_Espectrograma_video_sintetico_2_1_mono a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Espectrograma de video_sintetico_2_1_mono.wav"@pt , "Custody Record - Spectrogram of video_sintetico_2_1_mono.wav"@en ;
+    oem:documentaTransformacao oem:GeracaoEspectrograma_video_sintetico_2_1_mono ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_Espectrograma_video_sintetico_2_1_mono ;
+    oem:dataHora "2026-11-17T12:46:46-03:00"^^xsd:dateTime .
+
+oem:Espectrograma_video_sintetico_2_2 a owl:NamedIndividual , oem:ArtefatoAnalitico ;
+    rdfs:label "Espectrograma PSD de video_sintetico_2_2.wav"@pt , "PSD Spectrogram of video_sintetico_2_2.wav"@en ;
+    oem:caminhoArquivo "results/analises/caso_b/espectrogramas/espectrograma_video_sintetico_2_2.png"^^xsd:string ;
+    oem:tamanhoBytes 1050417 ;
+    oem:temValorHash oem:Hash_Espectrograma_video_sintetico_2_2 .
+
+oem:Hash_Espectrograma_video_sintetico_2_2 a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de espectrograma_video_sintetico_2_2.png"@pt , "SHA-256 Hash of espectrograma_video_sintetico_2_2.png"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "7a00ec515b2a9c748483756316b22daf82b11ecb5805ffeebde93f99ae99f4e0"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:49-03:00"^^xsd:dateTime .
+
+oem:GeracaoEspectrograma_video_sintetico_2_2 a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:GeracaoDeEspectrograma ;
+    rdfs:label "Geração Homomórfica de Espectrograma - video_sintetico_2_2"@pt , "Homomorphic Spectrogram Generation - video_sintetico_2_2"@en ;
+    oem:temEntrada oem:Evidencia_Audio_Sintetico_2_2_Stereo ;
+    oem:temSaida oem:Espectrograma_video_sintetico_2_2 ;
+    oem:verificadaPor oem:Hash_Espectrograma_video_sintetico_2_2 ;
+    oem:registradaEm oem:RegistroCustodia_Espectrograma_video_sintetico_2_2 ;
+    oem:versaoFerramenta "Python 3.12.5 / SciPy 1.17.1 / Matplotlib 3.8.4"^^xsd:string ;
+    oem:parametrosTransformacao "scipy.signal.spectrogram(window='hann', nperseg=4096, noverlap=3072, nfft=4096, scaling='density', mode='psd', cmap='viridis', dpi=150, fmax_display_hz=8000.0)"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:49-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_Espectrograma_video_sintetico_2_2 a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Espectrograma de video_sintetico_2_2.wav"@pt , "Custody Record - Spectrogram of video_sintetico_2_2.wav"@en ;
+    oem:documentaTransformacao oem:GeracaoEspectrograma_video_sintetico_2_2 ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_Espectrograma_video_sintetico_2_2 ;
+    oem:dataHora "2026-11-17T12:46:49-03:00"^^xsd:dateTime .
+
+oem:Espectrograma_video_sintetico_2_2_mono a owl:NamedIndividual , oem:ArtefatoAnalitico ;
+    rdfs:label "Espectrograma PSD de video_sintetico_2_2_mono.wav"@pt , "PSD Spectrogram of video_sintetico_2_2_mono.wav"@en ;
+    oem:caminhoArquivo "results/analises/caso_b/espectrogramas/espectrograma_video_sintetico_2_2_mono.png"^^xsd:string ;
+    oem:tamanhoBytes 1049961 ;
+    oem:temValorHash oem:Hash_Espectrograma_video_sintetico_2_2_mono .
+
+oem:Hash_Espectrograma_video_sintetico_2_2_mono a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de espectrograma_video_sintetico_2_2_mono.png"@pt , "SHA-256 Hash of espectrograma_video_sintetico_2_2_mono.png"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "7874798d69de7e8f2a59b260c7ec6ad72ef98fc39117309d148c159eed6a9325"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:52-03:00"^^xsd:dateTime .
+
+oem:GeracaoEspectrograma_video_sintetico_2_2_mono a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:GeracaoDeEspectrograma ;
+    rdfs:label "Geração Homomórfica de Espectrograma - video_sintetico_2_2_mono"@pt , "Homomorphic Spectrogram Generation - video_sintetico_2_2_mono"@en ;
+    oem:temEntrada oem:Evidencia_Audio_Sintetico_2_2_Mono ;
+    oem:temSaida oem:Espectrograma_video_sintetico_2_2_mono ;
+    oem:verificadaPor oem:Hash_Espectrograma_video_sintetico_2_2_mono ;
+    oem:registradaEm oem:RegistroCustodia_Espectrograma_video_sintetico_2_2_mono ;
+    oem:versaoFerramenta "Python 3.12.5 / SciPy 1.17.1 / Matplotlib 3.8.4"^^xsd:string ;
+    oem:parametrosTransformacao "scipy.signal.spectrogram(window='hann', nperseg=4096, noverlap=3072, nfft=4096, scaling='density', mode='psd', cmap='viridis', dpi=150, fmax_display_hz=8000.0)"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:52-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_Espectrograma_video_sintetico_2_2_mono a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Espectrograma de video_sintetico_2_2_mono.wav"@pt , "Custody Record - Spectrogram of video_sintetico_2_2_mono.wav"@en ;
+    oem:documentaTransformacao oem:GeracaoEspectrograma_video_sintetico_2_2_mono ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_Espectrograma_video_sintetico_2_2_mono ;
+    oem:dataHora "2026-11-17T12:46:52-03:00"^^xsd:dateTime .
+
+# =============================================================================
+# 2. Exames Periciais de ENF (60 Hz e Harmônico de 120 Hz)
+# =============================================================================
+
+oem:CurvaENF_video_sintetico_1_1 a owl:NamedIndividual , oem:ArtefatoAnalitico ;
+    rdfs:label "Série Temporal ENF (60/120 Hz) de video_sintetico_1_1.wav"@pt , "ENF Time Series (60/120 Hz) of video_sintetico_1_1.wav"@en ;
+    oem:caminhoArquivo "results/analises/caso_b/enf/enf_video_sintetico_1_1.csv"^^xsd:string ;
+    oem:temValorHash oem:Hash_CurvaENF_video_sintetico_1_1 .
+
+oem:Hash_CurvaENF_video_sintetico_1_1 a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de enf_video_sintetico_1_1.csv"@pt , "SHA-256 Hash of enf_video_sintetico_1_1.csv"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "e5cb6b6c966a401aa5c62dadd00d6ad7711455a237c5139bc8f4bdd65622b8ac"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:31-03:00"^^xsd:dateTime .
+
+oem:ExameENF_video_sintetico_1_1 a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExameENF , oem:ExtracaoDeCurvaENF ;
+    rdfs:label "Exame ENF (60/120 Hz) - video_sintetico_1_1"@pt , "ENF Examination (60/120 Hz) - video_sintetico_1_1"@en ;
+    oem:temEntrada oem:Evidencia_Audio_Sintetico_1_1_Stereo ;
+    oem:temSaida oem:CurvaENF_video_sintetico_1_1 ;
+    oem:verificadaPor oem:Hash_CurvaENF_video_sintetico_1_1 ;
+    oem:desvioPadraoFreqNormalizadoHz 0.0529 ;
+    oem:registradaEm oem:RegistroCustodia_ExameENF_video_sintetico_1_1 ;
+    oem:resultadoExame "ENF detectável"^^xsd:string ;
+    oem:limiarSNR_dB 6.0 ;
+    oem:snrMedio60Hz_dB 7.913 ;
+    oem:snrMedio120Hz_dB 10.418 ;
+    oem:parametrosTransformacao "grid=60Hz, harmonics=[60,120]Hz, target_fs=1200Hz, win=4.0s, hop=1.0s, zpad=8x, snr_thr=6.0dB, min_stable_ratio=0.60, max_norm_std=0.15Hz, step_thr=0.08Hz"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:31-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExameENF_video_sintetico_1_1 a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Exame ENF de video_sintetico_1_1.wav"@pt , "Custody Record - ENF Examination of video_sintetico_1_1.wav"@en ;
+    oem:documentaTransformacao oem:ExameENF_video_sintetico_1_1 ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_CurvaENF_video_sintetico_1_1 ;
+    oem:dataHora "2026-11-17T12:46:31-03:00"^^xsd:dateTime .
+
+oem:CurvaENF_video_sintetico_1_1_mono a owl:NamedIndividual , oem:ArtefatoAnalitico ;
+    rdfs:label "Série Temporal ENF (60/120 Hz) de video_sintetico_1_1_mono.wav"@pt , "ENF Time Series (60/120 Hz) of video_sintetico_1_1_mono.wav"@en ;
+    oem:caminhoArquivo "results/analises/caso_b/enf/enf_video_sintetico_1_1_mono.csv"^^xsd:string ;
+    oem:temValorHash oem:Hash_CurvaENF_video_sintetico_1_1_mono .
+
+oem:Hash_CurvaENF_video_sintetico_1_1_mono a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de enf_video_sintetico_1_1_mono.csv"@pt , "SHA-256 Hash of enf_video_sintetico_1_1_mono.csv"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "6365a99fd6b639d74cd0a7fe0e45b31a2038c27fdc16baad6839d7999f4da25e"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:34-03:00"^^xsd:dateTime .
+
+oem:ExameENF_video_sintetico_1_1_mono a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExameENF , oem:ExtracaoDeCurvaENF ;
+    rdfs:label "Exame ENF (60/120 Hz) - video_sintetico_1_1_mono"@pt , "ENF Examination (60/120 Hz) - video_sintetico_1_1_mono"@en ;
+    oem:temEntrada oem:Evidencia_Audio_Sintetico_1_1_Mono ;
+    oem:temSaida oem:CurvaENF_video_sintetico_1_1_mono ;
+    oem:verificadaPor oem:Hash_CurvaENF_video_sintetico_1_1_mono ;
+    oem:desvioPadraoFreqNormalizadoHz 0.0529 ;
+    oem:registradaEm oem:RegistroCustodia_ExameENF_video_sintetico_1_1_mono ;
+    oem:resultadoExame "ENF detectável"^^xsd:string ;
+    oem:limiarSNR_dB 6.0 ;
+    oem:snrMedio60Hz_dB 7.905 ;
+    oem:snrMedio120Hz_dB 10.419 ;
+    oem:parametrosTransformacao "grid=60Hz, harmonics=[60,120]Hz, target_fs=1200Hz, win=4.0s, hop=1.0s, zpad=8x, snr_thr=6.0dB, min_stable_ratio=0.60, max_norm_std=0.15Hz, step_thr=0.08Hz"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:34-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExameENF_video_sintetico_1_1_mono a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Exame ENF de video_sintetico_1_1_mono.wav"@pt , "Custody Record - ENF Examination of video_sintetico_1_1_mono.wav"@en ;
+    oem:documentaTransformacao oem:ExameENF_video_sintetico_1_1_mono ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_CurvaENF_video_sintetico_1_1_mono ;
+    oem:dataHora "2026-11-17T12:46:34-03:00"^^xsd:dateTime .
+
+oem:CurvaENF_video_sintetico_1_2 a owl:NamedIndividual , oem:ArtefatoAnalitico ;
+    rdfs:label "Série Temporal ENF (60/120 Hz) de video_sintetico_1_2.wav"@pt , "ENF Time Series (60/120 Hz) of video_sintetico_1_2.wav"@en ;
+    oem:caminhoArquivo "results/analises/caso_b/enf/enf_video_sintetico_1_2.csv"^^xsd:string ;
+    oem:temValorHash oem:Hash_CurvaENF_video_sintetico_1_2 .
+
+oem:Hash_CurvaENF_video_sintetico_1_2 a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de enf_video_sintetico_1_2.csv"@pt , "SHA-256 Hash of enf_video_sintetico_1_2.csv"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "594cc022ff30264acca21454db8d4b5d0395b42e5e5e9a4f7fa6e5103d84e4bd"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:37-03:00"^^xsd:dateTime .
+
+oem:ExameENF_video_sintetico_1_2 a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExameENF ;
+    rdfs:label "Exame ENF (60/120 Hz) - video_sintetico_1_2"@pt , "ENF Examination (60/120 Hz) - video_sintetico_1_2"@en ;
+    oem:temEntrada oem:Evidencia_Audio_Sintetico_1_2_Stereo ;
+
+    oem:registradaEm oem:RegistroCustodia_ExameENF_video_sintetico_1_2 ;
+    oem:resultadoExame "ENF não detectável"^^xsd:string ;
+    oem:limiarSNR_dB 6.0 ;
+    oem:snrMedio60Hz_dB 11.16 ;
+    oem:snrMedio120Hz_dB 4.778 ;
+    oem:parametrosTransformacao "grid=60Hz, harmonics=[60,120]Hz, target_fs=1200Hz, win=4.0s, hop=1.0s, zpad=8x, snr_thr=6.0dB, min_stable_ratio=0.60, max_norm_std=0.15Hz, step_thr=0.08Hz"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:37-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExameENF_video_sintetico_1_2 a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Exame ENF de video_sintetico_1_2.wav"@pt , "Custody Record - ENF Examination of video_sintetico_1_2.wav"@en ;
+    oem:documentaTransformacao oem:ExameENF_video_sintetico_1_2 ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_CurvaENF_video_sintetico_1_2 ;
+    oem:dataHora "2026-11-17T12:46:37-03:00"^^xsd:dateTime .
+
+oem:CurvaENF_video_sintetico_1_2_mono a owl:NamedIndividual , oem:ArtefatoAnalitico ;
+    rdfs:label "Série Temporal ENF (60/120 Hz) de video_sintetico_1_2_mono.wav"@pt , "ENF Time Series (60/120 Hz) of video_sintetico_1_2_mono.wav"@en ;
+    oem:caminhoArquivo "results/analises/caso_b/enf/enf_video_sintetico_1_2_mono.csv"^^xsd:string ;
+    oem:temValorHash oem:Hash_CurvaENF_video_sintetico_1_2_mono .
+
+oem:Hash_CurvaENF_video_sintetico_1_2_mono a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de enf_video_sintetico_1_2_mono.csv"@pt , "SHA-256 Hash of enf_video_sintetico_1_2_mono.csv"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "94efc2c571f750beac8badf5c5c9a22c0d6e81b3173c105d73abd071768b4354"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:39-03:00"^^xsd:dateTime .
+
+oem:ExameENF_video_sintetico_1_2_mono a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExameENF ;
+    rdfs:label "Exame ENF (60/120 Hz) - video_sintetico_1_2_mono"@pt , "ENF Examination (60/120 Hz) - video_sintetico_1_2_mono"@en ;
+    oem:temEntrada oem:Evidencia_Audio_Sintetico_1_2_Mono ;
+
+    oem:registradaEm oem:RegistroCustodia_ExameENF_video_sintetico_1_2_mono ;
+    oem:resultadoExame "ENF não detectável"^^xsd:string ;
+    oem:limiarSNR_dB 6.0 ;
+    oem:snrMedio60Hz_dB 11.162 ;
+    oem:snrMedio120Hz_dB 4.769 ;
+    oem:parametrosTransformacao "grid=60Hz, harmonics=[60,120]Hz, target_fs=1200Hz, win=4.0s, hop=1.0s, zpad=8x, snr_thr=6.0dB, min_stable_ratio=0.60, max_norm_std=0.15Hz, step_thr=0.08Hz"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:39-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExameENF_video_sintetico_1_2_mono a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Exame ENF de video_sintetico_1_2_mono.wav"@pt , "Custody Record - ENF Examination of video_sintetico_1_2_mono.wav"@en ;
+    oem:documentaTransformacao oem:ExameENF_video_sintetico_1_2_mono ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_CurvaENF_video_sintetico_1_2_mono ;
+    oem:dataHora "2026-11-17T12:46:39-03:00"^^xsd:dateTime .
+
+oem:CurvaENF_video_sintetico_2_1 a owl:NamedIndividual , oem:ArtefatoAnalitico ;
+    rdfs:label "Série Temporal ENF (60/120 Hz) de video_sintetico_2_1.wav"@pt , "ENF Time Series (60/120 Hz) of video_sintetico_2_1.wav"@en ;
+    oem:caminhoArquivo "results/analises/caso_b/enf/enf_video_sintetico_2_1.csv"^^xsd:string ;
+    oem:temValorHash oem:Hash_CurvaENF_video_sintetico_2_1 .
+
+oem:Hash_CurvaENF_video_sintetico_2_1 a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de enf_video_sintetico_2_1.csv"@pt , "SHA-256 Hash of enf_video_sintetico_2_1.csv"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "177555a041eaf47e2401fa459135ec85fc60f02d0a754c3aa46fbf3231a37cb5"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:43-03:00"^^xsd:dateTime .
+
+oem:ExameENF_video_sintetico_2_1 a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExameENF ;
+    rdfs:label "Exame ENF (60/120 Hz) - video_sintetico_2_1"@pt , "ENF Examination (60/120 Hz) - video_sintetico_2_1"@en ;
+    oem:temEntrada oem:Evidencia_Audio_Sintetico_2_1_Stereo ;
+
+    oem:registradaEm oem:RegistroCustodia_ExameENF_video_sintetico_2_1 ;
+    oem:resultadoExame "ENF não detectável"^^xsd:string ;
+    oem:limiarSNR_dB 6.0 ;
+    oem:snrMedio60Hz_dB 10.313 ;
+    oem:snrMedio120Hz_dB 8.049 ;
+    oem:parametrosTransformacao "grid=60Hz, harmonics=[60,120]Hz, target_fs=1200Hz, win=4.0s, hop=1.0s, zpad=8x, snr_thr=6.0dB, min_stable_ratio=0.60, max_norm_std=0.15Hz, step_thr=0.08Hz"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:43-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExameENF_video_sintetico_2_1 a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Exame ENF de video_sintetico_2_1.wav"@pt , "Custody Record - ENF Examination of video_sintetico_2_1.wav"@en ;
+    oem:documentaTransformacao oem:ExameENF_video_sintetico_2_1 ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_CurvaENF_video_sintetico_2_1 ;
+    oem:dataHora "2026-11-17T12:46:43-03:00"^^xsd:dateTime .
+
+oem:CurvaENF_video_sintetico_2_1_mono a owl:NamedIndividual , oem:ArtefatoAnalitico ;
+    rdfs:label "Série Temporal ENF (60/120 Hz) de video_sintetico_2_1_mono.wav"@pt , "ENF Time Series (60/120 Hz) of video_sintetico_2_1_mono.wav"@en ;
+    oem:caminhoArquivo "results/analises/caso_b/enf/enf_video_sintetico_2_1_mono.csv"^^xsd:string ;
+    oem:temValorHash oem:Hash_CurvaENF_video_sintetico_2_1_mono .
+
+oem:Hash_CurvaENF_video_sintetico_2_1_mono a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de enf_video_sintetico_2_1_mono.csv"@pt , "SHA-256 Hash of enf_video_sintetico_2_1_mono.csv"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "6eabeeda455aa8bbf66e9e9842bffbb61ee9d522ff2e4f18e5b0d6c47e98b0d9"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:46-03:00"^^xsd:dateTime .
+
+oem:ExameENF_video_sintetico_2_1_mono a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExameENF ;
+    rdfs:label "Exame ENF (60/120 Hz) - video_sintetico_2_1_mono"@pt , "ENF Examination (60/120 Hz) - video_sintetico_2_1_mono"@en ;
+    oem:temEntrada oem:Evidencia_Audio_Sintetico_2_1_Mono ;
+
+    oem:registradaEm oem:RegistroCustodia_ExameENF_video_sintetico_2_1_mono ;
+    oem:resultadoExame "ENF não detectável"^^xsd:string ;
+    oem:limiarSNR_dB 6.0 ;
+    oem:snrMedio60Hz_dB 10.313 ;
+    oem:snrMedio120Hz_dB 8.049 ;
+    oem:parametrosTransformacao "grid=60Hz, harmonics=[60,120]Hz, target_fs=1200Hz, win=4.0s, hop=1.0s, zpad=8x, snr_thr=6.0dB, min_stable_ratio=0.60, max_norm_std=0.15Hz, step_thr=0.08Hz"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:46-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExameENF_video_sintetico_2_1_mono a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Exame ENF de video_sintetico_2_1_mono.wav"@pt , "Custody Record - ENF Examination of video_sintetico_2_1_mono.wav"@en ;
+    oem:documentaTransformacao oem:ExameENF_video_sintetico_2_1_mono ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_CurvaENF_video_sintetico_2_1_mono ;
+    oem:dataHora "2026-11-17T12:46:46-03:00"^^xsd:dateTime .
+
+oem:CurvaENF_video_sintetico_2_2 a owl:NamedIndividual , oem:ArtefatoAnalitico ;
+    rdfs:label "Série Temporal ENF (60/120 Hz) de video_sintetico_2_2.wav"@pt , "ENF Time Series (60/120 Hz) of video_sintetico_2_2.wav"@en ;
+    oem:caminhoArquivo "results/analises/caso_b/enf/enf_video_sintetico_2_2.csv"^^xsd:string ;
+    oem:temValorHash oem:Hash_CurvaENF_video_sintetico_2_2 .
+
+oem:Hash_CurvaENF_video_sintetico_2_2 a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de enf_video_sintetico_2_2.csv"@pt , "SHA-256 Hash of enf_video_sintetico_2_2.csv"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "6fe7304042ca942eba3b353f9bb4b0d008b428f365ed3e8206b4f8cf8eda090c"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:49-03:00"^^xsd:dateTime .
+
+oem:ExameENF_video_sintetico_2_2 a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExameENF ;
+    rdfs:label "Exame ENF (60/120 Hz) - video_sintetico_2_2"@pt , "ENF Examination (60/120 Hz) - video_sintetico_2_2"@en ;
+    oem:temEntrada oem:Evidencia_Audio_Sintetico_2_2_Stereo ;
+
+    oem:registradaEm oem:RegistroCustodia_ExameENF_video_sintetico_2_2 ;
+    oem:resultadoExame "ENF não detectável"^^xsd:string ;
+    oem:limiarSNR_dB 6.0 ;
+    oem:snrMedio60Hz_dB 9.579 ;
+    oem:snrMedio120Hz_dB 5.485 ;
+    oem:parametrosTransformacao "grid=60Hz, harmonics=[60,120]Hz, target_fs=1200Hz, win=4.0s, hop=1.0s, zpad=8x, snr_thr=6.0dB, min_stable_ratio=0.60, max_norm_std=0.15Hz, step_thr=0.08Hz"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:49-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExameENF_video_sintetico_2_2 a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Exame ENF de video_sintetico_2_2.wav"@pt , "Custody Record - ENF Examination of video_sintetico_2_2.wav"@en ;
+    oem:documentaTransformacao oem:ExameENF_video_sintetico_2_2 ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_CurvaENF_video_sintetico_2_2 ;
+    oem:dataHora "2026-11-17T12:46:49-03:00"^^xsd:dateTime .
+
+oem:CurvaENF_video_sintetico_2_2_mono a owl:NamedIndividual , oem:ArtefatoAnalitico ;
+    rdfs:label "Série Temporal ENF (60/120 Hz) de video_sintetico_2_2_mono.wav"@pt , "ENF Time Series (60/120 Hz) of video_sintetico_2_2_mono.wav"@en ;
+    oem:caminhoArquivo "results/analises/caso_b/enf/enf_video_sintetico_2_2_mono.csv"^^xsd:string ;
+    oem:temValorHash oem:Hash_CurvaENF_video_sintetico_2_2_mono .
+
+oem:Hash_CurvaENF_video_sintetico_2_2_mono a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de enf_video_sintetico_2_2_mono.csv"@pt , "SHA-256 Hash of enf_video_sintetico_2_2_mono.csv"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "8435291381c624863918154a06aec723fb531ae81aeb5942220a41440a12748d"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:52-03:00"^^xsd:dateTime .
+
+oem:ExameENF_video_sintetico_2_2_mono a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExameENF ;
+    rdfs:label "Exame ENF (60/120 Hz) - video_sintetico_2_2_mono"@pt , "ENF Examination (60/120 Hz) - video_sintetico_2_2_mono"@en ;
+    oem:temEntrada oem:Evidencia_Audio_Sintetico_2_2_Mono ;
+
+    oem:registradaEm oem:RegistroCustodia_ExameENF_video_sintetico_2_2_mono ;
+    oem:resultadoExame "ENF não detectável"^^xsd:string ;
+    oem:limiarSNR_dB 6.0 ;
+    oem:snrMedio60Hz_dB 9.579 ;
+    oem:snrMedio120Hz_dB 5.485 ;
+    oem:parametrosTransformacao "grid=60Hz, harmonics=[60,120]Hz, target_fs=1200Hz, win=4.0s, hop=1.0s, zpad=8x, snr_thr=6.0dB, min_stable_ratio=0.60, max_norm_std=0.15Hz, step_thr=0.08Hz"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:52-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExameENF_video_sintetico_2_2_mono a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Exame ENF de video_sintetico_2_2_mono.wav"@pt , "Custody Record - ENF Examination of video_sintetico_2_2_mono.wav"@en ;
+    oem:documentaTransformacao oem:ExameENF_video_sintetico_2_2_mono ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_CurvaENF_video_sintetico_2_2_mono ;
+    oem:dataHora "2026-11-17T12:46:52-03:00"^^xsd:dateTime .
+
+# =============================================================================
+# 3. Exame de Metadados de Contêiner e Estrutura de GOP (ffprobe -show_frames)
+# =============================================================================
+
+oem:Hash_RelatorioGOP_video_sintetico_1_1 a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de gop_video_sintetico_1_1.json"@pt , "SHA-256 Hash of gop_video_sintetico_1_1.json"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "602411b27176f36461cad8a5e892afa0c2df94dc76c008362e2e662603e32421"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:29-03:00"^^xsd:dateTime .
+
+oem:ExameContainerGOP_video_sintetico_1_1 a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExameMetadadosContainerGOP ;
+    rdfs:label "Exame de Contêiner e GOP - video_sintetico_1_1.mp4"@pt , "Container and GOP Examination - video_sintetico_1_1.mp4"@en ;
+    oem:temEntrada oem:Evidencia_Sintetico_1_1_Work ;
+    oem:comparadoComReferencia oem:Evidencia_Original_1_Work ;
+    oem:geraAchado oem:IndicioRecodificacao_video_sintetico_1_1_1_DivergenciaDeResolucaoOuOrientacao ;
+    oem:geraAchado oem:IndicioRecodificacao_video_sintetico_1_1_2_DivergenciaDeTaxaDeQuadros ;
+    oem:geraAchado oem:IndicioRecodificacao_video_sintetico_1_1_3_DivergenciaDeEstruturaGOP ;
+    oem:geraAchado oem:IndicioRecodificacao_video_sintetico_1_1_4_DivergenciaDeBitrate ;
+    oem:verificadaPor oem:Hash_RelatorioGOP_video_sintetico_1_1 ;
+    oem:registradaEm oem:RegistroCustodia_ExameContainerGOP_video_sintetico_1_1 ;
+    oem:comandoExecutado "ffprobe -v quiet -select_streams v:0 -show_entries frame=pict_type,key_frame,pkt_pts_time,pkt_size -print_format json data/work/caso_b/video_sintetico_1_1.mp4"^^xsd:string ;
+    oem:estruturaGOPResumo "frames=240, I=1, P=239, B=0, num_gops=1, gop_lengths=[240], pattern_prefix=IPPPPPPPPPPPPPPPPPPP"^^xsd:string ;
+    oem:resultadoExame "4 indício(s) de recodificação observado(s)"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:29-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExameContainerGOP_video_sintetico_1_1 a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Exame de Contêiner e GOP de video_sintetico_1_1.mp4"@pt ,
+               "Custody Record - Container and GOP Examination of video_sintetico_1_1.mp4"@en ;
+    oem:documentaTransformacao oem:ExameContainerGOP_video_sintetico_1_1 ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_RelatorioGOP_video_sintetico_1_1 ;
+    oem:dataHora "2026-11-17T12:46:29-03:00"^^xsd:dateTime .
+
+oem:IndicioRecodificacao_video_sintetico_1_1_1_DivergenciaDeResolucaoOuOrientacao a owl:NamedIndividual , oem:IndicioDeRecodificacao , oem:IndicioDeEdicao ;
+    rdfs:label "Indício de Recodificação (DivergenciaDeResolucaoOuOrientacao) em video_sintetico_1_1.mp4"@pt ,
+               "Re-encoding Indicator (DivergenciaDeResolucaoOuOrientacao) in video_sintetico_1_1.mp4"@en ;
+    skos:definition "Mudança de resolução/orientação em relação à referência (478x850 -> 848x478)."@pt , "Resolution/orientation change relative to reference (478x850 -> 848x478)."@en ;
+    oem:valorReferencia "478x850"^^xsd:string ;
+    oem:valorObservado "848x478"^^xsd:string .
+
+oem:IndicioRecodificacao_video_sintetico_1_1_2_DivergenciaDeTaxaDeQuadros a owl:NamedIndividual , oem:IndicioDeRecodificacao , oem:IndicioDeEdicao ;
+    rdfs:label "Indício de Recodificação (DivergenciaDeTaxaDeQuadros) em video_sintetico_1_1.mp4"@pt ,
+               "Re-encoding Indicator (DivergenciaDeTaxaDeQuadros) in video_sintetico_1_1.mp4"@en ;
+    skos:definition "Taxa de quadros divergente da referência (30/1 -> 24/1 fps)."@pt , "Frame rate diverges from reference (30/1 -> 24/1 fps)."@en ;
+    oem:valorReferencia "30/1"^^xsd:string ;
+    oem:valorObservado "24/1"^^xsd:string .
+
+oem:IndicioRecodificacao_video_sintetico_1_1_3_DivergenciaDeEstruturaGOP a owl:NamedIndividual , oem:IndicioDeRecodificacao , oem:IndicioDeEdicao ;
+    rdfs:label "Indício de Recodificação (DivergenciaDeEstruturaGOP) em video_sintetico_1_1.mp4"@pt ,
+               "Re-encoding Indicator (DivergenciaDeEstruturaGOP) in video_sintetico_1_1.mp4"@en ;
+    skos:definition "Alteração na estrutura de GOP (Referência: I=1, P=216, B=0, maxGOP=217, padrão='IPPPPPPPPPPPPPPPPPPP' vs Alvo: I=1, P=239, B=0, maxGOP=240, padrão='IPPPPPPPPPPPPPPPPPPP')."@pt , "GOP structure alteration (Reference: I=1, P=216, B=0, maxGOP=217, pattern='IPPPPPPPPPPPPPPPPPPP' vs Target: I=1, P=239, B=0, maxGOP=240, pattern='IPPPPPPPPPPPPPPPPPPP')."@en ;
+    oem:valorReferencia "B=0,maxGOP=217,pat=IPPPPPPPPP"^^xsd:string ;
+    oem:valorObservado "B=0,maxGOP=240,pat=IPPPPPPPPP"^^xsd:string .
+
+oem:IndicioRecodificacao_video_sintetico_1_1_4_DivergenciaDeBitrate a owl:NamedIndividual , oem:IndicioDeRecodificacao , oem:IndicioDeEdicao ;
+    rdfs:label "Indício de Recodificação (DivergenciaDeBitrate) em video_sintetico_1_1.mp4"@pt ,
+               "Re-encoding Indicator (DivergenciaDeBitrate) in video_sintetico_1_1.mp4"@en ;
+    skos:definition "Variação acentuada de taxa de bits em relação à referência (Vídeo: 1577083 -> 1560783 bps [1.0%]; Áudio: 319352 -> 128282 bps [59.8%])."@pt , "Marked bitrate variation relative to reference (Video: 1577083 -> 1560783 bps [1.0%]; Audio: 319352 -> 128282 bps [59.8%])."@en ;
+    oem:valorReferencia "v=1577083,a=319352"^^xsd:string ;
+    oem:valorObservado "v=1560783,a=128282"^^xsd:string .
+
+oem:Hash_RelatorioGOP_video_sintetico_1_2 a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de gop_video_sintetico_1_2.json"@pt , "SHA-256 Hash of gop_video_sintetico_1_2.json"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "3439598e4e6de09535ecb360a46ebab2833e26272ef5345c697512efed743e68"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:34-03:00"^^xsd:dateTime .
+
+oem:ExameContainerGOP_video_sintetico_1_2 a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExameMetadadosContainerGOP ;
+    rdfs:label "Exame de Contêiner e GOP - video_sintetico_1_2.mp4"@pt , "Container and GOP Examination - video_sintetico_1_2.mp4"@en ;
+    oem:temEntrada oem:Evidencia_Sintetico_1_2_Work ;
+    oem:comparadoComReferencia oem:Evidencia_Original_1_Work ;
+    oem:geraAchado oem:IndicioRecodificacao_video_sintetico_1_2_1_DivergenciaDeResolucaoOuOrientacao ;
+    oem:geraAchado oem:IndicioRecodificacao_video_sintetico_1_2_2_DivergenciaDeTaxaDeQuadros ;
+    oem:geraAchado oem:IndicioRecodificacao_video_sintetico_1_2_3_DivergenciaDeEstruturaGOP ;
+    oem:geraAchado oem:IndicioRecodificacao_video_sintetico_1_2_4_DivergenciaDeBitrate ;
+    oem:verificadaPor oem:Hash_RelatorioGOP_video_sintetico_1_2 ;
+    oem:registradaEm oem:RegistroCustodia_ExameContainerGOP_video_sintetico_1_2 ;
+    oem:comandoExecutado "ffprobe -v quiet -select_streams v:0 -show_entries frame=pict_type,key_frame,pkt_pts_time,pkt_size -print_format json data/work/caso_b/video_sintetico_1_2.mp4"^^xsd:string ;
+    oem:estruturaGOPResumo "frames=240, I=1, P=239, B=0, num_gops=1, gop_lengths=[240], pattern_prefix=IPPPPPPPPPPPPPPPPPPP"^^xsd:string ;
+    oem:resultadoExame "4 indício(s) de recodificação observado(s)"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:34-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExameContainerGOP_video_sintetico_1_2 a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Exame de Contêiner e GOP de video_sintetico_1_2.mp4"@pt ,
+               "Custody Record - Container and GOP Examination of video_sintetico_1_2.mp4"@en ;
+    oem:documentaTransformacao oem:ExameContainerGOP_video_sintetico_1_2 ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_RelatorioGOP_video_sintetico_1_2 ;
+    oem:dataHora "2026-11-17T12:46:34-03:00"^^xsd:dateTime .
+
+oem:IndicioRecodificacao_video_sintetico_1_2_1_DivergenciaDeResolucaoOuOrientacao a owl:NamedIndividual , oem:IndicioDeRecodificacao , oem:IndicioDeEdicao ;
+    rdfs:label "Indício de Recodificação (DivergenciaDeResolucaoOuOrientacao) em video_sintetico_1_2.mp4"@pt ,
+               "Re-encoding Indicator (DivergenciaDeResolucaoOuOrientacao) in video_sintetico_1_2.mp4"@en ;
+    skos:definition "Mudança de resolução/orientação em relação à referência (478x850 -> 848x478)."@pt , "Resolution/orientation change relative to reference (478x850 -> 848x478)."@en ;
+    oem:valorReferencia "478x850"^^xsd:string ;
+    oem:valorObservado "848x478"^^xsd:string .
+
+oem:IndicioRecodificacao_video_sintetico_1_2_2_DivergenciaDeTaxaDeQuadros a owl:NamedIndividual , oem:IndicioDeRecodificacao , oem:IndicioDeEdicao ;
+    rdfs:label "Indício de Recodificação (DivergenciaDeTaxaDeQuadros) em video_sintetico_1_2.mp4"@pt ,
+               "Re-encoding Indicator (DivergenciaDeTaxaDeQuadros) in video_sintetico_1_2.mp4"@en ;
+    skos:definition "Taxa de quadros divergente da referência (30/1 -> 24/1 fps)."@pt , "Frame rate diverges from reference (30/1 -> 24/1 fps)."@en ;
+    oem:valorReferencia "30/1"^^xsd:string ;
+    oem:valorObservado "24/1"^^xsd:string .
+
+oem:IndicioRecodificacao_video_sintetico_1_2_3_DivergenciaDeEstruturaGOP a owl:NamedIndividual , oem:IndicioDeRecodificacao , oem:IndicioDeEdicao ;
+    rdfs:label "Indício de Recodificação (DivergenciaDeEstruturaGOP) em video_sintetico_1_2.mp4"@pt ,
+               "Re-encoding Indicator (DivergenciaDeEstruturaGOP) in video_sintetico_1_2.mp4"@en ;
+    skos:definition "Alteração na estrutura de GOP (Referência: I=1, P=216, B=0, maxGOP=217, padrão='IPPPPPPPPPPPPPPPPPPP' vs Alvo: I=1, P=239, B=0, maxGOP=240, padrão='IPPPPPPPPPPPPPPPPPPP')."@pt , "GOP structure alteration (Reference: I=1, P=216, B=0, maxGOP=217, pattern='IPPPPPPPPPPPPPPPPPPP' vs Target: I=1, P=239, B=0, maxGOP=240, pattern='IPPPPPPPPPPPPPPPPPPP')."@en ;
+    oem:valorReferencia "B=0,maxGOP=217,pat=IPPPPPPPPP"^^xsd:string ;
+    oem:valorObservado "B=0,maxGOP=240,pat=IPPPPPPPPP"^^xsd:string .
+
+oem:IndicioRecodificacao_video_sintetico_1_2_4_DivergenciaDeBitrate a owl:NamedIndividual , oem:IndicioDeRecodificacao , oem:IndicioDeEdicao ;
+    rdfs:label "Indício de Recodificação (DivergenciaDeBitrate) em video_sintetico_1_2.mp4"@pt ,
+               "Re-encoding Indicator (DivergenciaDeBitrate) in video_sintetico_1_2.mp4"@en ;
+    skos:definition "Variação acentuada de taxa de bits em relação à referência (Vídeo: 1577083 -> 1570271 bps [0.4%]; Áudio: 319352 -> 128305 bps [59.8%])."@pt , "Marked bitrate variation relative to reference (Video: 1577083 -> 1570271 bps [0.4%]; Audio: 319352 -> 128305 bps [59.8%])."@en ;
+    oem:valorReferencia "v=1577083,a=319352"^^xsd:string ;
+    oem:valorObservado "v=1570271,a=128305"^^xsd:string .
+
+oem:Hash_RelatorioGOP_video_sintetico_2_1 a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de gop_video_sintetico_2_1.json"@pt , "SHA-256 Hash of gop_video_sintetico_2_1.json"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "1335e0504fc229f076d2b0e62b988012e7baed426f7f4bce55d54235af03208d"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:39-03:00"^^xsd:dateTime .
+
+oem:ExameContainerGOP_video_sintetico_2_1 a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExameMetadadosContainerGOP ;
+    rdfs:label "Exame de Contêiner e GOP - video_sintetico_2_1.mp4"@pt , "Container and GOP Examination - video_sintetico_2_1.mp4"@en ;
+    oem:temEntrada oem:Evidencia_Sintetico_2_1_Work ;
+    oem:comparadoComReferencia oem:Evidencia_Original_2_Work ;
+    oem:geraAchado oem:IndicioRecodificacao_video_sintetico_2_1_1_DivergenciaDeResolucaoOuOrientacao ;
+    oem:geraAchado oem:IndicioRecodificacao_video_sintetico_2_1_2_DivergenciaDeEstruturaGOP ;
+    oem:geraAchado oem:IndicioRecodificacao_video_sintetico_2_1_3_DivergenciaDeTimeBaseVideo ;
+    oem:geraAchado oem:IndicioRecodificacao_video_sintetico_2_1_4_InconsistenciaSampleRateTimeBaseAudio ;
+    oem:geraAchado oem:IndicioRecodificacao_video_sintetico_2_1_5_DivergenciaDeBitrate ;
+    oem:verificadaPor oem:Hash_RelatorioGOP_video_sintetico_2_1 ;
+    oem:registradaEm oem:RegistroCustodia_ExameContainerGOP_video_sintetico_2_1 ;
+    oem:comandoExecutado "ffprobe -v quiet -select_streams v:0 -show_entries frame=pict_type,key_frame,pkt_pts_time,pkt_size -print_format json data/work/caso_b/video_sintetico_2_1.mp4"^^xsd:string ;
+    oem:estruturaGOPResumo "frames=498, I=2, P=496, B=0, num_gops=2, gop_lengths=[300, 198], pattern_prefix=IPPPPPPPPPPPPPPPPPPP"^^xsd:string ;
+    oem:resultadoExame "5 indício(s) de recodificação observado(s)"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:39-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExameContainerGOP_video_sintetico_2_1 a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Exame de Contêiner e GOP de video_sintetico_2_1.mp4"@pt ,
+               "Custody Record - Container and GOP Examination of video_sintetico_2_1.mp4"@en ;
+    oem:documentaTransformacao oem:ExameContainerGOP_video_sintetico_2_1 ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_RelatorioGOP_video_sintetico_2_1 ;
+    oem:dataHora "2026-11-17T12:46:39-03:00"^^xsd:dateTime .
+
+oem:IndicioRecodificacao_video_sintetico_2_1_1_DivergenciaDeResolucaoOuOrientacao a owl:NamedIndividual , oem:IndicioDeRecodificacao , oem:IndicioDeEdicao ;
+    rdfs:label "Indício de Recodificação (DivergenciaDeResolucaoOuOrientacao) em video_sintetico_2_1.mp4"@pt ,
+               "Re-encoding Indicator (DivergenciaDeResolucaoOuOrientacao) in video_sintetico_2_1.mp4"@en ;
+    skos:definition "Mudança de resolução/orientação em relação à referência (576x1024 -> 478x850)."@pt , "Resolution/orientation change relative to reference (576x1024 -> 478x850)."@en ;
+    oem:valorReferencia "576x1024"^^xsd:string ;
+    oem:valorObservado "478x850"^^xsd:string .
+
+oem:IndicioRecodificacao_video_sintetico_2_1_2_DivergenciaDeEstruturaGOP a owl:NamedIndividual , oem:IndicioDeRecodificacao , oem:IndicioDeEdicao ;
+    rdfs:label "Indício de Recodificação (DivergenciaDeEstruturaGOP) em video_sintetico_2_1.mp4"@pt ,
+               "Re-encoding Indicator (DivergenciaDeEstruturaGOP) in video_sintetico_2_1.mp4"@en ;
+    skos:definition "Alteração na estrutura de GOP (Referência: I=8, P=547, B=1322, maxGOP=250, padrão='IBPBBPBBPBBBPBBBPBBB' vs Alvo: I=2, P=496, B=0, maxGOP=300, padrão='IPPPPPPPPPPPPPPPPPPP')."@pt , "GOP structure alteration (Reference: I=8, P=547, B=1322, maxGOP=250, pattern='IBPBBPBBPBBBPBBBPBBB' vs Target: I=2, P=496, B=0, maxGOP=300, pattern='IPPPPPPPPPPPPPPPPPPP')."@en ;
+    oem:valorReferencia "B=1322,maxGOP=250,pat=IBPBBPBBPB"^^xsd:string ;
+    oem:valorObservado "B=0,maxGOP=300,pat=IPPPPPPPPP"^^xsd:string .
+
+oem:IndicioRecodificacao_video_sintetico_2_1_3_DivergenciaDeTimeBaseVideo a owl:NamedIndividual , oem:IndicioDeRecodificacao , oem:IndicioDeEdicao ;
+    rdfs:label "Indício de Recodificação (DivergenciaDeTimeBaseVideo) em video_sintetico_2_1.mp4"@pt ,
+               "Re-encoding Indicator (DivergenciaDeTimeBaseVideo) in video_sintetico_2_1.mp4"@en ;
+    skos:definition "Mudança de time_base da stream de vídeo (1/15360 -> 1/90000)."@pt , "Video stream time_base change (1/15360 -> 1/90000)."@en ;
+    oem:valorReferencia "1/15360"^^xsd:string ;
+    oem:valorObservado "1/90000"^^xsd:string .
+
+oem:IndicioRecodificacao_video_sintetico_2_1_4_InconsistenciaSampleRateTimeBaseAudio a owl:NamedIndividual , oem:IndicioDeRecodificacao , oem:IndicioDeEdicao ;
+    rdfs:label "Indício de Recodificação (InconsistenciaSampleRateTimeBaseAudio) em video_sintetico_2_1.mp4"@pt ,
+               "Re-encoding Indicator (InconsistenciaSampleRateTimeBaseAudio) in video_sintetico_2_1.mp4"@en ;
+    skos:definition "Inconsistência interna na trilha de áudio: sample_rate=44100 Hz, mas time_base=1/48000 (na referência: 1/44100)."@pt , "Internal audio stream inconsistency: sample_rate=44100 Hz, but time_base=1/48000 (in reference: 1/44100)."@en ;
+    oem:valorReferencia "1/44100"^^xsd:string ;
+    oem:valorObservado "1/48000"^^xsd:string .
+
+oem:IndicioRecodificacao_video_sintetico_2_1_5_DivergenciaDeBitrate a owl:NamedIndividual , oem:IndicioDeRecodificacao , oem:IndicioDeEdicao ;
+    rdfs:label "Indício de Recodificação (DivergenciaDeBitrate) em video_sintetico_2_1.mp4"@pt ,
+               "Re-encoding Indicator (DivergenciaDeBitrate) in video_sintetico_2_1.mp4"@en ;
+    skos:definition "Variação acentuada de taxa de bits em relação à referência (Vídeo: 699618 -> 1326996 bps [89.7%]; Áudio: 128002 -> 128041 bps [0.0%])."@pt , "Marked bitrate variation relative to reference (Video: 699618 -> 1326996 bps [89.7%]; Audio: 128002 -> 128041 bps [0.0%])."@en ;
+    oem:valorReferencia "v=699618,a=128002"^^xsd:string ;
+    oem:valorObservado "v=1326996,a=128041"^^xsd:string .
+
+oem:Hash_RelatorioGOP_video_sintetico_2_2 a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de gop_video_sintetico_2_2.json"@pt , "SHA-256 Hash of gop_video_sintetico_2_2.json"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "c4564dcdb61b14d2b5f0a9e6e1668f6f5969f4c5fb588f5382e7eb3088be15ae"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:47-03:00"^^xsd:dateTime .
+
+oem:ExameContainerGOP_video_sintetico_2_2 a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExameMetadadosContainerGOP ;
+    rdfs:label "Exame de Contêiner e GOP - video_sintetico_2_2.mp4"@pt , "Container and GOP Examination - video_sintetico_2_2.mp4"@en ;
+    oem:temEntrada oem:Evidencia_Sintetico_2_2_Work ;
+    oem:comparadoComReferencia oem:Evidencia_Original_2_Work ;
+    oem:geraAchado oem:IndicioRecodificacao_video_sintetico_2_2_1_DivergenciaDeResolucaoOuOrientacao ;
+    oem:geraAchado oem:IndicioRecodificacao_video_sintetico_2_2_2_DivergenciaDeEstruturaGOP ;
+    oem:geraAchado oem:IndicioRecodificacao_video_sintetico_2_2_3_DivergenciaDeTimeBaseVideo ;
+    oem:geraAchado oem:IndicioRecodificacao_video_sintetico_2_2_4_InconsistenciaSampleRateTimeBaseAudio ;
+    oem:geraAchado oem:IndicioRecodificacao_video_sintetico_2_2_5_DivergenciaDeBitrate ;
+    oem:verificadaPor oem:Hash_RelatorioGOP_video_sintetico_2_2 ;
+    oem:registradaEm oem:RegistroCustodia_ExameContainerGOP_video_sintetico_2_2 ;
+    oem:comandoExecutado "ffprobe -v quiet -select_streams v:0 -show_entries frame=pict_type,key_frame,pkt_pts_time,pkt_size -print_format json data/work/caso_b/video_sintetico_2_2.mp4"^^xsd:string ;
+    oem:estruturaGOPResumo "frames=387, I=2, P=385, B=0, num_gops=2, gop_lengths=[300, 87], pattern_prefix=IPPPPPPPPPPPPPPPPPPP"^^xsd:string ;
+    oem:resultadoExame "5 indício(s) de recodificação observado(s)"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:47-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExameContainerGOP_video_sintetico_2_2 a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Exame de Contêiner e GOP de video_sintetico_2_2.mp4"@pt ,
+               "Custody Record - Container and GOP Examination of video_sintetico_2_2.mp4"@en ;
+    oem:documentaTransformacao oem:ExameContainerGOP_video_sintetico_2_2 ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_RelatorioGOP_video_sintetico_2_2 ;
+    oem:dataHora "2026-11-17T12:46:47-03:00"^^xsd:dateTime .
+
+oem:IndicioRecodificacao_video_sintetico_2_2_1_DivergenciaDeResolucaoOuOrientacao a owl:NamedIndividual , oem:IndicioDeRecodificacao , oem:IndicioDeEdicao ;
+    rdfs:label "Indício de Recodificação (DivergenciaDeResolucaoOuOrientacao) em video_sintetico_2_2.mp4"@pt ,
+               "Re-encoding Indicator (DivergenciaDeResolucaoOuOrientacao) in video_sintetico_2_2.mp4"@en ;
+    skos:definition "Mudança de resolução/orientação em relação à referência (576x1024 -> 476x848)."@pt , "Resolution/orientation change relative to reference (576x1024 -> 476x848)."@en ;
+    oem:valorReferencia "576x1024"^^xsd:string ;
+    oem:valorObservado "476x848"^^xsd:string .
+
+oem:IndicioRecodificacao_video_sintetico_2_2_2_DivergenciaDeEstruturaGOP a owl:NamedIndividual , oem:IndicioDeRecodificacao , oem:IndicioDeEdicao ;
+    rdfs:label "Indício de Recodificação (DivergenciaDeEstruturaGOP) em video_sintetico_2_2.mp4"@pt ,
+               "Re-encoding Indicator (DivergenciaDeEstruturaGOP) in video_sintetico_2_2.mp4"@en ;
+    skos:definition "Alteração na estrutura de GOP (Referência: I=8, P=547, B=1322, maxGOP=250, padrão='IBPBBPBBPBBBPBBBPBBB' vs Alvo: I=2, P=385, B=0, maxGOP=300, padrão='IPPPPPPPPPPPPPPPPPPP')."@pt , "GOP structure alteration (Reference: I=8, P=547, B=1322, maxGOP=250, pattern='IBPBBPBBPBBBPBBBPBBB' vs Target: I=2, P=385, B=0, maxGOP=300, pattern='IPPPPPPPPPPPPPPPPPPP')."@en ;
+    oem:valorReferencia "B=1322,maxGOP=250,pat=IBPBBPBBPB"^^xsd:string ;
+    oem:valorObservado "B=0,maxGOP=300,pat=IPPPPPPPPP"^^xsd:string .
+
+oem:IndicioRecodificacao_video_sintetico_2_2_3_DivergenciaDeTimeBaseVideo a owl:NamedIndividual , oem:IndicioDeRecodificacao , oem:IndicioDeEdicao ;
+    rdfs:label "Indício de Recodificação (DivergenciaDeTimeBaseVideo) em video_sintetico_2_2.mp4"@pt ,
+               "Re-encoding Indicator (DivergenciaDeTimeBaseVideo) in video_sintetico_2_2.mp4"@en ;
+    skos:definition "Mudança de time_base da stream de vídeo (1/15360 -> 1/90000)."@pt , "Video stream time_base change (1/15360 -> 1/90000)."@en ;
+    oem:valorReferencia "1/15360"^^xsd:string ;
+    oem:valorObservado "1/90000"^^xsd:string .
+
+oem:IndicioRecodificacao_video_sintetico_2_2_4_InconsistenciaSampleRateTimeBaseAudio a owl:NamedIndividual , oem:IndicioDeRecodificacao , oem:IndicioDeEdicao ;
+    rdfs:label "Indício de Recodificação (InconsistenciaSampleRateTimeBaseAudio) em video_sintetico_2_2.mp4"@pt ,
+               "Re-encoding Indicator (InconsistenciaSampleRateTimeBaseAudio) in video_sintetico_2_2.mp4"@en ;
+    skos:definition "Inconsistência interna na trilha de áudio: sample_rate=44100 Hz, mas time_base=1/48000 (na referência: 1/44100)."@pt , "Internal audio stream inconsistency: sample_rate=44100 Hz, but time_base=1/48000 (in reference: 1/44100)."@en ;
+    oem:valorReferencia "1/44100"^^xsd:string ;
+    oem:valorObservado "1/48000"^^xsd:string .
+
+oem:IndicioRecodificacao_video_sintetico_2_2_5_DivergenciaDeBitrate a owl:NamedIndividual , oem:IndicioDeRecodificacao , oem:IndicioDeEdicao ;
+    rdfs:label "Indício de Recodificação (DivergenciaDeBitrate) em video_sintetico_2_2.mp4"@pt ,
+               "Re-encoding Indicator (DivergenciaDeBitrate) in video_sintetico_2_2.mp4"@en ;
+    skos:definition "Variação acentuada de taxa de bits em relação à referência (Vídeo: 699618 -> 1426896 bps [104.0%]; Áudio: 128002 -> 128282 bps [0.2%])."@pt , "Marked bitrate variation relative to reference (Video: 699618 -> 1426896 bps [104.0%]; Audio: 128002 -> 128282 bps [0.2%])."@en ;
+    oem:valorReferencia "v=699618,a=128002"^^xsd:string ;
+    oem:valorObservado "v=1426896,a=128282"^^xsd:string .

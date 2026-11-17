@@ -1,0 +1,19 @@
+PREFIX oem: <http://example.org/oem#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT DISTINCT ?evidencia ?transformacao ?tipoDeclaracao ?registro ?hashValor
+WHERE {
+    ?evidencia oem:sofreu ?transformacao .
+    VALUES ?tipoDeclaracao {
+        oem:TransformacaoPreservadoraDeclarada
+        oem:TransformacaoGenerativa
+        oem:TransformacaoNaoDeclarada
+    }
+    ?transformacao a ?tipoDeclaracao .
+    OPTIONAL { ?transformacao oem:registradaEm ?registro . }
+    OPTIONAL {
+        ?transformacao oem:verificadaPor ?h .
+        ?h oem:valorHashHex ?hashValor .
+    }
+}
+ORDER BY ?evidencia ?transformacao

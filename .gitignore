@@ -1,0 +1,72 @@
+# =============================================================================
+# 1. Raw and Working Multimedia Directories & Binary Tools
+# =============================================================================
+data/raw/
+data/work/
+Vídeos/
+Videos/
+tools/
+
+# =============================================================================
+# 2. All Raw Multimedia Extensions (Video, Audio, Images)
+# =============================================================================
+*.mp4
+*.MP4
+*.mov
+*.MOV
+*.m4v
+*.M4V
+*.mkv
+*.MKV
+*.avi
+*.AVI
+*.3gp
+*.3GP
+*.webm
+*.WEBM
+*.wav
+*.WAV
+*.mp3
+*.MP3
+*.flac
+*.FLAC
+*.ogg
+*.OGG
+*.m4a
+*.M4A
+*.aac
+*.AAC
+*.jpg
+*.JPG
+*.jpeg
+*.JPEG
+Frame_video_utilizado.jpeg
+
+# =============================================================================
+# 3. PNG Policy: Exclude all PNGs by default, allow ONLY Conjunto 1 in results/,
+#    and explicitly block all Conjunto 2 PNGs (Video_original_2, video_sintetico_2_*)
+# =============================================================================
+*.png
+*.PNG
+!results/**/*.png
+!results/**/*.PNG
+
+# Block Conjunto 2 visual/derived PNG artifacts (third-party platform video set)
+results/**/*Video_original_2*.png
+results/**/*video_original_2*.png
+results/**/*video_sintetico_2_*.png
+results/**/*Video_sintetico_2_*.png
+
+# =============================================================================
+# 4. Python / Test / OS / Editor Artifacts
+# =============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.pytest_cache/
+.coverage
+*.egg-info/
+.DS_Store
+Thumbs.db

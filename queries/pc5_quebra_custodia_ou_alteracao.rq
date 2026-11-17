@@ -1,0 +1,17 @@
+PREFIX oem: <http://example.org/oem#>
+
+SELECT DISTINCT ?evidencia ?transformacaoVioladora ?classificacaoEvidencia
+WHERE {
+    ?evidencia oem:sofreu ?transformacaoVioladora ;
+               a ?classificacaoEvidencia .
+    VALUES ?classificacaoEvidencia {
+        oem:EvidenciaComConteudoAlterado
+        oem:EvidenciaComCadeiaQuebrada
+    }
+    FILTER EXISTS {
+        { ?transformacaoVioladora a oem:TransformacaoGenerativa }
+        UNION
+        { ?transformacaoVioladora a oem:TransformacaoNaoDeclarada }
+    }
+}
+ORDER BY ?evidencia ?transformacaoVioladora

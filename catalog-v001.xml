@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <uri name="http://example.org/oem" uri="ontology/oem.ttl"/>
+    <uri name="http://example.org/oem/cases/caso_a" uri="cases/caso_a/caso_a.ttl"/>
+    <uri name="http://example.org/oem/cases/caso_a_fechado" uri="cases/caso_a/caso_a_fechado.ttl"/>
+    <uri name="http://example.org/oem/cases/caso_b" uri="cases/caso_b/caso_b.ttl"/>
+    <uri name="http://example.org/oem/cases/caso_c" uri="cases/caso_c/caso_c.ttl"/>
+</catalog>

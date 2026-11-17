@@ -1,0 +1,5 @@
+exame,audioEntrada,resultado,snr60,snr120,limiar
+http://example.org/oem#ExameENF_Video_original_2,http://example.org/oem#Evidencia_Audio_Original_2_Stereo,ENF não detectável,12.493,10.577,6.0
+http://example.org/oem#ExameENF_Video_original_2_mono,http://example.org/oem#Evidencia_Audio_Original_2_Mono,ENF não detectável,12.493,10.577,6.0
+http://example.org/oem#ExameENF_video_original_1,http://example.org/oem#Evidencia_Audio_Original_1_Stereo,ENF detectável,3.928,8.995,6.0
+http://example.org/oem#ExameENF_video_original_1_mono,http://example.org/oem#Evidencia_Audio_Original_1_Mono,ENF detectável,3.932,8.994,6.0

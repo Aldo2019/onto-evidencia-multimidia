@@ -1,0 +1,769 @@
+@prefix oem: <http://example.org/oem#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.org/oem/cases/caso_a> a owl:Ontology ;
+    owl:imports <http://example.org/oem> ;
+    rdfs:label "Caso A - Gravações Originais, Cópias Forenses Isomórficas e Extração de Áudio"@pt ,
+               "Case A - Original Recordings, Isomorphic Forensic Copies, and Audio Extraction"@en ;
+    skos:definition "Instâncias e registros de cadeia de custódia referentes ao Caso A (aquisição isomórfica verificada por hash SHA-256 dos vídeos originais e extração homomórfica das trilhas de áudio em PCM 16-bit)."@pt ,
+                    "Instances and chain of custody records for Case A (SHA-256 hash-verified isomorphic acquisition of original videos and homomorphic extraction of 16-bit PCM audio tracks)."@en .
+
+# =============================================================================
+# Declarações de Vocabulário (OWL 2 DL Declarations)
+# =============================================================================
+
+oem:EvidenciaMultimidia a owl:Class ;
+    rdfs:label "Evidência Multimídia"@pt , "Multimedia Evidence"@en ;
+    skos:definition "Qualquer item de áudio, imagem ou vídeo submetido a exame ou custódia pericial."@pt ,
+                    "Any audio, image, or video item submitted to forensic examination or custody."@en .
+
+oem:Transformacao a owl:Class ;
+    rdfs:label "Transformação"@pt , "Transformation"@en ;
+    skos:definition "Operação técnica ou manuseio aplicado sobre uma evidência multimídia que gera um novo artefato ou estado."@pt ,
+                    "Technical operation or handling applied to multimedia evidence producing a new artifact or state."@en .
+
+oem:TransformacaoIsomorfica a owl:Class ;
+    rdfs:subClassOf oem:Transformacao ;
+    rdfs:label "Transformação Isomórfica"@pt , "Isomorphic Transformation"@en ;
+    skos:definition "Transformação que preserva integralmente a sequência de bits da evidência original, comprovada pela igualdade do valor de hash criptográfico."@pt ,
+                    "Transformation that strictly preserves the bit sequence of the original evidence, proven by cryptographic hash equality."@en .
+
+oem:TransformacaoHomomorfica a owl:Class ;
+    rdfs:subClassOf oem:Transformacao ;
+    rdfs:label "Transformação Homomórfica"@pt , "Homomorphic Transformation"@en ;
+    skos:definition "Transformação redutora controlada (como extração de áudio sem reamostragem, geração de espectrograma ou extração de curva ENF) que preserva as propriedades periciais relevantes sem introduzir conteúdo sintético."@pt ,
+                    "Controlled reductive transformation (such as unresampled audio extraction, spectrogram generation, or ENF curve extraction) that preserves relevant forensic properties without introducing synthetic content."@en .
+
+oem:ExtracaoDeAudio a owl:Class ;
+    rdfs:subClassOf oem:TransformacaoHomomorfica ;
+    rdfs:label "Extração de Áudio"@pt , "Audio Extraction"@en ;
+    skos:definition "Operação homomórfica que isola e decodifica a trilha sonora de um contêiner de vídeo para formato de áudio sem compressão com perdas, mantendo a taxa de amostragem original."@pt ,
+                    "Homomorphic operation that isolates and decodes the audio track from a video container into an uncompressed audio format while preserving the original sample rate."@en .
+
+oem:ValorHash a owl:Class ;
+    rdfs:label "Valor de Hash"@pt , "Hash Value"@en ;
+    skos:definition "Resumo criptográfico calculado sobre um arquivo para comprovar que seu conteúdo binário permaneceu inalterado."@pt ,
+                    "Cryptographic digest computed over a file to prove its binary content remained unchanged."@en .
+
+oem:RegistroDeCustodia a owl:Class ;
+    rdfs:label "Registro de Custódia"@pt , "Custody Record"@en ;
+    skos:definition "Assento formal na cadeia de custódia que documenta quem realizou determinada transformação ou manuseio, quando e sob quais garantias."@pt ,
+                    "Formal entry in the chain of custody documenting who performed a given transformation or handling, when, and under which guarantees."@en .
+
+oem:Agente a owl:Class ;
+    rdfs:label "Agente"@pt , "Agent"@en ;
+    skos:definition "Pessoa ou sistema responsável por executar ou atestar um ato na cadeia de custódia."@pt ,
+                    "Person or system responsible for executing or attesting an act in the chain of custody."@en .
+
+oem:temEntrada a owl:ObjectProperty ;
+    rdfs:label "tem entrada"@pt , "has input"@en .
+
+oem:temSaida a owl:ObjectProperty ;
+    rdfs:label "tem saída"@pt , "has output"@en .
+
+oem:verificadaPor a owl:ObjectProperty ;
+    rdfs:label "verificada por"@pt , "verified by"@en .
+
+oem:registradaEm a owl:ObjectProperty ;
+    rdfs:label "registrada em"@pt , "recorded in"@en .
+
+oem:documentaTransformacao a owl:ObjectProperty ;
+    rdfs:label "documenta transformação"@pt , "documents transformation"@en .
+
+oem:atestadoPor a owl:ObjectProperty ;
+    rdfs:label "atestado por"@pt , "attested by"@en .
+
+oem:temValorHash a owl:ObjectProperty ;
+    rdfs:label "tem valor de hash"@pt , "has hash value"@en .
+
+oem:algoritmoHash a owl:DatatypeProperty ;
+    rdfs:label "algoritmo de hash"@pt , "hash algorithm"@en .
+
+oem:valorHashHex a owl:DatatypeProperty ;
+    rdfs:label "valor hexadecimal do hash"@pt , "hexadecimal hash value"@en .
+
+oem:dataHora a owl:DatatypeProperty ;
+    rdfs:label "data e hora"@pt , "date and time"@en .
+
+oem:caminhoArquivo a owl:DatatypeProperty ;
+    rdfs:label "caminho do arquivo"@pt , "file path"@en .
+
+oem:tamanhoBytes a owl:DatatypeProperty ;
+    rdfs:label "tamanho em bytes"@pt , "size in bytes"@en .
+
+oem:somenteLeitura a owl:DatatypeProperty ;
+    rdfs:label "somente leitura"@pt , "read-only"@en .
+
+oem:nomeAgente a owl:DatatypeProperty ;
+    rdfs:label "nome do agente"@pt , "agent name"@en .
+
+oem:comandoExecutado a owl:DatatypeProperty ;
+    rdfs:label "comando executado"@pt , "executed command"@en .
+
+oem:versaoFerramenta a owl:DatatypeProperty ;
+    rdfs:label "versão da ferramenta"@pt , "tool version"@en .
+
+oem:parametrosTransformacao a owl:DatatypeProperty ;
+    rdfs:label "parâmetros da transformação"@pt , "transformation parameters"@en .
+
+oem:metodoDownmixMono a owl:DatatypeProperty ;
+    rdfs:label "método de conversão para mono"@pt , "mono downmix method"@en .
+
+oem:taxaAmostragemHz a owl:DatatypeProperty ;
+    rdfs:label "taxa de amostragem (Hz)"@pt , "sample rate (Hz)"@en .
+
+oem:numeroCanais a owl:DatatypeProperty ;
+    rdfs:label "número de canais"@pt , "number of channels"@en .
+
+# =============================================================================
+# Agente Responsável (Perito / Pesquisador)
+# =============================================================================
+
+oem:Agente_Perito a owl:NamedIndividual , oem:Agente ;
+    rdfs:label "Agente (perito)"@pt , "Agente (perito)"@en ;
+    oem:nomeAgente "Agente (perito)"^^xsd:string .
+
+# =============================================================================
+# Item 1: video_original_1.mp4 -> data/work/caso_a/video_original_1.mp4
+# =============================================================================
+
+oem:Evidencia_Original_1_Raw a owl:NamedIndividual , oem:EvidenciaMultimidia ;
+    rdfs:label "Vídeo Original 1 ( Matriz Somente Leitura )"@pt ,
+               "Original Video 1 ( Read-Only Master )"@en ;
+    oem:caminhoArquivo "Vídeos/Vídeo_1/video_original_1.mp4"^^xsd:string ;
+    oem:tamanhoBytes 1718872 ;
+    oem:somenteLeitura true ;
+    oem:temValorHash oem:Hash_video_original_1 .
+
+oem:Evidencia_Original_1_Work a owl:NamedIndividual , oem:EvidenciaMultimidia ;
+    rdfs:label "Vídeo Original 1 ( Cópia Forense de Trabalho - Caso A )"@pt ,
+               "Original Video 1 ( Working Forensic Copy - Case A )"@en ;
+    oem:caminhoArquivo "data/work/caso_a/video_original_1.mp4"^^xsd:string ;
+    oem:tamanhoBytes 1718872 ;
+    oem:somenteLeitura false ;
+    oem:temValorHash oem:Hash_video_original_1 .
+
+oem:Hash_video_original_1 a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de video_original_1.mp4"@pt ,
+               "SHA-256 Hash of video_original_1.mp4"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "3abe96337aefc4c4cfb89f24ed6d4bda598b55b0f0d9216245d1dd7fd9984ba3"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:29:13-03:00"^^xsd:dateTime .
+
+oem:CopiaForense_video_original_1 a owl:NamedIndividual , oem:TransformacaoIsomorfica ;
+    rdfs:label "Cópia Forense Isomórfica de video_original_1.mp4"@pt ,
+               "Isomorphic Forensic Copy of video_original_1.mp4"@en ;
+    oem:temEntrada oem:Evidencia_Original_1_Raw ;
+    oem:temSaida oem:Evidencia_Original_1_Work ;
+    oem:verificadaPor oem:Hash_video_original_1 ;
+    oem:registradaEm oem:RegistroCustodia_video_original_1 ;
+    oem:dataHora "2026-11-17T12:29:13-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_video_original_1 a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Cópia Forense de video_original_1.mp4"@pt ,
+               "Custody Record - Forensic Copy of video_original_1.mp4"@en ;
+    oem:documentaTransformacao oem:CopiaForense_video_original_1 ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_video_original_1 ;
+    oem:dataHora "2026-11-17T12:29:13-03:00"^^xsd:dateTime .
+
+# --- Extração de Áudio Estéreo (Sem Reamostragem) de video_original_1.mp4 ---
+
+oem:Evidencia_Audio_Original_1_Stereo a owl:NamedIndividual , oem:EvidenciaMultimidia ;
+    rdfs:label "Áudio Extraído Estéreo de video_original_1.mp4"@pt ,
+               "Extracted Stereo Audio of video_original_1.mp4"@en ;
+    oem:caminhoArquivo "data/work/caso_a/video_original_1.wav"^^xsd:string ;
+    oem:tamanhoBytes 1388622 ;
+    oem:taxaAmostragemHz 48000 ;
+    oem:numeroCanais 2 ;
+    oem:temValorHash oem:Hash_video_original_1_wav .
+
+oem:Hash_video_original_1_wav a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de video_original_1.wav"@pt ,
+               "SHA-256 Hash of video_original_1.wav"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "d27bfdc4192ba097658d5e5367a0d3ce574a6cd3198cb5a449c6cb2ca590af6f"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:32:17-03:00"^^xsd:dateTime .
+
+oem:ExtracaoDeAudio_video_original_1_Stereo a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExtracaoDeAudio ;
+    rdfs:label "Extração de Áudio (Estéreo Original) - video_original_1"@pt ,
+               "Audio Extraction (Original Stereo) - video_original_1"@en ;
+    oem:temEntrada oem:Evidencia_Original_1_Work ;
+    oem:temSaida oem:Evidencia_Audio_Original_1_Stereo ;
+    oem:verificadaPor oem:Hash_video_original_1_wav ;
+    oem:registradaEm oem:RegistroCustodia_ExtracaoAudio_video_original_1_Stereo ;
+    oem:comandoExecutado "ffmpeg -i data/work/caso_a/video_original_1.mp4 -vn -map 0:a:0 -c:a pcm_s16le data/work/caso_a/video_original_1.wav"^^xsd:string ;
+    oem:versaoFerramenta "ffmpeg version 8.1.1-full_build-www.gyan.dev (built with gcc 15.2.0)"^^xsd:string ;
+    oem:parametrosTransformacao "-vn -map 0:a:0 -c:a pcm_s16le (48000 Hz preserved, 2 channels stereo)"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:32:17-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExtracaoAudio_video_original_1_Stereo a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Extração de Áudio Estéreo de video_original_1.mp4"@pt ,
+               "Custody Record - Stereo Audio Extraction of video_original_1.mp4"@en ;
+    oem:documentaTransformacao oem:ExtracaoDeAudio_video_original_1_Stereo ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_video_original_1_wav ;
+    oem:dataHora "2026-11-17T12:32:17-03:00"^^xsd:dateTime .
+
+# --- Extração de Áudio Mono (Downmix) de video_original_1.mp4 ---
+
+oem:Evidencia_Audio_Original_1_Mono a owl:NamedIndividual , oem:EvidenciaMultimidia ;
+    rdfs:label "Áudio Extraído Mono de video_original_1.mp4"@pt ,
+               "Extracted Mono Audio of video_original_1.mp4"@en ;
+    oem:caminhoArquivo "data/work/caso_a/video_original_1_mono.wav"^^xsd:string ;
+    oem:tamanhoBytes 694350 ;
+    oem:taxaAmostragemHz 48000 ;
+    oem:numeroCanais 1 ;
+    oem:temValorHash oem:Hash_video_original_1_mono_wav .
+
+oem:Hash_video_original_1_mono_wav a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de video_original_1_mono.wav"@pt ,
+               "SHA-256 Hash of video_original_1_mono.wav"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "8b52f679d55902d254a5a0ddb155db1d2cbabd4024d7fa99cb9956dfc24106dd"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:32:17-03:00"^^xsd:dateTime .
+
+oem:ExtracaoDeAudio_video_original_1_Mono a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExtracaoDeAudio ;
+    rdfs:label "Extração de Áudio (Downmix Mono) - video_original_1"@pt ,
+               "Audio Extraction (Mono Downmix) - video_original_1"@en ;
+    oem:temEntrada oem:Evidencia_Original_1_Work ;
+    oem:temSaida oem:Evidencia_Audio_Original_1_Mono ;
+    oem:verificadaPor oem:Hash_video_original_1_mono_wav ;
+    oem:registradaEm oem:RegistroCustodia_ExtracaoAudio_video_original_1_Mono ;
+    oem:comandoExecutado "ffmpeg -i data/work/caso_a/video_original_1.mp4 -vn -map 0:a:0 -ac 1 -c:a pcm_s16le data/work/caso_a/video_original_1_mono.wav"^^xsd:string ;
+    oem:versaoFerramenta "ffmpeg version 8.1.1-full_build-www.gyan.dev (built with gcc 15.2.0)"^^xsd:string ;
+    oem:parametrosTransformacao "-vn -map 0:a:0 -ac 1 -c:a pcm_s16le (48000 Hz preserved, 1 channel mono)"^^xsd:string ;
+    oem:metodoDownmixMono "FFmpeg libswresample default stereo-to-mono downmix (-ac 1): M = 0.5*L + 0.5*R (equal-weight linear channel averaging prior to pcm_s16le quantization)"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:32:17-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExtracaoAudio_video_original_1_Mono a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Extração de Áudio Mono de video_original_1.mp4"@pt ,
+               "Custody Record - Mono Audio Extraction of video_original_1.mp4"@en ;
+    oem:documentaTransformacao oem:ExtracaoDeAudio_video_original_1_Mono ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_video_original_1_mono_wav ;
+    oem:dataHora "2026-11-17T12:32:17-03:00"^^xsd:dateTime .
+
+# =============================================================================
+# Item 2: Video_original_2.mp4 -> data/work/caso_a/Video_original_2.mp4
+# =============================================================================
+
+oem:Evidencia_Original_2_Raw a owl:NamedIndividual , oem:EvidenciaMultimidia ;
+    rdfs:label "Vídeo Original 2 ( Matriz Somente Leitura )"@pt ,
+               "Original Video 2 ( Read-Only Master )"@en ;
+    oem:caminhoArquivo "Vídeos/Vídeo_2/Video_original_2.mp4"^^xsd:string ;
+    oem:tamanhoBytes 6509060 ;
+    oem:somenteLeitura true ;
+    oem:temValorHash oem:Hash_Video_original_2 .
+
+oem:Evidencia_Original_2_Work a owl:NamedIndividual , oem:EvidenciaMultimidia ;
+    rdfs:label "Vídeo Original 2 ( Cópia Forense de Trabalho - Caso A )"@pt ,
+               "Original Video 2 ( Working Forensic Copy - Case A )"@en ;
+    oem:caminhoArquivo "data/work/caso_a/Video_original_2.mp4"^^xsd:string ;
+    oem:tamanhoBytes 6509060 ;
+    oem:somenteLeitura false ;
+    oem:temValorHash oem:Hash_Video_original_2 .
+
+oem:Hash_Video_original_2 a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de Video_original_2.mp4"@pt ,
+               "SHA-256 Hash of Video_original_2.mp4"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "08945ba4c6ca34b15163bba89df473971378b3e658b8ed13a163fa706450ec6e"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:29:13-03:00"^^xsd:dateTime .
+
+oem:CopiaForense_Video_original_2 a owl:NamedIndividual , oem:TransformacaoIsomorfica ;
+    rdfs:label "Cópia Forense Isomórfica de Video_original_2.mp4"@pt ,
+               "Isomorphic Forensic Copy of Video_original_2.mp4"@en ;
+    oem:temEntrada oem:Evidencia_Original_2_Raw ;
+    oem:temSaida oem:Evidencia_Original_2_Work ;
+    oem:verificadaPor oem:Hash_Video_original_2 ;
+    oem:registradaEm oem:RegistroCustodia_Video_original_2 ;
+    oem:dataHora "2026-11-17T12:29:13-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_Video_original_2 a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Cópia Forense de Video_original_2.mp4"@pt ,
+               "Custody Record - Forensic Copy of Video_original_2.mp4"@en ;
+    oem:documentaTransformacao oem:CopiaForense_Video_original_2 ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_Video_original_2 ;
+    oem:dataHora "2026-11-17T12:29:13-03:00"^^xsd:dateTime .
+
+# --- Extração de Áudio Estéreo (Sem Reamostragem) de Video_original_2.mp4 ---
+
+oem:Evidencia_Audio_Original_2_Stereo a owl:NamedIndividual , oem:EvidenciaMultimidia ;
+    rdfs:label "Áudio Extraído Estéreo de Video_original_2.mp4"@pt ,
+               "Extracted Stereo Audio of Video_original_2.mp4"@en ;
+    oem:caminhoArquivo "data/work/caso_a/Video_original_2.wav"^^xsd:string ;
+    oem:tamanhoBytes 11034702 ;
+    oem:taxaAmostragemHz 44100 ;
+    oem:numeroCanais 2 ;
+    oem:temValorHash oem:Hash_Video_original_2_wav .
+
+oem:Hash_Video_original_2_wav a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de Video_original_2.wav"@pt ,
+               "SHA-256 Hash of Video_original_2.wav"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "b6e69d2adea58667f2f1707cd75864e83e2bbe383ffb11c326a9e69b99426db1"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:32:17-03:00"^^xsd:dateTime .
+
+oem:ExtracaoDeAudio_Video_original_2_Stereo a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExtracaoDeAudio ;
+    rdfs:label "Extração de Áudio (Estéreo Original) - Video_original_2"@pt ,
+               "Audio Extraction (Original Stereo) - Video_original_2"@en ;
+    oem:temEntrada oem:Evidencia_Original_2_Work ;
+    oem:temSaida oem:Evidencia_Audio_Original_2_Stereo ;
+    oem:verificadaPor oem:Hash_Video_original_2_wav ;
+    oem:registradaEm oem:RegistroCustodia_ExtracaoAudio_Video_original_2_Stereo ;
+    oem:comandoExecutado "ffmpeg -i data/work/caso_a/Video_original_2.mp4 -vn -map 0:a:0 -c:a pcm_s16le data/work/caso_a/Video_original_2.wav"^^xsd:string ;
+    oem:versaoFerramenta "ffmpeg version 8.1.1-full_build-www.gyan.dev (built with gcc 15.2.0)"^^xsd:string ;
+    oem:parametrosTransformacao "-vn -map 0:a:0 -c:a pcm_s16le (44100 Hz preserved, 2 channels stereo)"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:32:17-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExtracaoAudio_Video_original_2_Stereo a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Extração de Áudio Estéreo de Video_original_2.mp4"@pt ,
+               "Custody Record - Stereo Audio Extraction of Video_original_2.mp4"@en ;
+    oem:documentaTransformacao oem:ExtracaoDeAudio_Video_original_2_Stereo ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_Video_original_2_wav ;
+    oem:dataHora "2026-11-17T12:32:17-03:00"^^xsd:dateTime .
+
+# --- Extração de Áudio Mono (Downmix) de Video_original_2.mp4 ---
+
+oem:Evidencia_Audio_Original_2_Mono a owl:NamedIndividual , oem:EvidenciaMultimidia ;
+    rdfs:label "Áudio Extraído Mono de Video_original_2.mp4"@pt ,
+               "Extracted Mono Audio of Video_original_2.mp4"@en ;
+    oem:caminhoArquivo "data/work/caso_a/Video_original_2_mono.wav"^^xsd:string ;
+    oem:tamanhoBytes 5517390 ;
+    oem:taxaAmostragemHz 44100 ;
+    oem:numeroCanais 1 ;
+    oem:temValorHash oem:Hash_Video_original_2_mono_wav .
+
+oem:Hash_Video_original_2_mono_wav a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de Video_original_2_mono.wav"@pt ,
+               "SHA-256 Hash of Video_original_2_mono.wav"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "1c412c5fa7fd8fc7a423835df9beb9ddc051d46769fb3a247dbd6526ac13b6bc"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:32:17-03:00"^^xsd:dateTime .
+
+oem:ExtracaoDeAudio_Video_original_2_Mono a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExtracaoDeAudio ;
+    rdfs:label "Extração de Áudio (Downmix Mono) - Video_original_2"@pt ,
+               "Audio Extraction (Mono Downmix) - Video_original_2"@en ;
+    oem:temEntrada oem:Evidencia_Original_2_Work ;
+    oem:temSaida oem:Evidencia_Audio_Original_2_Mono ;
+    oem:verificadaPor oem:Hash_Video_original_2_mono_wav ;
+    oem:registradaEm oem:RegistroCustodia_ExtracaoAudio_Video_original_2_Mono ;
+    oem:comandoExecutado "ffmpeg -i data/work/caso_a/Video_original_2.mp4 -vn -map 0:a:0 -ac 1 -c:a pcm_s16le data/work/caso_a/Video_original_2_mono.wav"^^xsd:string ;
+    oem:versaoFerramenta "ffmpeg version 8.1.1-full_build-www.gyan.dev (built with gcc 15.2.0)"^^xsd:string ;
+    oem:parametrosTransformacao "-vn -map 0:a:0 -ac 1 -c:a pcm_s16le (44100 Hz preserved, 1 channel mono)"^^xsd:string ;
+    oem:metodoDownmixMono "FFmpeg libswresample default stereo-to-mono downmix (-ac 1): M = 0.5*L + 0.5*R (equal-weight linear channel averaging prior to pcm_s16le quantization)"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:32:17-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExtracaoAudio_Video_original_2_Mono a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Extração de Áudio Mono de Video_original_2.mp4"@pt ,
+               "Custody Record - Mono Audio Extraction of Video_original_2.mp4"@en ;
+    oem:documentaTransformacao oem:ExtracaoDeAudio_Video_original_2_Mono ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_Video_original_2_mono_wav ;
+    oem:dataHora "2026-11-17T12:32:17-03:00"^^xsd:dateTime .
+
+
+# =============================================================================
+# Extensão de Vocabulário para Análises Periciais (Espectrograma, ENF, GOP)
+# =============================================================================
+
+oem:GeracaoDeEspectrograma a owl:Class ;
+    rdfs:subClassOf oem:TransformacaoHomomorfica ;
+    rdfs:label "Geração de Espectrograma"@pt , "Spectrogram Generation"@en ;
+    skos:definition "Transformação homomórfica que projeta um sinal de áudio no domínio tempo-frequência (densidade espectral de potência) sem alterar a evidência de entrada."@pt ,
+                    "Homomorphic transformation that projects an audio signal into the time-frequency domain (power spectral density) without altering the input evidence."@en .
+
+oem:ExtracaoDeCurvaENF a owl:Class ;
+    rdfs:subClassOf oem:TransformacaoHomomorfica ;
+    rdfs:label "Extração de Curva ENF"@pt , "ENF Curve Extraction"@en ;
+    skos:definition "Transformação homomórfica que extrai a série temporal da frequência da rede elétrica (60 Hz ou harmônicos) a partir de um sinal de áudio."@pt ,
+                    "Homomorphic transformation that extracts the Electrical Network Frequency (60 Hz or harmonics) time series from an audio signal."@en .
+
+oem:ArtefatoAnalitico a owl:Class ;
+    rdfs:subClassOf oem:EvidenciaMultimidia ;
+    rdfs:label "Artefato Analítico Derivado"@pt , "Derived Analytical Artifact"@en ;
+    skos:definition "Representação visual ou numérica (como um espectrograma ou curva de frequência) produzida por uma transformação homomórfica controlada."@pt ,
+                    "Visual or numerical representation (such as a spectrogram or frequency curve) produced by a controlled homomorphic transformation."@en .
+
+oem:ExamePericial a owl:Class ;
+    rdfs:subClassOf oem:TransformacaoHomomorfica ;
+    rdfs:label "Exame Pericial"@pt , "Forensic Examination"@en ;
+    skos:definition "Procedimento técnico-pericial documentado que inspeciona propriedades físicas, acústicas ou estruturais de uma evidência multimídia."@pt ,
+                    "Documented technical forensic procedure that inspects physical, acoustic, or structural properties of multimedia evidence."@en .
+
+oem:ExameENF a owl:Class ;
+    rdfs:subClassOf oem:ExamePericial ;
+    rdfs:label "Exame de Frequência da Rede Elétrica (ENF)"@pt , "Electrical Network Frequency (ENF) Examination"@en ;
+    skos:definition "Exame pericial que busca a componente da rede elétrica (60 Hz no Brasil e seu harmônico de 120 Hz) para avaliar estabilidade e eventuais descontinuidades de fase ou frequência."@pt ,
+                    "Forensic examination that searches for the power grid component (60 Hz in Brazil and its 120 Hz harmonic) to assess stability and potential phase or frequency discontinuities."@en .
+
+oem:ExameMetadadosContainerGOP a owl:Class ;
+    rdfs:subClassOf oem:ExamePericial ;
+    rdfs:label "Exame de Metadados de Contêiner e Estrutura de GOP"@pt , "Container Metadata and GOP Structure Examination"@en ;
+    skos:definition "Exame pericial que compara parâmetros de codificação, contêiner e sequência de quadros (I, P, B) de um vídeo com uma referência conhecida."@pt ,
+                    "Forensic examination comparing encoding parameters, container metadata, and frame sequence (I, P, B) of a video against a known reference."@en .
+
+oem:AchadoPericial a owl:Class ;
+    rdfs:label "Achado Pericial"@pt , "Forensic Finding"@en ;
+    skos:definition "Elemento técnico objetivamente observado durante um exame pericial."@pt ,
+                    "Technical element objectively observed during a forensic examination."@en .
+
+oem:IndicioDeEdicao a owl:Class ;
+    rdfs:subClassOf oem:AchadoPericial ;
+    rdfs:label "Indício de Edição"@pt , "Editing Indicator"@en ;
+    skos:definition "Achado técnico que aponta divergência estrutural, acústica ou de codificação compatível com reprocessamento ou edição, sem constituir por si só conclusão de adulteração."@pt ,
+                    "Technical finding pointing to structural, acoustic, or encoding divergence compatible with reprocessing or editing, without constituting by itself a conclusion of tampering."@en .
+
+oem:IndicioDeRecodificacao a owl:Class ;
+    rdfs:subClassOf oem:IndicioDeEdicao ;
+    rdfs:label "Indício de Recodificação"@pt , "Re-encoding Indicator"@en ;
+    skos:definition "Indício técnico de que o arquivo de vídeo ou áudio passou por nova etapa de compressão, mudança de resolução, taxa de quadros, estrutura de GOP ou taxa de bits."@pt ,
+                    "Technical indicator that the video or audio file underwent a new compression stage, resolution change, frame rate change, GOP structure alteration, or bitrate change."@en .
+
+oem:DescontinuidadeENF a owl:Class ;
+    rdfs:subClassOf oem:IndicioDeEdicao ;
+    rdfs:label "Descontinuidade de ENF"@pt , "ENF Discontinuity"@en ;
+    skos:definition "Salto abrupto estatisticamente significativo na curva da frequência da rede elétrica (ENF) em um instante específico do áudio."@pt ,
+                    "Statistically significant abrupt jump in the Electrical Network Frequency (ENF) curve at a specific audio instant."@en .
+
+oem:geraAchado a owl:ObjectProperty ;
+    rdfs:label "gera achado"@pt , "generates finding"@en .
+
+oem:comparadoComReferencia a owl:ObjectProperty ;
+    rdfs:label "comparado com referência"@pt , "compared with reference"@en .
+
+oem:resultadoExame a owl:DatatypeProperty ;
+    rdfs:label "resultado do exame"@pt , "examination result"@en .
+
+oem:snrMedio60Hz_dB a owl:DatatypeProperty ;
+    rdfs:label "SNR médio em 60 Hz (dB)"@pt , "mean SNR at 60 Hz (dB)"@en .
+
+oem:snrMedio120Hz_dB a owl:DatatypeProperty ;
+    rdfs:label "SNR médio em 120 Hz (dB)"@pt , "mean SNR at 120 Hz (dB)"@en .
+
+oem:limiarSNR_dB a owl:DatatypeProperty ;
+    rdfs:label "limiar de SNR configurado (dB)"@pt , "configured SNR threshold (dB)"@en .
+
+oem:desvioPadraoFreqNormalizadoHz a owl:DatatypeProperty ;
+    rdfs:label "desvio padrão de frequência normalizado (Hz)"@pt , "normalized frequency standard deviation (Hz)"@en .
+
+oem:instanteSegundos a owl:DatatypeProperty ;
+    rdfs:label "instante em segundos"@pt , "instant in seconds"@en .
+
+oem:estruturaGOPResumo a owl:DatatypeProperty ;
+    rdfs:label "resumo da estrutura de GOP"@pt , "GOP structure summary"@en .
+
+oem:valorReferencia a owl:DatatypeProperty ;
+    rdfs:label "valor na referência"@pt , "reference value"@en .
+
+oem:valorObservado a owl:DatatypeProperty ;
+    rdfs:label "valor observado"@pt , "observed value"@en .
+
+# =============================================================================
+# 1. Transformações Homomórficas: Geração de Espectrogramas
+# =============================================================================
+
+oem:Espectrograma_video_original_1 a owl:NamedIndividual , oem:ArtefatoAnalitico ;
+    rdfs:label "Espectrograma PSD de video_original_1.wav"@pt , "PSD Spectrogram of video_original_1.wav"@en ;
+    oem:caminhoArquivo "results/analises/caso_a/espectrogramas/espectrograma_video_original_1.png"^^xsd:string ;
+    oem:tamanhoBytes 876600 ;
+    oem:temValorHash oem:Hash_Espectrograma_video_original_1 .
+
+oem:Hash_Espectrograma_video_original_1 a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de espectrograma_video_original_1.png"@pt , "SHA-256 Hash of espectrograma_video_original_1.png"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "1b8aa84ea920ee2604fff5e70b17763e184495fe5e35ed617263e7b120e75025"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:04-03:00"^^xsd:dateTime .
+
+oem:GeracaoEspectrograma_video_original_1 a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:GeracaoDeEspectrograma ;
+    rdfs:label "Geração Homomórfica de Espectrograma - video_original_1"@pt , "Homomorphic Spectrogram Generation - video_original_1"@en ;
+    oem:temEntrada oem:Evidencia_Audio_Original_1_Stereo ;
+    oem:temSaida oem:Espectrograma_video_original_1 ;
+    oem:verificadaPor oem:Hash_Espectrograma_video_original_1 ;
+    oem:registradaEm oem:RegistroCustodia_Espectrograma_video_original_1 ;
+    oem:versaoFerramenta "Python 3.12.5 / SciPy 1.17.1 / Matplotlib 3.8.4"^^xsd:string ;
+    oem:parametrosTransformacao "scipy.signal.spectrogram(window='hann', nperseg=4096, noverlap=3072, nfft=4096, scaling='density', mode='psd', cmap='viridis', dpi=150, fmax_display_hz=8000.0)"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:04-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_Espectrograma_video_original_1 a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Espectrograma de video_original_1.wav"@pt , "Custody Record - Spectrogram of video_original_1.wav"@en ;
+    oem:documentaTransformacao oem:GeracaoEspectrograma_video_original_1 ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_Espectrograma_video_original_1 ;
+    oem:dataHora "2026-11-17T12:46:04-03:00"^^xsd:dateTime .
+
+oem:Espectrograma_video_original_1_mono a owl:NamedIndividual , oem:ArtefatoAnalitico ;
+    rdfs:label "Espectrograma PSD de video_original_1_mono.wav"@pt , "PSD Spectrogram of video_original_1_mono.wav"@en ;
+    oem:caminhoArquivo "results/analises/caso_a/espectrogramas/espectrograma_video_original_1_mono.png"^^xsd:string ;
+    oem:tamanhoBytes 884477 ;
+    oem:temValorHash oem:Hash_Espectrograma_video_original_1_mono .
+
+oem:Hash_Espectrograma_video_original_1_mono a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de espectrograma_video_original_1_mono.png"@pt , "SHA-256 Hash of espectrograma_video_original_1_mono.png"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "199bfbaf64473791cb960727bdba328169e51e3ba25ac5b7d7abd5bacbed0c51"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:06-03:00"^^xsd:dateTime .
+
+oem:GeracaoEspectrograma_video_original_1_mono a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:GeracaoDeEspectrograma ;
+    rdfs:label "Geração Homomórfica de Espectrograma - video_original_1_mono"@pt , "Homomorphic Spectrogram Generation - video_original_1_mono"@en ;
+    oem:temEntrada oem:Evidencia_Audio_Original_1_Mono ;
+    oem:temSaida oem:Espectrograma_video_original_1_mono ;
+    oem:verificadaPor oem:Hash_Espectrograma_video_original_1_mono ;
+    oem:registradaEm oem:RegistroCustodia_Espectrograma_video_original_1_mono ;
+    oem:versaoFerramenta "Python 3.12.5 / SciPy 1.17.1 / Matplotlib 3.8.4"^^xsd:string ;
+    oem:parametrosTransformacao "scipy.signal.spectrogram(window='hann', nperseg=4096, noverlap=3072, nfft=4096, scaling='density', mode='psd', cmap='viridis', dpi=150, fmax_display_hz=8000.0)"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:06-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_Espectrograma_video_original_1_mono a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Espectrograma de video_original_1_mono.wav"@pt , "Custody Record - Spectrogram of video_original_1_mono.wav"@en ;
+    oem:documentaTransformacao oem:GeracaoEspectrograma_video_original_1_mono ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_Espectrograma_video_original_1_mono ;
+    oem:dataHora "2026-11-17T12:46:06-03:00"^^xsd:dateTime .
+
+oem:Espectrograma_Video_original_2 a owl:NamedIndividual , oem:ArtefatoAnalitico ;
+    rdfs:label "Espectrograma PSD de Video_original_2.wav"@pt , "PSD Spectrogram of Video_original_2.wav"@en ;
+    oem:caminhoArquivo "results/analises/caso_a/espectrogramas/espectrograma_Video_original_2.png"^^xsd:string ;
+    oem:tamanhoBytes 1143905 ;
+    oem:temValorHash oem:Hash_Espectrograma_Video_original_2 .
+
+oem:Hash_Espectrograma_Video_original_2 a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de espectrograma_Video_original_2.png"@pt , "SHA-256 Hash of espectrograma_Video_original_2.png"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "193f4e0781675ee4fedce9adbe056938221152cd8485edecf32773fa02e8f6c8"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:18-03:00"^^xsd:dateTime .
+
+oem:GeracaoEspectrograma_Video_original_2 a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:GeracaoDeEspectrograma ;
+    rdfs:label "Geração Homomórfica de Espectrograma - Video_original_2"@pt , "Homomorphic Spectrogram Generation - Video_original_2"@en ;
+    oem:temEntrada oem:Evidencia_Audio_Original_2_Stereo ;
+    oem:temSaida oem:Espectrograma_Video_original_2 ;
+    oem:verificadaPor oem:Hash_Espectrograma_Video_original_2 ;
+    oem:registradaEm oem:RegistroCustodia_Espectrograma_Video_original_2 ;
+    oem:versaoFerramenta "Python 3.12.5 / SciPy 1.17.1 / Matplotlib 3.8.4"^^xsd:string ;
+    oem:parametrosTransformacao "scipy.signal.spectrogram(window='hann', nperseg=4096, noverlap=3072, nfft=4096, scaling='density', mode='psd', cmap='viridis', dpi=150, fmax_display_hz=8000.0)"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:18-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_Espectrograma_Video_original_2 a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Espectrograma de Video_original_2.wav"@pt , "Custody Record - Spectrogram of Video_original_2.wav"@en ;
+    oem:documentaTransformacao oem:GeracaoEspectrograma_Video_original_2 ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_Espectrograma_Video_original_2 ;
+    oem:dataHora "2026-11-17T12:46:18-03:00"^^xsd:dateTime .
+
+oem:Espectrograma_Video_original_2_mono a owl:NamedIndividual , oem:ArtefatoAnalitico ;
+    rdfs:label "Espectrograma PSD de Video_original_2_mono.wav"@pt , "PSD Spectrogram of Video_original_2_mono.wav"@en ;
+    oem:caminhoArquivo "results/analises/caso_a/espectrogramas/espectrograma_Video_original_2_mono.png"^^xsd:string ;
+    oem:tamanhoBytes 1143955 ;
+    oem:temValorHash oem:Hash_Espectrograma_Video_original_2_mono .
+
+oem:Hash_Espectrograma_Video_original_2_mono a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de espectrograma_Video_original_2_mono.png"@pt , "SHA-256 Hash of espectrograma_Video_original_2_mono.png"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "efa8f89de63e2ba04ad4f1b0a4da36b53a31e148b8a235da381ecb09c6a367e0"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:28-03:00"^^xsd:dateTime .
+
+oem:GeracaoEspectrograma_Video_original_2_mono a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:GeracaoDeEspectrograma ;
+    rdfs:label "Geração Homomórfica de Espectrograma - Video_original_2_mono"@pt , "Homomorphic Spectrogram Generation - Video_original_2_mono"@en ;
+    oem:temEntrada oem:Evidencia_Audio_Original_2_Mono ;
+    oem:temSaida oem:Espectrograma_Video_original_2_mono ;
+    oem:verificadaPor oem:Hash_Espectrograma_Video_original_2_mono ;
+    oem:registradaEm oem:RegistroCustodia_Espectrograma_Video_original_2_mono ;
+    oem:versaoFerramenta "Python 3.12.5 / SciPy 1.17.1 / Matplotlib 3.8.4"^^xsd:string ;
+    oem:parametrosTransformacao "scipy.signal.spectrogram(window='hann', nperseg=4096, noverlap=3072, nfft=4096, scaling='density', mode='psd', cmap='viridis', dpi=150, fmax_display_hz=8000.0)"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:28-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_Espectrograma_Video_original_2_mono a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Espectrograma de Video_original_2_mono.wav"@pt , "Custody Record - Spectrogram of Video_original_2_mono.wav"@en ;
+    oem:documentaTransformacao oem:GeracaoEspectrograma_Video_original_2_mono ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_Espectrograma_Video_original_2_mono ;
+    oem:dataHora "2026-11-17T12:46:28-03:00"^^xsd:dateTime .
+
+# =============================================================================
+# 2. Exames Periciais de ENF (60 Hz e Harmônico de 120 Hz)
+# =============================================================================
+
+oem:CurvaENF_video_original_1 a owl:NamedIndividual , oem:ArtefatoAnalitico ;
+    rdfs:label "Série Temporal ENF (60/120 Hz) de video_original_1.wav"@pt , "ENF Time Series (60/120 Hz) of video_original_1.wav"@en ;
+    oem:caminhoArquivo "results/analises/caso_a/enf/enf_video_original_1.csv"^^xsd:string ;
+    oem:temValorHash oem:Hash_CurvaENF_video_original_1 .
+
+oem:Hash_CurvaENF_video_original_1 a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de enf_video_original_1.csv"@pt , "SHA-256 Hash of enf_video_original_1.csv"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "89090b9968c27973057046939e5b262c6f1fd11a24d7627b46dbf1267d43b524"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:04-03:00"^^xsd:dateTime .
+
+oem:ExameENF_video_original_1 a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExameENF , oem:ExtracaoDeCurvaENF ;
+    rdfs:label "Exame ENF (60/120 Hz) - video_original_1"@pt , "ENF Examination (60/120 Hz) - video_original_1"@en ;
+    oem:temEntrada oem:Evidencia_Audio_Original_1_Stereo ;
+    oem:temSaida oem:CurvaENF_video_original_1 ;
+    oem:verificadaPor oem:Hash_CurvaENF_video_original_1 ;
+    oem:desvioPadraoFreqNormalizadoHz 0.02238 ;
+    oem:registradaEm oem:RegistroCustodia_ExameENF_video_original_1 ;
+    oem:resultadoExame "ENF detectável"^^xsd:string ;
+    oem:limiarSNR_dB 6.0 ;
+    oem:snrMedio60Hz_dB 3.928 ;
+    oem:snrMedio120Hz_dB 8.995 ;
+    oem:parametrosTransformacao "grid=60Hz, harmonics=[60,120]Hz, target_fs=1200Hz, win=4.0s, hop=1.0s, zpad=8x, snr_thr=6.0dB, min_stable_ratio=0.60, max_norm_std=0.15Hz, step_thr=0.08Hz"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:04-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExameENF_video_original_1 a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Exame ENF de video_original_1.wav"@pt , "Custody Record - ENF Examination of video_original_1.wav"@en ;
+    oem:documentaTransformacao oem:ExameENF_video_original_1 ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_CurvaENF_video_original_1 ;
+    oem:dataHora "2026-11-17T12:46:04-03:00"^^xsd:dateTime .
+
+oem:CurvaENF_video_original_1_mono a owl:NamedIndividual , oem:ArtefatoAnalitico ;
+    rdfs:label "Série Temporal ENF (60/120 Hz) de video_original_1_mono.wav"@pt , "ENF Time Series (60/120 Hz) of video_original_1_mono.wav"@en ;
+    oem:caminhoArquivo "results/analises/caso_a/enf/enf_video_original_1_mono.csv"^^xsd:string ;
+    oem:temValorHash oem:Hash_CurvaENF_video_original_1_mono .
+
+oem:Hash_CurvaENF_video_original_1_mono a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de enf_video_original_1_mono.csv"@pt , "SHA-256 Hash of enf_video_original_1_mono.csv"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "97d2883f01e744fd173e3a851d984276aef2ed7a033677f8d9344f44043954b1"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:06-03:00"^^xsd:dateTime .
+
+oem:ExameENF_video_original_1_mono a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExameENF , oem:ExtracaoDeCurvaENF ;
+    rdfs:label "Exame ENF (60/120 Hz) - video_original_1_mono"@pt , "ENF Examination (60/120 Hz) - video_original_1_mono"@en ;
+    oem:temEntrada oem:Evidencia_Audio_Original_1_Mono ;
+    oem:temSaida oem:CurvaENF_video_original_1_mono ;
+    oem:verificadaPor oem:Hash_CurvaENF_video_original_1_mono ;
+    oem:desvioPadraoFreqNormalizadoHz 0.02238 ;
+    oem:registradaEm oem:RegistroCustodia_ExameENF_video_original_1_mono ;
+    oem:resultadoExame "ENF detectável"^^xsd:string ;
+    oem:limiarSNR_dB 6.0 ;
+    oem:snrMedio60Hz_dB 3.932 ;
+    oem:snrMedio120Hz_dB 8.994 ;
+    oem:parametrosTransformacao "grid=60Hz, harmonics=[60,120]Hz, target_fs=1200Hz, win=4.0s, hop=1.0s, zpad=8x, snr_thr=6.0dB, min_stable_ratio=0.60, max_norm_std=0.15Hz, step_thr=0.08Hz"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:06-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExameENF_video_original_1_mono a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Exame ENF de video_original_1_mono.wav"@pt , "Custody Record - ENF Examination of video_original_1_mono.wav"@en ;
+    oem:documentaTransformacao oem:ExameENF_video_original_1_mono ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_CurvaENF_video_original_1_mono ;
+    oem:dataHora "2026-11-17T12:46:06-03:00"^^xsd:dateTime .
+
+oem:CurvaENF_Video_original_2 a owl:NamedIndividual , oem:ArtefatoAnalitico ;
+    rdfs:label "Série Temporal ENF (60/120 Hz) de Video_original_2.wav"@pt , "ENF Time Series (60/120 Hz) of Video_original_2.wav"@en ;
+    oem:caminhoArquivo "results/analises/caso_a/enf/enf_Video_original_2.csv"^^xsd:string ;
+    oem:temValorHash oem:Hash_CurvaENF_Video_original_2 .
+
+oem:Hash_CurvaENF_Video_original_2 a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de enf_Video_original_2.csv"@pt , "SHA-256 Hash of enf_Video_original_2.csv"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "265177f2122978b403febc0b4b48c17cd3c6233e21ee442b6d2cd09bafdd6b0c"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:18-03:00"^^xsd:dateTime .
+
+oem:ExameENF_Video_original_2 a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExameENF ;
+    rdfs:label "Exame ENF (60/120 Hz) - Video_original_2"@pt , "ENF Examination (60/120 Hz) - Video_original_2"@en ;
+    oem:temEntrada oem:Evidencia_Audio_Original_2_Stereo ;
+
+    oem:registradaEm oem:RegistroCustodia_ExameENF_Video_original_2 ;
+    oem:resultadoExame "ENF não detectável"^^xsd:string ;
+    oem:limiarSNR_dB 6.0 ;
+    oem:snrMedio60Hz_dB 12.493 ;
+    oem:snrMedio120Hz_dB 10.577 ;
+    oem:parametrosTransformacao "grid=60Hz, harmonics=[60,120]Hz, target_fs=1200Hz, win=4.0s, hop=1.0s, zpad=8x, snr_thr=6.0dB, min_stable_ratio=0.60, max_norm_std=0.15Hz, step_thr=0.08Hz"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:18-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExameENF_Video_original_2 a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Exame ENF de Video_original_2.wav"@pt , "Custody Record - ENF Examination of Video_original_2.wav"@en ;
+    oem:documentaTransformacao oem:ExameENF_Video_original_2 ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_CurvaENF_Video_original_2 ;
+    oem:dataHora "2026-11-17T12:46:18-03:00"^^xsd:dateTime .
+
+oem:CurvaENF_Video_original_2_mono a owl:NamedIndividual , oem:ArtefatoAnalitico ;
+    rdfs:label "Série Temporal ENF (60/120 Hz) de Video_original_2_mono.wav"@pt , "ENF Time Series (60/120 Hz) of Video_original_2_mono.wav"@en ;
+    oem:caminhoArquivo "results/analises/caso_a/enf/enf_Video_original_2_mono.csv"^^xsd:string ;
+    oem:temValorHash oem:Hash_CurvaENF_Video_original_2_mono .
+
+oem:Hash_CurvaENF_Video_original_2_mono a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de enf_Video_original_2_mono.csv"@pt , "SHA-256 Hash of enf_Video_original_2_mono.csv"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "5b7b45dcd52788a99a3709112d016f93fd7ccfd11e951f0c5d5ef3f237c7fa9c"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:28-03:00"^^xsd:dateTime .
+
+oem:ExameENF_Video_original_2_mono a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExameENF ;
+    rdfs:label "Exame ENF (60/120 Hz) - Video_original_2_mono"@pt , "ENF Examination (60/120 Hz) - Video_original_2_mono"@en ;
+    oem:temEntrada oem:Evidencia_Audio_Original_2_Mono ;
+
+    oem:registradaEm oem:RegistroCustodia_ExameENF_Video_original_2_mono ;
+    oem:resultadoExame "ENF não detectável"^^xsd:string ;
+    oem:limiarSNR_dB 6.0 ;
+    oem:snrMedio60Hz_dB 12.493 ;
+    oem:snrMedio120Hz_dB 10.577 ;
+    oem:parametrosTransformacao "grid=60Hz, harmonics=[60,120]Hz, target_fs=1200Hz, win=4.0s, hop=1.0s, zpad=8x, snr_thr=6.0dB, min_stable_ratio=0.60, max_norm_std=0.15Hz, step_thr=0.08Hz"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:28-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExameENF_Video_original_2_mono a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Exame ENF de Video_original_2_mono.wav"@pt , "Custody Record - ENF Examination of Video_original_2_mono.wav"@en ;
+    oem:documentaTransformacao oem:ExameENF_Video_original_2_mono ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_CurvaENF_Video_original_2_mono ;
+    oem:dataHora "2026-11-17T12:46:28-03:00"^^xsd:dateTime .
+
+# =============================================================================
+# 3. Exame de Metadados de Contêiner e Estrutura de GOP (ffprobe -show_frames)
+# =============================================================================
+
+oem:Hash_RelatorioGOP_video_original_1 a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de gop_video_original_1.json"@pt , "SHA-256 Hash of gop_video_original_1.json"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "eb03516c8320dd70da40f36068f0f8068ae334179e9013171897af08de0deec2"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:02-03:00"^^xsd:dateTime .
+
+oem:ExameContainerGOP_video_original_1 a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExameMetadadosContainerGOP ;
+    rdfs:label "Exame de Contêiner e GOP - video_original_1.mp4"@pt , "Container and GOP Examination - video_original_1.mp4"@en ;
+    oem:temEntrada oem:Evidencia_Original_1_Work ;
+    oem:comparadoComReferencia oem:Evidencia_Original_1_Work ;
+    oem:verificadaPor oem:Hash_RelatorioGOP_video_original_1 ;
+    oem:registradaEm oem:RegistroCustodia_ExameContainerGOP_video_original_1 ;
+    oem:comandoExecutado "ffprobe -v quiet -select_streams v:0 -show_entries frame=pict_type,key_frame,pkt_pts_time,pkt_size -print_format json data/work/caso_a/video_original_1.mp4"^^xsd:string ;
+    oem:estruturaGOPResumo "frames=217, I=1, P=216, B=0, num_gops=1, gop_lengths=[217], pattern_prefix=IPPPPPPPPPPPPPPPPPPP"^^xsd:string ;
+    oem:resultadoExame "0 indício(s) de recodificação observado(s)"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:02-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExameContainerGOP_video_original_1 a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Exame de Contêiner e GOP de video_original_1.mp4"@pt ,
+               "Custody Record - Container and GOP Examination of video_original_1.mp4"@en ;
+    oem:documentaTransformacao oem:ExameContainerGOP_video_original_1 ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_RelatorioGOP_video_original_1 ;
+    oem:dataHora "2026-11-17T12:46:02-03:00"^^xsd:dateTime .
+
+oem:Hash_RelatorioGOP_Video_original_2 a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de gop_Video_original_2.json"@pt , "SHA-256 Hash of gop_Video_original_2.json"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "95d96fdf2498843c02d481da563fa2cb26938753dc91417361b746d578d24d24"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:08-03:00"^^xsd:dateTime .
+
+oem:ExameContainerGOP_Video_original_2 a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExameMetadadosContainerGOP ;
+    rdfs:label "Exame de Contêiner e GOP - Video_original_2.mp4"@pt , "Container and GOP Examination - Video_original_2.mp4"@en ;
+    oem:temEntrada oem:Evidencia_Original_2_Work ;
+    oem:comparadoComReferencia oem:Evidencia_Original_2_Work ;
+    oem:verificadaPor oem:Hash_RelatorioGOP_Video_original_2 ;
+    oem:registradaEm oem:RegistroCustodia_ExameContainerGOP_Video_original_2 ;
+    oem:comandoExecutado "ffprobe -v quiet -select_streams v:0 -show_entries frame=pict_type,key_frame,pkt_pts_time,pkt_size -print_format json data/work/caso_a/Video_original_2.mp4"^^xsd:string ;
+    oem:estruturaGOPResumo "frames=1877, I=8, P=547, B=1322, num_gops=8, gop_lengths=[250, 250, 250, 250, 250, 250, 250, 127], pattern_prefix=IBPBBPBBPBBBPBBBPBBB"^^xsd:string ;
+    oem:resultadoExame "0 indício(s) de recodificação observado(s)"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:46:08-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExameContainerGOP_Video_original_2 a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Exame de Contêiner e GOP de Video_original_2.mp4"@pt ,
+               "Custody Record - Container and GOP Examination of Video_original_2.mp4"@en ;
+    oem:documentaTransformacao oem:ExameContainerGOP_Video_original_2 ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_RelatorioGOP_Video_original_2 ;
+    oem:dataHora "2026-11-17T12:46:08-03:00"^^xsd:dateTime .

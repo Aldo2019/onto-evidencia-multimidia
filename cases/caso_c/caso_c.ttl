@@ -1,0 +1,178 @@
+@prefix oem: <http://example.org/oem#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.org/oem/cases/caso_c> a owl:Ontology ;
+    owl:imports <http://example.org/oem> ;
+    rdfs:label "Caso C - Versão Recodificada por Aplicativo de Mensagem sem Registro de Custódia"@pt ,
+               "Case C - Messaging App Re-encoded Version without Custody Record"@en ;
+    skos:definition "Instâncias e exames periciais do Caso C: vídeo recodificado por transmissão em aplicativo de mensageria sem registro de custódia (registradaEm max 0 RegistroDeCustodia)."@pt ,
+                    "Instances and forensic examinations for Case C: video re-encoded by messaging app transmission lacking a custody record (registradaEm max 0 RegistroDeCustodia)."@en .
+
+# =============================================================================
+# Agente e Evidências de Entrada e Saída (Caso C)
+# =============================================================================
+
+oem:Agente_Perito a owl:NamedIndividual , oem:Agente ;
+    rdfs:label "Agente (perito)"@pt , "Agente (perito)"@en ;
+    oem:nomeAgente "Agente (perito)"^^xsd:string .
+
+oem:Evidencia_Original_1_Work a owl:NamedIndividual , oem:EvidenciaMultimidia ;
+    rdfs:label "Vídeo Original 1 (Cópia de Referência - Caso A)"@pt ,
+               "Original Video 1 (Reference Copy - Case A)"@en ;
+    oem:caminhoArquivo "data/work/caso_a/video_original_1.mp4"^^xsd:string ;
+    oem:tamanhoBytes 1718872 .
+
+oem:Evidencia_Recodificado_Mensageiro_1_Work a owl:NamedIndividual , oem:EvidenciaMultimidia ;
+    rdfs:label "Vídeo Recodificado por Aplicativo de Mensagem 1 (Caso C)"@pt ,
+               "Messaging App Re-encoded Video 1 (Case C)"@en ;
+    oem:caminhoArquivo "data/work/caso_c/video_recodificado_mensageiro_1.mp4"^^xsd:string ;
+    oem:tamanhoBytes 925087 ;
+    oem:sofreu oem:TransmissaoMensageiro_video_1 ;
+    oem:temValorHash oem:Hash_video_recodificado_mensageiro_1 .
+
+oem:Hash_video_recodificado_mensageiro_1 a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de video_recodificado_mensageiro_1.mp4"@pt ,
+               "SHA-256 Hash of video_recodificado_mensageiro_1.mp4"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "361fa834338c76bbc239589c46cc896cd0c524c0fe63a5d5a93f22728a00f3fd"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:59:56-03:00"^^xsd:dateTime .
+
+# =============================================================================
+# Recodificação de Transmissão SEM Registro de Custódia (registradaEm max 0)
+# =============================================================================
+
+oem:TransmissaoMensageiro_video_1 a owl:NamedIndividual , oem:RecodificacaoDeTransmissao , [
+        a owl:Restriction ;
+        owl:onProperty oem:registradaEm ;
+        owl:maxQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+        owl:onClass oem:RegistroDeCustodia
+    ] ;
+    rdfs:label "Recodificação por Aplicativo de Mensagem sem Registro de Custódia"@pt ,
+               "Messaging App Re-encoding without Custody Record"@en ;
+    oem:temEntrada oem:Evidencia_Original_1_Work ;
+    oem:temSaida oem:Evidencia_Recodificado_Mensageiro_1_Work ;
+    oem:parametrosTransformacao "Recodificação com perdas (H.264 Main@L3.1, CRF 28, 476x848, B-frames=2, AAC 96 kbps @ 44100 Hz) e remoção de metadados (-map_metadata -1) sem registro na cadeia de custódia"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:59:56-03:00"^^xsd:dateTime .
+
+# =============================================================================
+# Extração de Áudio, Espectrograma, Exame ENF e Exame de GOP do Caso C
+# =============================================================================
+
+oem:Evidencia_Audio_Recodificado_1_Stereo a owl:NamedIndividual , oem:EvidenciaMultimidia ;
+    rdfs:label "Áudio Extraído Estéreo de video_recodificado_mensageiro_1.mp4"@pt ,
+               "Extracted Stereo Audio of video_recodificado_mensageiro_1.mp4"@en ;
+    oem:caminhoArquivo "data/work/caso_c/video_recodificado_mensageiro_1.wav"^^xsd:string ;
+    oem:tamanhoBytes 1278030 ;
+    oem:taxaAmostragemHz 44100 ;
+    oem:numeroCanais 2 ;
+    oem:temValorHash oem:Hash_video_recodificado_mensageiro_1_wav .
+
+oem:Hash_video_recodificado_mensageiro_1_wav a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de video_recodificado_mensageiro_1.wav"@pt ,
+               "SHA-256 Hash of video_recodificado_mensageiro_1.wav"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "5dd05a685402ef19edc9fdd82fb4cfd74b1bf41aaa2b2224ca74d9c9196a87c4"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:59:57-03:00"^^xsd:dateTime .
+
+oem:ExtracaoDeAudio_video_recodificado_1_Stereo a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExtracaoDeAudio ;
+    rdfs:label "Extração de Áudio (Estéreo) - video_recodificado_mensageiro_1"@pt ,
+               "Audio Extraction (Stereo) - video_recodificado_mensageiro_1"@en ;
+    oem:temEntrada oem:Evidencia_Recodificado_Mensageiro_1_Work ;
+    oem:temSaida oem:Evidencia_Audio_Recodificado_1_Stereo ;
+    oem:verificadaPor oem:Hash_video_recodificado_mensageiro_1_wav ;
+    oem:registradaEm oem:RegistroCustodia_ExtracaoAudio_video_recodificado_1_Stereo ;
+    oem:comandoExecutado "ffmpeg -i data/work/caso_c/video_recodificado_mensageiro_1.mp4 -vn -map 0:a:0 -c:a pcm_s16le data/work/caso_c/video_recodificado_mensageiro_1.wav"^^xsd:string ;
+    oem:versaoFerramenta "ffmpeg version 8.1.1-full_build-www.gyan.dev"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:59:57-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExtracaoAudio_video_recodificado_1_Stereo a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Extração de Áudio de video_recodificado_mensageiro_1.mp4"@pt ,
+               "Custody Record - Audio Extraction of video_recodificado_mensageiro_1.mp4"@en ;
+    oem:documentaTransformacao oem:ExtracaoDeAudio_video_recodificado_1_Stereo ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_video_recodificado_mensageiro_1_wav ;
+    oem:dataHora "2026-11-17T12:59:57-03:00"^^xsd:dateTime .
+
+oem:CurvaENF_video_recodificado_mensageiro_1 a owl:NamedIndividual , oem:ArtefatoAnalitico ;
+    rdfs:label "Série Temporal ENF (60/120 Hz) de video_recodificado_mensageiro_1.wav"@pt ,
+               "ENF Time Series (60/120 Hz) of video_recodificado_mensageiro_1.wav"@en ;
+    oem:caminhoArquivo "results/analises/caso_c/enf/enf_video_recodificado_mensageiro_1.csv"^^xsd:string ;
+    oem:temValorHash oem:Hash_CurvaENF_video_recodificado_mensageiro_1 .
+
+oem:Hash_CurvaENF_video_recodificado_mensageiro_1 a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de enf_video_recodificado_mensageiro_1.csv"@pt ,
+               "SHA-256 Hash of enf_video_recodificado_mensageiro_1.csv"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "53f55af0cd3e73a21f24f0e7126e35cf6bc79ef7973e227237590cca8bf53d3f"^^xsd:string ;
+    oem:dataHora "2026-11-17T13:01:15-03:00"^^xsd:dateTime .
+
+oem:ExameENF_video_recodificado_mensageiro_1 a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExameENF , oem:ExtracaoDeCurvaENF ;
+    rdfs:label "Exame ENF (60/120 Hz) - video_recodificado_mensageiro_1"@pt ,
+               "ENF Examination (60/120 Hz) - video_recodificado_mensageiro_1"@en ;
+    oem:temEntrada oem:Evidencia_Audio_Recodificado_1_Stereo ;
+    oem:temSaida oem:CurvaENF_video_recodificado_mensageiro_1 ;
+    oem:verificadaPor oem:Hash_CurvaENF_video_recodificado_mensageiro_1 ;
+    oem:registradaEm oem:RegistroCustodia_ExameENF_video_recodificado_mensageiro_1 ;
+    oem:resultadoExame "ENF detectável"^^xsd:string ;
+    oem:limiarSNR_dB 6.0 ;
+    oem:snrMedio60Hz_dB 4.292 ;
+    oem:snrMedio120Hz_dB 8.966 ;
+    oem:desvioPadraoFreqNormalizadoHz 0.02633 ;
+    oem:dataHora "2026-11-17T13:01:15-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExameENF_video_recodificado_mensageiro_1 a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Exame ENF de video_recodificado_mensageiro_1.wav"@pt ,
+               "Custody Record - ENF Examination of video_recodificado_mensageiro_1.wav"@en ;
+    oem:documentaTransformacao oem:ExameENF_video_recodificado_mensageiro_1 ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_CurvaENF_video_recodificado_mensageiro_1 ;
+    oem:dataHora "2026-11-17T13:01:15-03:00"^^xsd:dateTime .
+
+oem:ExameContainerGOP_video_recodificado_mensageiro_1 a owl:NamedIndividual , oem:TransformacaoHomomorfica , oem:ExameMetadadosContainerGOP ;
+    rdfs:label "Exame de Contêiner e GOP - video_recodificado_mensageiro_1.mp4"@pt ,
+               "Container and GOP Examination - video_recodificado_mensageiro_1.mp4"@en ;
+    oem:temEntrada oem:Evidencia_Recodificado_Mensageiro_1_Work ;
+    oem:comparadoComReferencia oem:Evidencia_Original_1_Work ;
+    oem:geraAchado oem:IndicioRecodificacao_caso_c_1_DivergenciaDeResolucaoOuOrientacao ,
+                   oem:IndicioRecodificacao_caso_c_2_DivergenciaDeEstruturaGOP ,
+                   oem:IndicioRecodificacao_caso_c_3_DivergenciaDeTimeBaseVideo ,
+                   oem:IndicioRecodificacao_caso_c_4_DivergenciaDeBitrate ;
+    oem:registradaEm oem:RegistroCustodia_ExameGOP_caso_c ;
+    oem:estruturaGOPResumo "frames=217, I=1, P=63, B=153, num_gops=1, gop_lengths=[217], pattern_prefix=IBBBPBBBPBBBPBBBPBBB"^^xsd:string ;
+    oem:resultadoExame "4 indício(s) de recodificação observado(s)"^^xsd:string ;
+    oem:dataHora "2026-11-17T13:01:13-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_ExameGOP_caso_c a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Exame GOP Caso C"@pt ,
+               "Custody Record - GOP Examination Case C"@en ;
+    oem:documentaTransformacao oem:ExameContainerGOP_video_recodificado_mensageiro_1 ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:dataHora "2026-11-17T13:01:13-03:00"^^xsd:dateTime .
+
+oem:IndicioRecodificacao_caso_c_1_DivergenciaDeResolucaoOuOrientacao a owl:NamedIndividual , oem:DivergenciaDeResolucaoOuOrientacao ;
+    rdfs:label "Indício de Recodificação (DivergenciaDeResolucaoOuOrientacao) em video_recodificado_mensageiro_1.mp4"@pt ,
+               "Re-encoding Indicator (DivergenciaDeResolucaoOuOrientacao) in video_recodificado_mensageiro_1.mp4"@en ;
+    oem:valorReferencia "478x850"^^xsd:string ;
+    oem:valorObservado "476x848"^^xsd:string .
+
+oem:IndicioRecodificacao_caso_c_2_DivergenciaDeEstruturaGOP a owl:NamedIndividual , oem:DivergenciaDeEstruturaGOP ;
+    rdfs:label "Indício de Recodificação (DivergenciaDeEstruturaGOP) em video_recodificado_mensageiro_1.mp4"@pt ,
+               "Re-encoding Indicator (DivergenciaDeEstruturaGOP) in video_recodificado_mensageiro_1.mp4"@en ;
+    oem:valorReferencia "B=0,maxGOP=217,pat=IPPPPPPPPP"^^xsd:string ;
+    oem:valorObservado "B=153,maxGOP=217,pat=IBBBPBBBPB"^^xsd:string .
+
+oem:IndicioRecodificacao_caso_c_3_DivergenciaDeTimeBaseVideo a owl:NamedIndividual , oem:DivergenciaDeTimeBaseVideo ;
+    rdfs:label "Indício de Recodificação (DivergenciaDeTimeBaseVideo) em video_recodificado_mensageiro_1.mp4"@pt ,
+               "Re-encoding Indicator (DivergenciaDeTimeBaseVideo) in video_recodificado_mensageiro_1.mp4"@en ;
+    oem:valorReferencia "1/90000"^^xsd:string ;
+    oem:valorObservado "1/15360"^^xsd:string .
+
+oem:IndicioRecodificacao_caso_c_4_DivergenciaDeBitrate a owl:NamedIndividual , oem:DivergenciaDeBitrate ;
+    rdfs:label "Indício de Recodificação (DivergenciaDeBitrate) em video_recodificado_mensageiro_1.mp4"@pt ,
+               "Re-encoding Indicator (DivergenciaDeBitrate) in video_recodificado_mensageiro_1.mp4"@en ;
+    oem:valorReferencia "v=1577083,a=319352"^^xsd:string ;
+    oem:valorObservado "v=916790,a=95586"^^xsd:string .

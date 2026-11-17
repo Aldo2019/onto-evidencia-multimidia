@@ -1,0 +1,9 @@
+exame,audioEntrada,resultado,snr60,snr120,limiar
+http://example.org/oem#ExameENF_video_sintetico_1_1,http://example.org/oem#Evidencia_Audio_Sintetico_1_1_Stereo,ENF detectável,7.913,10.418,6.0
+http://example.org/oem#ExameENF_video_sintetico_1_1_mono,http://example.org/oem#Evidencia_Audio_Sintetico_1_1_Mono,ENF detectável,7.905,10.419,6.0
+http://example.org/oem#ExameENF_video_sintetico_1_2,http://example.org/oem#Evidencia_Audio_Sintetico_1_2_Stereo,ENF não detectável,11.16,4.778,6.0
+http://example.org/oem#ExameENF_video_sintetico_1_2_mono,http://example.org/oem#Evidencia_Audio_Sintetico_1_2_Mono,ENF não detectável,11.162,4.769,6.0
+http://example.org/oem#ExameENF_video_sintetico_2_1,http://example.org/oem#Evidencia_Audio_Sintetico_2_1_Stereo,ENF não detectável,10.313,8.049,6.0
+http://example.org/oem#ExameENF_video_sintetico_2_1_mono,http://example.org/oem#Evidencia_Audio_Sintetico_2_1_Mono,ENF não detectável,10.313,8.049,6.0
+http://example.org/oem#ExameENF_video_sintetico_2_2,http://example.org/oem#Evidencia_Audio_Sintetico_2_2_Stereo,ENF não detectável,9.579,5.485,6.0
+http://example.org/oem#ExameENF_video_sintetico_2_2_mono,http://example.org/oem#Evidencia_Audio_Sintetico_2_2_Mono,ENF não detectável,9.579,5.485,6.0
