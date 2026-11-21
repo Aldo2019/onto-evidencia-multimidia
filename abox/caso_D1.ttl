@@ -1,0 +1,93 @@
+@prefix oem: <http://example.org/oem#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.org/oem/abox/caso_D1> a owl:Ontology ;
+    owl:imports <http://example.org/oem> ;
+    rdfs:label "Cenário D1 (Com Fechamento) - Detecção de Contradição entre Atestação Pericial e Transformação Generativa"@pt ,
+               "Scenario D1 (With Closure) - Contradiction Detection between Forensic Closure Attestation and Generative Transformation"@en ;
+    skos:definition "Variante D1 do Cenário D baseada na evidência única oem:Evidencia_Original_1_Work (vídeo original do Conjunto 1), mantendo o axioma de fechamento do Caso A e acrescentando uma transformação generativa oem:t_g registrada em um registro de terceiro."@pt ,
+                    "Scenario D variant D1 based on the single evidence item oem:Evidencia_Original_1_Work (original video from Set 1), retaining Case A's closure axiom while asserting an additional generative transformation oem:t_g recorded in a third-party custody record."@en .
+
+# =============================================================================
+# Agentes
+# =============================================================================
+
+oem:Agente_Perito a owl:NamedIndividual , oem:Agente ;
+    rdfs:label "Agente (perito)"@pt , "Agente (perito)"@en ;
+    oem:nomeAgente "Agente (perito)"^^xsd:string .
+
+# =============================================================================
+# Evidência Única (Conjunto 1 — video_original_1.mp4, copiada do Caso A)
+# =============================================================================
+
+oem:Evidencia_Original_1_Raw a owl:NamedIndividual , oem:EvidenciaMultimidia ;
+    rdfs:label "Vídeo Original 1 ( Matriz Somente Leitura )"@pt ,
+               "Original Video 1 ( Read-Only Master )"@en ;
+    oem:caminhoArquivo "Vídeos/Vídeo_1/video_original_1.mp4"^^xsd:string ;
+    oem:tamanhoBytes 1718872 ;
+    oem:somenteLeitura true ;
+    oem:temValorHash oem:Hash_video_original_1 .
+
+oem:Evidencia_Original_1_Work a owl:NamedIndividual , oem:EvidenciaMultimidia ;
+    rdfs:label "Vídeo Original 1 ( Cópia Forense de Trabalho - Caso A )"@pt ,
+               "Original Video 1 ( Working Forensic Copy - Case A )"@en ;
+    oem:caminhoArquivo "data/work/caso_a/video_original_1.mp4"^^xsd:string ;
+    oem:tamanhoBytes 1718872 ;
+    oem:somenteLeitura false ;
+    oem:temValorHash oem:Hash_video_original_1 .
+
+oem:Hash_video_original_1 a owl:NamedIndividual , oem:ValorHash ;
+    rdfs:label "Hash SHA-256 de video_original_1.mp4"@pt ,
+               "SHA-256 Hash of video_original_1.mp4"@en ;
+    oem:algoritmoHash "SHA-256"^^xsd:string ;
+    oem:valorHashHex "3abe96337aefc4c4cfb89f24ed6d4bda598b55b0f0d9216245d1dd7fd9984ba3"^^xsd:string ;
+    oem:dataHora "2026-11-17T12:29:13-03:00"^^xsd:dateTime .
+
+oem:CopiaForense_video_original_1 a owl:NamedIndividual , oem:TransformacaoIsomorfica ;
+    rdfs:label "Cópia Forense Isomórfica de video_original_1.mp4"@pt ,
+               "Isomorphic Forensic Copy of video_original_1.mp4"@en ;
+    oem:temEntrada oem:Evidencia_Original_1_Raw ;
+    oem:temSaida oem:Evidencia_Original_1_Work ;
+    oem:verificadaPor oem:Hash_video_original_1 ;
+    oem:registradaEm oem:RegistroCustodia_video_original_1 ;
+    oem:dataHora "2026-11-17T12:29:13-03:00"^^xsd:dateTime .
+
+oem:RegistroCustodia_video_original_1 a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de Custódia - Cópia Forense de video_original_1.mp4"@pt ,
+               "Custody Record - Forensic Copy of video_original_1.mp4"@en ;
+    oem:documentaTransformacao oem:CopiaForense_video_original_1 ;
+    oem:atestadoPor oem:Agente_Perito ;
+    oem:verificadaPor oem:Hash_video_original_1 ;
+    oem:dataHora "2026-11-17T12:29:13-03:00"^^xsd:dateTime .
+
+# =============================================================================
+# Novo Indivíduo Generativo (t_g) com Registro de Terceiro
+# =============================================================================
+
+oem:RegistroCustodia_Terceiro a owl:NamedIndividual , oem:RegistroDeCustodia ;
+    rdfs:label "Registro de terceiro"@pt ,
+               "Third-party custody record"@en ;
+    oem:documentaTransformacao oem:t_g .
+
+oem:t_g a owl:NamedIndividual , oem:TransformacaoGenerativa ;
+    rdfs:label "Transformação Generativa de Terceiro (t_g)"@pt ,
+               "Third-Party Generative Transformation (t_g)"@en ;
+    oem:temSaida oem:Evidencia_Original_1_Work ;
+    oem:registradaEm oem:RegistroCustodia_Terceiro .
+
+# =============================================================================
+# Axioma de Fechamento Original do Caso A (SEM incluir oem:t_g)
+# =============================================================================
+
+oem:Evidencia_Original_1_Work a [
+    a owl:Restriction ;
+    owl:onProperty oem:sofreu ;
+    owl:allValuesFrom [
+        a owl:Class ;
+        owl:oneOf ( oem:CopiaForense_video_original_1 )
+    ]
+] .

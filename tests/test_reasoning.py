@@ -4,11 +4,15 @@ from __future__ import annotations
 
 import json
 import pathlib
+import subprocess
 import rdflib
 
 BASE_DIR = pathlib.Path(__file__).resolve().parent.parent
 REASONING_DIR = BASE_DIR / "results" / "reasoning"
 METRICS_DIR = BASE_DIR / "results" / "metrics"
+ABOX_DIR = BASE_DIR / "abox"
+SAIDAS_DIR = BASE_DIR / "saidas"
+ROBOT_JAR = BASE_DIR / "tools" / "robot.jar"
 OEM = rdflib.Namespace("http://example.org/oem#")
 RDF = rdflib.RDF
 
@@ -76,3 +80,60 @@ def test_caso_c_infers_cadeia_quebrada_and_not_integra() -> None:
     assert OEM.EvidenciaComCadeiaQuebrada in types
     assert OEM.EvidenciaIntegra not in types
     assert (OEM.TransmissaoMensageiro_video_1, RDF.type, OEM.TransformacaoNaoDeclarada) in g
+
+
+def test_cenario_d1_inconsistent(tmp_path: pathlib.Path) -> None:
+    """D1 (com fechamento + t_g generativa) deve resultar em ontologia inconsistente."""
+    expl_path = SAIDAS_DIR / "D1_explicacao.md"
+    assert expl_path.exists(), "Arquivo saidas/D1_explicacao.md não encontrado"
+    expl_text = expl_path.read_text(encoding="utf-8")
+    assert "owl#Thing" in expl_text and "owl#Nothing" in expl_text
+    assert "oem#t_g" in expl_text
+    assert "oem#TransformacaoGenerativa" in expl_text
+    assert "oem#TransformacaoIsomorfica" in expl_text
+    assert "oem#Evidencia_Original_1_Work" in expl_text
+
+    if ROBOT_JAR.exists():
+        merged = tmp_path / "d1_merged.ttl"
+        reasoned = tmp_path / "d1_reasoned.ttl"
+        merge_proc = subprocess.run(
+            [
+                "java", "-jar", str(ROBOT_JAR), "merge",
+                "--catalog", str(BASE_DIR / "catalog-v001.xml"),
+                "--input", str(BASE_DIR / "ontology" / "oem.ttl"),
+                "--input", str(ABOX_DIR / "caso_D1.ttl"),
+                "--output", str(merged),
+            ],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        assert merge_proc.returncode == 0, merge_proc.stderr
+        reason_proc = subprocess.run(
+            [
+                "java", "-jar", str(ROBOT_JAR), "reason",
+                "--catalog", str(BASE_DIR / "catalog-v001.xml"),
+                "--reasoner", "HermiT",
+                "--input", str(merged),
+                "--output", str(reasoned),
+            ],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        combined = f"{reason_proc.stdout}\n{reason_proc.stderr}".lower()
+        assert reason_proc.returncode != 0, "D1 deveria falhar por inconsistência no HermiT"
+        assert "inconsistent" in combined, f"Saída inesperada do HermiT: {combined}"
+
+
+def test_cenario_d2_conteudo_alterado_and_not_integra() -> None:
+    """D2 (controle, sem fechamento) deve ser consistente e inferir EvidenciaComConteudoAlterado."""
+    d2_path = SAIDAS_DIR / "D2_classificacao.ttl"
+    assert d2_path.exists(), "Arquivo saidas/D2_classificacao.ttl não encontrado"
+    g = rdflib.Graph()
+    g.parse(str(d2_path), format="turtle")
+    types = set(g.objects(OEM.Evidencia_Original_1_Work, RDF.type))
+    assert OEM.EvidenciaComConteudoAlterado in types
+    assert OEM.EvidenciaIntegra not in types
+    assert (OEM.t_g, RDF.type, OEM.TransformacaoGenerativa) in g
+    assert (OEM.t_g, RDF.type, OEM.TransformacaoDeclarada) in g

@@ -80,6 +80,28 @@ A tese central modelada e verificada formalmente na ontologia estabelece que:
 | **Caso A (Fechado)** | Isomórfica (`SHA-256`) + Homomórficas (`WAV`, `PSD`, `ENF`, `GOP`) | `registradaEm` presente + axioma $\forall \mathsf{sofreu}.\{t_1,\dots,t_n\}$ | **`oem:EvidenciaIntegra`** (`video_original_1`, `Video_original_2` e `.wav` estéreo) | `oem:EvidenciaComConteudoAlterado`, `oem:EvidenciaComCadeiaQuebrada` | `2836 ms` |
 | **Caso B (Deepfake)** | Generativa (`oem:TransformacaoGenerativa`) + Aquisição/Exames | Síntese generativa no percurso (`oem:SinteseDeepfake_*`) | **`oem:EvidenciaComConteudoAlterado`** (`video_sintetico_1_1` a `2_2`) | `oem:EvidenciaIntegra` (disjunta de conteúdo alterado) | `1476 ms` |
 | **Caso C (Mensageiro)** | Recodificação com perdas (`oem:RecodificacaoDeTransmissao`) | Sem registro explícito (`registradaEm max 0 RegistroDeCustodia`) | **`oem:EvidenciaComCadeiaQuebrada`** (`video_recodificado_mensageiro_1`) | `oem:EvidenciaIntegra`, `oem:EvidenciaComConteudoAlterado` | `1119 ms` |
+| **Cenário D1 (Contradição)** | Isomórfica (`CopiaForense_video_original_1`) + Generativa (`oem:t_g`, registro de terceiro) | Fechamento original $\forall \mathsf{sofreu}.\{\mathsf{CopiaForense\_video\_original\_1}\}$ (sem `t_g`) | **INCONSISTENTE** ($\top \sqsubseteq \bot$; 6 axiomas na justificação mínima) | Classificação inviável por contradição formal | `1690 ms` (reason) / `2124 ms` (explain) |
+| **Cenário D2 (Controle)** | Isomórfica (`CopiaForense_video_original_1`) + Generativa (`oem:t_g`, registro de terceiro) | Sem axioma de fechamento (OWA) | **Consistente**; **`oem:EvidenciaComConteudoAlterado`** (`Evidencia_Original_1_Work`) | `oem:EvidenciaIntegra` | `2034 ms` |
+
+---
+
+### Cenário D (Detecção de Contradição)
+
+O **Cenário D** avalia o comportamento da ontologia quando uma transformação generativa registrada por terceiro (`oem:t_g`, vinculada a `oem:RegistroCustodia_Terceiro`, `"Registro de terceiro"`) é asserida sobre uma evidência única (`oem:Evidencia_Original_1_Work`, vídeo original do Conjunto 1), em duas variantes sem alteração da TBox (`ontology/oem.ttl`) nem das ABoxes anteriores:
+
+- **D1 — Com fechamento (`abox/caso_D1.ttl` → `saidas/D1_explicacao.md`):** mantém o axioma de fechamento original do Caso A ($\forall \mathsf{sofreu}.\{\mathsf{CopiaForense\_video\_original\_1}\}$), sem incluir `oem:t_g`. O HermiT detectou **inconsistência lógica** (`1690 ms` no `robot reason`; `2124 ms` no `robot explain --mode inconsistency`). Como o fechamento restringe toda transformação sofrida pela evidência ao conjunto unitário da cópia isomórfica e `oem:sofreu` é inversa de `oem:temSaida`, a asserção de `oem:t_g` como `oem:TransformacaoGenerativa` entra em conflito direto com a disjunção entre transformações isomórficas, homomórficas e generativas.
+- **D2 — Controle, sem fechamento (`abox/caso_D2.ttl` → `saidas/D2_classificacao.ttl`):** idêntica a D1, porém removendo o axioma de fechamento. A ontologia permaneceu **consistente** (`2034 ms` no `robot reason`), e o HermiT inferiu `oem:Evidencia_Original_1_Work` como **`oem:EvidenciaComConteudoAlterado`** (e **não** como `oem:EvidenciaIntegra`), além de classificar `oem:t_g` em `oem:TransformacaoDeclarada`.
+
+#### Axiomas exatos na justificação mínima de inconsistência de D1 (`saidas/D1_explicacao.md`)
+
+Entailment explicado: `owl:Thing SubClassOf owl:Nothing` (6 axiomas):
+
+1. `[Third-Party Generative Transformation (t_g)](http://example.org/oem#t_g) Type [Transformação Generativa](http://example.org/oem#TransformacaoGenerativa)`
+2. `[underwent transformation](http://example.org/oem#sofreu) InverseOf [tem saída](http://example.org/oem#temSaida)`
+3. `[Isomorphic Forensic Copy of video_original_1.mp4](http://example.org/oem#CopiaForense_video_original_1) Type [Transformação Isomórfica](http://example.org/oem#TransformacaoIsomorfica)`
+4. `[Original Video 1 ( Working Forensic Copy - Case A )](http://example.org/oem#Evidencia_Original_1_Work) Type [underwent transformation](http://example.org/oem#sofreu) only ({[Isomorphic Forensic Copy of video_original_1.mp4](http://example.org/oem#CopiaForense_video_original_1)})`
+5. `[Third-Party Generative Transformation (t_g)](http://example.org/oem#t_g) [tem saída](http://example.org/oem#temSaida) [Original Video 1 ( Working Forensic Copy - Case A )](http://example.org/oem#Evidencia_Original_1_Work)`
+6. `DisjointClasses: [Transformação Generativa](http://example.org/oem#TransformacaoGenerativa), [Homomorphic Transformation](http://example.org/oem#TransformacaoHomomorfica), [Transformação Isomórfica](http://example.org/oem#TransformacaoIsomorfica)`
 
 ---
 

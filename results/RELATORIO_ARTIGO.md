@@ -259,8 +259,44 @@ SELECT DISTINCT ?evidencia ?transformacaoVioladora ?classificacaoEvidencia WHERE
 
 ## 7. Testes automatizados
 
-- **Saída resumida do `pytest` (`tests/test_reasoning.py`):** `5` testes executados, `5` aprovados (`PASSED` em `0.31s`), `0` falhos (`FAILED`) [`tests/test_reasoning.py`].
+- **Saída resumida do `pytest` (`tests/test_reasoning.py`):** `7` testes executados (`5` dos Casos A–C + `2` do Cenário D: D1 inconsistente e D2 consistente/classificado), `7` aprovados (`PASSED`), `0` falhos (`FAILED`) [`tests/test_reasoning.py`].
 - **Testes que falharam:** `Nenhum` (`0`).
+
+## Cenário D — Detecção de contradição (D1 e D2)
+
+Executado em `2026-11-21` sem alteração da TBox (`ontology/oem.ttl`) nem das ABoxes existentes (`cases/*`), usando `ROBOT 1.9.4` com raciocinador **HermiT** (`OpenJDK 25.0.5`) sobre uma única evidência do Conjunto 1 (`oem:Evidencia_Original_1_Work`, `video_original_1.mp4`), à qual foi acrescentado o indivíduo generativo `oem:t_g` (`rdf:type oem:TransformacaoGenerativa`; `oem:temSaida oem:Evidencia_Original_1_Work`; `oem:registradaEm oem:RegistroCustodia_Terceiro`, `"Registro de terceiro"`).
+
+### Resumo das variantes e tempos de execução
+
+| Variante | Arquivo ABox | Fechamento ($\forall\mathsf{sofreu}$) | Perfil OWL 2 DL | Resultado (HermiT) | Saída gerada | Tempo (`merge` / `reason` / `explain`) |
+| :--- | :--- | :---: | :---: | :--- | :--- | :--- |
+| **D1 (com fechamento)** | `abox/caso_D1.ttl` | Presente (`{CopiaForense_video_original_1}`, sem `t_g`) | Válido (`0` violações) | **INCONSISTENTE** (`exit 1`: *The ontology is inconsistent*) | `saidas/D1_explicacao.md` | `1824 ms` / **`1690 ms`** / **`2124 ms`** |
+| **D2 (controle, sem fechamento)** | `abox/caso_D2.ttl` | Ausente (OWA) | Válido (`0` violações) | **Consistente**; `Evidencia_Original_1_Work` inferida como `oem:EvidenciaComConteudoAlterado` (e **não** `oem:EvidenciaIntegra`); `t_g` em `oem:TransformacaoDeclarada` | `saidas/D2_classificacao.ttl` | `1604 ms` / **`2034 ms`** / `—` |
+
+### Axiomas exatos na justificação mínima de inconsistência de D1 (`saidas/D1_explicacao.md`)
+
+Gerados por `robot explain --reasoner HermiT --mode inconsistency` (`owl:Thing SubClassOf owl:Nothing`, exatamente `6` axiomas):
+
+```manchester
+t_g Type TransformacaoGenerativa
+sofreu InverseOf temSaida
+CopiaForense_video_original_1 Type TransformacaoIsomorfica
+Evidencia_Original_1_Work Type sofreu only ({CopiaForense_video_original_1})
+t_g temSaida Evidencia_Original_1_Work
+DisjointClasses: TransformacaoGenerativa, TransformacaoHomomorfica, TransformacaoIsomorfica
+```
+
+Reprodução literal das linhas de `saidas/D1_explicacao.md`:
+1. `[Third-Party Generative Transformation (t_g)](http://example.org/oem#t_g) Type [Transformação Generativa](http://example.org/oem#TransformacaoGenerativa)`
+2. `[underwent transformation](http://example.org/oem#sofreu) InverseOf [tem saída](http://example.org/oem#temSaida)`
+3. `[Isomorphic Forensic Copy of video_original_1.mp4](http://example.org/oem#CopiaForense_video_original_1) Type [Transformação Isomórfica](http://example.org/oem#TransformacaoIsomorfica)`
+4. `[Original Video 1 ( Working Forensic Copy - Case A )](http://example.org/oem#Evidencia_Original_1_Work) Type [underwent transformation](http://example.org/oem#sofreu) only ({[Isomorphic Forensic Copy of video_original_1.mp4](http://example.org/oem#CopiaForense_video_original_1)})`
+5. `[Third-Party Generative Transformation (t_g)](http://example.org/oem#t_g) [tem saída](http://example.org/oem#temSaida) [Original Video 1 ( Working Forensic Copy - Case A )](http://example.org/oem#Evidencia_Original_1_Work)`
+6. `DisjointClasses: [Transformação Generativa](http://example.org/oem#TransformacaoGenerativa), [Homomorphic Transformation](http://example.org/oem#TransformacaoHomomorfica), [Transformação Isomórfica](http://example.org/oem#TransformacaoIsomorfica)`
+
+Notação DL: $\{\mathsf{t\_g} : \mathsf{TransformacaoGenerativa},\; (\mathsf{t\_g}, \mathsf{Evidencia\_Original\_1\_Work}) : \mathsf{temSaida},\; \mathsf{sofreu} \equiv \mathsf{temSaida}^{-},\; \mathsf{Evidencia\_Original\_1\_Work} : \forall \mathsf{sofreu}.\{\mathsf{CopiaForense\_video\_original\_1}\},\; \mathsf{CopiaForense\_video\_original\_1} : \mathsf{TransformacaoIsomorfica},\; \mathsf{TransformacaoIsomorfica} \sqcap \mathsf{TransformacaoGenerativa} \sqsubseteq \bot\} \models \top \sqsubseteq \bot$.
+
+- **Observação:** o registro de custódia de terceiro (`oem:RegistroCustodia_Terceiro`) não participa da justificação mínima de inconsistência: mesmo que a transformação generativa seja formalmente declarada por terceiro, o conflito ocorre diretamente entre o fechamento do percurso, a propriedade inversa `sofreu`/`temSaida` e a disjunção entre `TransformacaoIsomorfica` e `TransformacaoGenerativa`. Nenhuma divergência em relação ao resultado esperado foi observada em D1 ou D2.
 
 ## 8. Limitações observadas na execução
 
