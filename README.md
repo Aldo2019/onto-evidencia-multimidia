@@ -1,5 +1,4 @@
 # Ontologia de Evidências Multimídia (OEM) — ISKO Brasil 2027
-# Ontology of Multimedia Evidence (OEM) — ISKO Brazil 2027
 
 [![OWL 2 DL](https://img.shields.io/badge/OWL_2-DL_Valid-brightgreen)](#)
 [![Reasoner](https://img.shields.io/badge/Reasoner-HermiT_1.4.3-blue)](#)
