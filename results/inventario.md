@@ -1,7 +1,6 @@
 # Inventário Forense Preliminar de Arquivos de Vídeo
 
-**Data da coleta:** 2026-11-17  
-**Diretório inspecionado:** `Vídeos`  
+**Diretórios inspecionados:** `Vídeos/` (6 arquivos, coleta em 2026-11-17) e `data/work/caso_c/` (1 arquivo, acrescentado em 2026-11-22)  
 **Modo de operação:** Somente leitura (nenhum arquivo original foi movido, renomeado, convertido ou modificado).
 
 ---
@@ -37,6 +36,7 @@
 - **`com.apple.*` / `com.android.*`:** Ausentes em todos os arquivos.
 - **`handler_name` / `HandlerType`:** Ausente nas streams do `ffprobe`; reportado como `Audio Track` no `exiftool` para os 6 arquivos em `Vídeos/`.
 - **`ZoneIdentifier`:** Reportado como `Exists` pelo `exiftool` nos 6 arquivos em `Vídeos/` (indicando transferência/download no sistema de arquivos Windows).
+- **Campos `pix_fmt`, `color_space` e `exif_*` da linha 8 (`data/work/caso_c/video_recodificado_mensageiro_1.mp4`) no `results/inventario.csv`:** Registrados como `n/a`, pois o arquivo de mídia recodificado não é versionado no repositório (conforme `.gitignore`) e não estava presente neste clone para execução do `exiftool`/`ffprobe` sobre o binário (os demais campos da linha 8 provêm de `results/analises/caso_c/container_gop/gop_video_recodificado_mensageiro_1.json`).
 
 ---
 

@@ -8,19 +8,19 @@
 
 | caso | arquivo (nome) | papel (original/cópia/sintético/recodificado) | contêiner | codec vídeo/áudio | duração | resolução/fps | tem áudio? | SHA-256 (abreviado) |
 | :--- | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :--- |
-| **Caso A** | `video_original_1.mp4` | original (matriz) e cópia (`data/work/caso_a/`) | `mp42` (`mp42isom`) | `h264` (`High@L3.1`) / `aac` (`LC`, `48000 Hz`, `2 ch`) | `7.246688 s` | `478x850` / `30/1` | sim | `3abe96337aefc4c4…` [`results/inventario.csv`] |
-| **Caso A** | `Video_original_2.mp4` | original (matriz) e cópia (`data/work/caso_a/`) | `mp42` (`mp42isom`) | `h264` (`High@L3.1`) / `aac` (`LC`, `44100 Hz`, `2 ch`) | `62.566667 s` | `576x1024` / `30/1` | sim | `08945ba4c6ca34b1…` [`results/inventario.csv`] |
-| **Caso B** | `video_sintetico_1_1.mp4` | sintético (matriz e cópia em `data/work/caso_b/`) | `mp42` (`mp42isom`) | `h264` (`High@L3.1`) / `aac` (`LC`, `48000 Hz`, `2 ch`) | `10.026667 s` | `848x478` / `24/1` | sim | `11fc8dfd6061cda1…` [`results/inventario.csv`] |
-| **Caso B** | `video_sintetico_1_2.mp4` | sintético (matriz e cópia em `data/work/caso_b/`) | `mp42` (`mp42isom`) | `h264` (`High@L3.1`) / `aac` (`LC`, `48000 Hz`, `2 ch`) | `10.026667 s` | `848x478` / `24/1` | sim | `a55dc991a06c7811…` [`results/inventario.csv`] |
-| **Caso B** | `video_sintetico_2_1.mp4` | sintético (matriz e cópia em `data/work/caso_b/`) | `mp42` (`mp42isom`) | `h264` (`High@L3.1`) / `aac` (`LC`, `44100 Hz`, `2 ch`) | `16.678563 s` | `478x850` / `30/1` | sim | `843837539c8aa52c…` [`results/inventario.csv`] |
-| **Caso B** | `video_sintetico_2_2.mp4` | sintético (matriz e cópia em `data/work/caso_b/`) | `mp42` (`mp42isom`) | `h264` (`High@L3.1`) / `aac` (`LC`, `44100 Hz`, `2 ch`) | `12.985104 s` | `476x848` / `30/1` | sim | `9e361c539f2ae782…` [`results/inventario.csv`] |
-| **Caso C** | `video_recodificado_mensageiro_1.mp4` | recodificado sem custódia (`data/work/caso_c/`) | `isom` (`isomiso2avc1mp41`) | `h264` (`Main@L3.1`) / `aac` (`LC`, `44100 Hz`, `2 ch`) | `7.246009 s` | `476x848` / `30/1` | sim | `361fa834338c76bb…` [`results/analises/caso_c/resumo_analises.json`] |
+| **Cenário A** | `video_original_1.mp4` | original (matriz) e cópia (`data/work/caso_a/`) | `mp42` (`mp42isom`) | `h264` (`High@L3.1`) / `aac` (`LC`, `48000 Hz`, `2 ch`) | `7.246688 s` | `478x850` / `30/1` | sim | `3abe96337aefc4c4…` [`results/inventario.csv`] |
+| **Cenário A** | `Video_original_2.mp4` | original (matriz) e cópia (`data/work/caso_a/`) | `mp42` (`mp42isom`) | `h264` (`High@L3.1`) / `aac` (`LC`, `44100 Hz`, `2 ch`) | `62.566667 s` | `576x1024` / `30/1` | sim | `08945ba4c6ca34b1…` [`results/inventario.csv`] |
+| **Cenário B** | `video_sintetico_1_1.mp4` | sintético (matriz e cópia em `data/work/caso_b/`) | `mp42` (`mp42isom`) | `h264` (`High@L3.1`) / `aac` (`LC`, `48000 Hz`, `2 ch`) | `10.026667 s` | `848x478` / `24/1` | sim | `11fc8dfd6061cda1…` [`results/inventario.csv`] |
+| **Cenário B** | `video_sintetico_1_2.mp4` | sintético (matriz e cópia em `data/work/caso_b/`) | `mp42` (`mp42isom`) | `h264` (`High@L3.1`) / `aac` (`LC`, `48000 Hz`, `2 ch`) | `10.026667 s` | `848x478` / `24/1` | sim | `a55dc991a06c7811…` [`results/inventario.csv`] |
+| **Cenário B** | `video_sintetico_2_1.mp4` | sintético (matriz e cópia em `data/work/caso_b/`) | `mp42` (`mp42isom`) | `h264` (`High@L3.1`) / `aac` (`LC`, `44100 Hz`, `2 ch`) | `16.678563 s` | `478x850` / `30/1` | sim | `843837539c8aa52c…` [`results/inventario.csv`] |
+| **Cenário B** | `video_sintetico_2_2.mp4` | sintético (matriz e cópia em `data/work/caso_b/`) | `mp42` (`mp42isom`) | `h264` (`High@L3.1`) / `aac` (`LC`, `44100 Hz`, `2 ch`) | `12.985104 s` | `476x848` / `30/1` | sim | `9e361c539f2ae782…` [`results/inventario.csv`] |
+| **Cenário C** | `video_recodificado_mensageiro_1.mp4` | recodificado sem custódia (`data/work/caso_c/`) | `isom` (`isomiso2avc1mp41`) | `h264` (`Main@L3.1`) / `aac` (`LC`, `44100 Hz`, `2 ch`) | `7.246009 s` | `476x848` / `30/1` | sim | `361fa834338c76bb…` [`results/analises/caso_c/resumo_analises.json`] |
 
-- **`cases/PROTOCOLO.md`:** `NÃO ENCONTRADO`; conforme os registros de custódia, o **Caso A** foi produzido por bloqueio somente leitura das matrizes originais e cópia forense bit a bit [`cases/caso_a/registro_custodia.csv`], o **Caso B** por síntese neural (deepfake de rosto/voz) seguida de cópia forense bit a bit para análise [`cases/caso_b/registro_custodia.csv`], e o **Caso C** por recodificação com perdas (`libx264 Main@L3.1, CRF 28, 476x848, AAC 96k, -map_metadata -1`) sem registro de custódia [`cases/caso_c/registro_custodia.csv`].
+- **`cases/PROTOCOLO.md`:** `NÃO ENCONTRADO`; conforme os registros de custódia, o **Cenário A** foi produzido por bloqueio somente leitura das matrizes originais e cópia forense bit a bit [`cases/caso_a/registro_custodia.csv`], o **Cenário B** por síntese neural (deepfake de rosto/voz) seguida de cópia forense bit a bit para análise [`cases/caso_b/registro_custodia.csv`], e o **Cenário C** por recodificação com perdas (`libx264 Main@L3.1, CRF 28, 476x848, AAC 96k, -map_metadata -1`) sem registro de custódia [`cases/caso_c/registro_custodia.csv`].
 
 ## 2. Ontologia (TBox)
 
-- **Métricas da TBox (`ontology/oem.ttl`):** `33` classes (`35` nos grafos mesclados), `10` propriedades de objeto (`22` de dados e `2` de anotação), `104` axiomas lógicos (`386` axiomas totais); expressividade DL `RRESTRCUCINTUNIVRESTREIQ(D)` ($\mathcal{ALCRIQ}(\mathbf{D})$) na TBox/Casos A-aberto, B, C e `RRESTRCUCINTUNIVRESTREOIQ(D)` ($\mathcal{ALCOIQ}(\mathbf{D})$) no Caso A-fechado [`results/metrics/oem_tbox_metrics.json`, `results/metrics/caso_a_fechado_metrics.json`].
+- **Métricas da TBox (`ontology/oem.ttl`):** `33` classes (`35` nos grafos mesclados), `10` propriedades de objeto (`22` de dados e `2` de anotação), `104` axiomas lógicos (`102` de TBox + `2` de RBox; `386` axiomas totais); expressividade DL `RRESTRCUCINTUNIVRESTREIQ(D)` ($\mathcal{ALCIQ}(\mathbf{D})$) na TBox e nos Cenários A-aberto, B e C (o código `RRESTR` do OWLAPI indica restrições de domínio/imagem, não composição de papéis ($\mathcal{R}$)), passando a `RRESTRCUCINTUNIVRESTREOIQ(D)` ($\mathcal{ALCOIQ}(\mathbf{D})$) nos Cenários A-fechado e D1 [`results/metrics/oem_tbox_metrics.json`, `results/metrics/caso_a_fechado_metrics.json`].
 - **Perfil OWL 2 DL e Consistência:** Válido (`owl2_dl: true`, `0` violações em `results/reasoning/profile_tbox.txt`), consistente sob o HermiT, `0` classes insatisfatíveis [`results/metrics/oem_tbox_metrics.json`, `tests/test_reasoning.py`].
 - **Classes acrescentadas (`rdfs:subClassOf oem:TransformacaoHomomorfica` e `oem:IndicioDeEdicao`) com `skos:definition` `@pt` [`ontology/oem.ttl`]:**
   - `oem:ExtracaoDeAudio`: *"Operação homomórfica que separa e decodifica a trilha sonora de um vídeo para áudio PCM sem reamostragem."*
@@ -43,18 +43,18 @@ Registros atestados pelo indivíduo `Agente (perito)` [`cases/caso_a/caso_a.ttl`
 
 | Caso | transformação | tipo (isomórfica/homomórfica/generativa) | declarada? (sim/não) | evidência de verificação (hash antes = depois?) | registro de custódia |
 | :--- | :--- | :---: | :---: | :--- | :--- |
-| **Caso A** | `oem:CopiaForense_video_original_1` | isomórfica | sim | **Sim:** `3abe96337aefc4c4…` = `3abe96337aefc4c4…` | `oem:RegistroCustodia_video_original_1` [`cases/caso_a/registro_custodia.csv`] |
-| **Caso A** | `oem:CopiaForense_Video_original_2` | isomórfica | sim | **Sim:** `08945ba4c6ca34b1…` = `08945ba4c6ca34b1…` | `oem:RegistroCustodia_Video_original_2` [`cases/caso_a/registro_custodia.csv`] |
-| **Caso A** | `oem:ExtracaoDeAudio_video_original_1_Stereo` e `_Mono` | homomórfica | sim | derivado (`d27bfdc4192ba097…` / `8b52f679d55902d2…`) | `oem:RegistroCustodia_ExtracaoAudio_video_original_1_Stereo` / `_Mono` [`cases/caso_a/caso_a.ttl`] |
-| **Caso A** | `oem:ExtracaoDeAudio_Video_original_2_Stereo` e `_Mono` | homomórfica | sim | derivado (`b6e69d2adea58667…` / `1c412c5fa7fd8fc7…`) | `oem:RegistroCustodia_ExtracaoAudio_Video_original_2_Stereo` / `_Mono` [`cases/caso_a/caso_a.ttl`] |
-| **Caso A** | `oem:GeracaoEspectrograma_*` (4), `oem:ExameENF_*` (4), `oem:ExameContainerGOP_*` (2) | homomórfica | sim | derivados verificados (`1b8aa84ea920ee26…`, `193f4e0781675ee4…`, `89090b9968c27973…`, `0a056253877e36d6…`, `9ec75d04a4948440…`) | `oem:RegistroCustodia_Espectrograma_*`, `_ExameENF_*`, `_ExameContainerGOP_*` [`cases/caso_a/caso_a.ttl`] |
-| **Caso B** | `oem:SinteseDeepfake_1_1`, `_1_2`, `_2_1`, `_2_2` | **generativa** | **não** | **Divergência face aos originais:** gerou `11fc8dfd6061cda1…`, `a55dc991a06c7811…`, `843837539c8aa52c…`, `9e361c539f2ae782…` | sem registro (`—`) [`cases/caso_b/caso_b.ttl`] |
-| **Caso B** | `oem:CopiaForense_video_sintetico_1_1` a `_2_2` (4 cópias) | isomórfica | sim | **Sim (aquisição):** `11fc8dfd6061cda1…`, `a55dc991a06c7811…`, `843837539c8aa52c…`, `9e361c539f2ae782…` (`antes == depois`) | `oem:RegistroCustodia_video_sintetico_1_1` a `_2_2` [`cases/caso_b/registro_custodia.csv`] |
-| **Caso B** | `oem:ExtracaoDeAudio_*` (8), `oem:GeracaoEspectrograma_*` (8), `oem:ExameENF_*` (8), `oem:ExameContainerGOP_*` (4) | homomórfica | sim | derivados verificados (`345abd0cf1749f8b…`, `e2c374f1436d12e3…`, `5423b5c5c7fc6826…`, `063409b41b3f4103…`, etc.) | `oem:RegistroCustodia_ExtracaoAudio_*`, `_Espectrograma_*`, `_ExameENF_*`, `_ExameContainerGOP_*` [`cases/caso_b/caso_b.ttl`] |
-| **Caso C** | `oem:TransmissaoMensageiro_video_1` | recodificação (`oem:RecodificacaoDeTransmissao`) | **não** (`registradaEm max 0`) | **Divergência de hash:** antes `3abe96337aefc4c4…` $\neq$ depois `361fa834338c76bb…` | **NENHUM** (`oem:TransformacaoNaoDeclarada`) [`cases/caso_c/caso_c.ttl`] |
-| **Caso C** | `oem:ExtracaoDeAudio_video_recodificado_1_Stereo`, `oem:ExameENF_*`, `oem:ExameContainerGOP_*` | homomórfica | sim | derivados verificados (`5dd05a685402ef19…`, `53f55af0cd3e73a2…`, `09f7705d69702b73…`) | `oem:RegistroCustodia_ExtracaoAudio_video_recodificado_1_Stereo`, `_ExameENF_*`, `_ExameGOP_caso_c` [`cases/caso_c/caso_c.ttl`] |
+| **Cenário A** | `oem:CopiaForense_video_original_1` | isomórfica | sim | **Sim:** `3abe96337aefc4c4…` = `3abe96337aefc4c4…` | `oem:RegistroCustodia_video_original_1` [`cases/caso_a/registro_custodia.csv`] |
+| **Cenário A** | `oem:CopiaForense_Video_original_2` | isomórfica | sim | **Sim:** `08945ba4c6ca34b1…` = `08945ba4c6ca34b1…` | `oem:RegistroCustodia_Video_original_2` [`cases/caso_a/registro_custodia.csv`] |
+| **Cenário A** | `oem:ExtracaoDeAudio_video_original_1_Stereo` e `_Mono` | homomórfica | sim | derivado (`d27bfdc4192ba097…` / `8b52f679d55902d2…`) | `oem:RegistroCustodia_ExtracaoAudio_video_original_1_Stereo` / `_Mono` [`cases/caso_a/caso_a.ttl`] |
+| **Cenário A** | `oem:ExtracaoDeAudio_Video_original_2_Stereo` e `_Mono` | homomórfica | sim | derivado (`b6e69d2adea58667…` / `1c412c5fa7fd8fc7…`) | `oem:RegistroCustodia_ExtracaoAudio_Video_original_2_Stereo` / `_Mono` [`cases/caso_a/caso_a.ttl`] |
+| **Cenário A** | `oem:GeracaoEspectrograma_*` (4), `oem:ExameENF_*` (4), `oem:ExameContainerGOP_*` (2) | homomórfica | sim | derivados verificados (`1b8aa84ea920ee26…`, `193f4e0781675ee4…`, `89090b9968c27973…`, `0a056253877e36d6…`, `9ec75d04a4948440…`) | `oem:RegistroCustodia_Espectrograma_*`, `_ExameENF_*`, `_ExameContainerGOP_*` [`cases/caso_a/caso_a.ttl`] |
+| **Cenário B** | `oem:SinteseDeepfake_1_1`, `_1_2`, `_2_1`, `_2_2` | **generativa** | **não** | **Divergência face aos originais:** gerou `11fc8dfd6061cda1…`, `a55dc991a06c7811…`, `843837539c8aa52c…`, `9e361c539f2ae782…` | sem registro (`—`) [`cases/caso_b/caso_b.ttl`] |
+| **Cenário B** | `oem:CopiaForense_video_sintetico_1_1` a `_2_2` (4 cópias) | isomórfica | sim | **Sim (aquisição):** `11fc8dfd6061cda1…`, `a55dc991a06c7811…`, `843837539c8aa52c…`, `9e361c539f2ae782…` (`antes == depois`) | `oem:RegistroCustodia_video_sintetico_1_1` a `_2_2` [`cases/caso_b/registro_custodia.csv`] |
+| **Cenário B** | `oem:ExtracaoDeAudio_*` (8), `oem:GeracaoEspectrograma_*` (8), `oem:ExameENF_*` (8), `oem:ExameContainerGOP_*` (4) | homomórfica | sim | derivados verificados (`345abd0cf1749f8b…`, `e2c374f1436d12e3…`, `5423b5c5c7fc6826…`, `063409b41b3f4103…`, etc.) | `oem:RegistroCustodia_ExtracaoAudio_*`, `_Espectrograma_*`, `_ExameENF_*`, `_ExameContainerGOP_*` [`cases/caso_b/caso_b.ttl`] |
+| **Cenário C** | `oem:TransmissaoMensageiro_video_1` | recodificação (`oem:RecodificacaoDeTransmissao`) | **não** (`registradaEm max 0`) | **Divergência de hash:** antes `3abe96337aefc4c4…` $\neq$ depois `361fa834338c76bb…` | **NENHUM** (`oem:TransformacaoNaoDeclarada`) [`cases/caso_c/caso_c.ttl`] |
+| **Cenário C** | `oem:ExtracaoDeAudio_video_recodificado_1_Stereo`, `oem:ExameENF_*`, `oem:ExameContainerGOP_*` | homomórfica | sim | derivados verificados (`5dd05a685402ef19…`, `53f55af0cd3e73a2…`, `09f7705d69702b73…`) | `oem:RegistroCustodia_ExtracaoAudio_video_recodificado_1_Stereo`, `_ExameENF_*`, `_ExameGOP_caso_c` [`cases/caso_c/caso_c.ttl`] |
 
-- **Destaque de divergência de hash:** Todas as cópias forenses em `data/work/` preservaram exatamente o SHA-256 (`hash_antes == hash_depois`), enquanto a recodificação de mensageiro no Caso C alterou o hash de `3abe96337aefc4c4…` para `361fa834338c76bb…` e os vídeos sintéticos do Caso B diferem integralmente dos hashes das matrizes do Caso A [`cases/caso_a/registro_custodia.csv`, `cases/caso_b/registro_custodia.csv`, `cases/caso_c/registro_custodia.csv`].
+- **Destaque de divergência de hash:** Todas as cópias forenses em `data/work/` preservaram exatamente o SHA-256 (`hash_antes == hash_depois`), enquanto a recodificação de mensageiro no Cenário C alterou o hash de `3abe96337aefc4c4…` para `361fa834338c76bb…` e os vídeos sintéticos do Cenário B diferem integralmente dos hashes das matrizes do Cenário A [`cases/caso_a/registro_custodia.csv`, `cases/caso_b/registro_custodia.csv`, `cases/caso_c/registro_custodia.csv`].
 
 ## 4. Análises de sinal e de metadados
 
@@ -62,9 +62,9 @@ Registros atestados pelo indivíduo `Agente (perito)` [`cases/caso_a/caso_a.ttl`
 
 - **Parâmetros (`analysis/config.yaml`):** `window_type="hann"`, `nperseg=4096`, `noverlap=3072`, `nfft=4096`, `scaling="density"`, `cmap="viridis"`, `dpi=150`, `fmax_display_hz=8000.0` [`analysis/config.yaml`].
 - **Caminhos relativos e SHA-256 abreviados (`results/analises/<caso>/espectrogramas/` e `results/espectrogramas/`):** [`results/analises/resumo_geral_analises.json`]
-  - Caso A: `results/analises/caso_a/espectrogramas/espectrograma_video_original_1.png` (`1b8aa84ea920ee26…`), `..._video_original_1_mono.png` (`199bfbaf64473791…`), `..._Video_original_2.png` (`193f4e0781675ee4…`), `..._Video_original_2_mono.png` (`efa8f89de63e2ba0…`).
-  - Caso B: `results/analises/caso_b/espectrogramas/espectrograma_video_sintetico_1_1.png` (`a3127c6fb6e871a3…`), `..._1_1_mono.png` (`875029e38d98a235…`), `..._1_2.png` (`77e1604e2186297f…`), `..._1_2_mono.png` (`4ca1401939a273a7…`), `..._2_1.png` (`6b1118e5ba4b270f…`), `..._2_1_mono.png` (`ead9a566e09bcc14…`), `..._2_2.png` (`7a00ec515b2a9c74…`), `..._2_2_mono.png` (`7874798d69de7e8f…`).
-  - Caso C: `results/analises/caso_c/espectrogramas/espectrograma_video_recodificado_mensageiro_1.png` (`dd2ec5a3bb764516…`), `..._1_mono.png` (`5a5ed92134361157…`).
+  - Cenário A: `results/analises/caso_a/espectrogramas/espectrograma_video_original_1.png` (`1b8aa84ea920ee26…`), `..._video_original_1_mono.png` (`199bfbaf64473791…`), `..._Video_original_2.png` (`193f4e0781675ee4…`), `..._Video_original_2_mono.png` (`efa8f89de63e2ba0…`).
+  - Cenário B: `results/analises/caso_b/espectrogramas/espectrograma_video_sintetico_1_1.png` (`a3127c6fb6e871a3…`), `..._1_1_mono.png` (`875029e38d98a235…`), `..._1_2.png` (`77e1604e2186297f…`), `..._1_2_mono.png` (`4ca1401939a273a7…`), `..._2_1.png` (`6b1118e5ba4b270f…`), `..._2_1_mono.png` (`ead9a566e09bcc14…`), `..._2_2.png` (`7a00ec515b2a9c74…`), `..._2_2_mono.png` (`7874798d69de7e8f…`).
+  - Cenário C: `results/analises/caso_c/espectrogramas/espectrograma_video_recodificado_mensageiro_1.png` (`dd2ec5a3bb764516…`), `..._1_mono.png` (`5a5ed92134361157…`).
 
 ### 4.2 ENF — por caso: detectável? (sim/não), SNR medida, nº de descontinuidades, instantes (s), limiar usado
 
@@ -72,27 +72,27 @@ Registros atestados pelo indivíduo `Agente (perito)` [`cases/caso_a/caso_a.ttl`
 
 | Caso | Arquivo `.wav` (estéreo e `_mono`) | Detectável? | SNR 60 Hz / 120 Hz (dB) | DP norm. 60 / 120 Hz (Hz) | Nº descontinuidades | Instantes (s) | Limiar (dB) | Registro / Achados |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| **Caso A** | `video_original_1.wav` | **sim** (120 Hz) | `3.928` (`3.932`) / **`8.995`** (`8.994`) | `0.4733` / **`0.02238`** | `0` | `—` | `6.0` | `"ENF detectável"`, `0` descontinuidades [`results/analises/caso_a/resumo_analises.json`] |
-| **Caso A** | `Video_original_2.wav` | **não** | `12.493` / `10.577` | `0.25759` / `0.17494` | `0` | `—` | `6.0` | `"ENF não detectável"` — **nenhum achado gerado** [`results/analises/caso_a/resumo_analises.json`] |
-| **Caso B** | `video_sintetico_1_1.wav` | **sim** (120 Hz) | `7.913` (`7.905`) / **`10.418`** (`10.419`) | `0.93162` / **`0.0529`** | `0` | `—` | `6.0` | `"ENF detectável"`, `0` descontinuidades [`results/analises/caso_b/resumo_analises.json`] |
-| **Caso B** | `video_sintetico_1_2.wav` | **não** | `11.16` (`11.162`) / `4.778` (`4.769`) | `0.5823` / `0.17987` | `0` | `—` | `6.0` | `"ENF não detectável"` — **nenhum achado gerado** [`results/analises/caso_b/resumo_analises.json`] |
-| **Caso B** | `video_sintetico_2_1.wav` | **não** | `10.313` / `8.049` | `0.20448` / `0.29619` | `0` | `—` | `6.0` | `"ENF não detectável"` — **nenhum achado gerado** [`results/analises/caso_b/resumo_analises.json`] |
-| **Caso B** | `video_sintetico_2_2.wav` | **não** | `9.579` / `5.485` | `0.40557` / `0.37689` | `0` | `—` | `6.0` | `"ENF não detectável"` — **nenhum achado gerado** [`results/analises/caso_b/resumo_analises.json`] |
-| **Caso C** | `video_recodificado_mensageiro_1.wav` | **sim** (120 Hz) | `4.292` (`4.287`) / **`8.966`** | `0.38102` / **`0.02633`** | `0` | `—` | `6.0` | `"ENF detectável"`, `0` descontinuidades [`results/analises/caso_c/resumo_analises.json`] |
+| **Cenário A** | `video_original_1.wav` | **sim** (120 Hz) | `3.928` (`3.932`) / **`8.995`** (`8.994`) | `0.4733` / **`0.02238`** | `0` | `—` | `6.0` | `"ENF detectável"`, `0` descontinuidades [`results/analises/caso_a/resumo_analises.json`] |
+| **Cenário A** | `Video_original_2.wav` | **não** | `12.493` / `10.577` | `0.25759` / `0.17494` | `0` | `—` | `6.0` | `"ENF não detectável"` — **nenhum achado gerado** [`results/analises/caso_a/resumo_analises.json`] |
+| **Cenário B** | `video_sintetico_1_1.wav` | **sim** (120 Hz) | `7.913` (`7.905`) / **`10.418`** (`10.419`) | `0.93162` / **`0.0529`** | `0` | `—` | `6.0` | `"ENF detectável"`, `0` descontinuidades [`results/analises/caso_b/resumo_analises.json`] |
+| **Cenário B** | `video_sintetico_1_2.wav` | **não** | `11.16` (`11.162`) / `4.778` (`4.769`) | `0.5823` / `0.17987` | `0` | `—` | `6.0` | `"ENF não detectável"` — **nenhum achado gerado** [`results/analises/caso_b/resumo_analises.json`] |
+| **Cenário B** | `video_sintetico_2_1.wav` | **não** | `10.313` / `8.049` | `0.20448` / `0.29619` | `0` | `—` | `6.0` | `"ENF não detectável"` — **nenhum achado gerado** [`results/analises/caso_b/resumo_analises.json`] |
+| **Cenário B** | `video_sintetico_2_2.wav` | **não** | `9.579` / `5.485` | `0.40557` / `0.37689` | `0` | `—` | `6.0` | `"ENF não detectável"` — **nenhum achado gerado** [`results/analises/caso_b/resumo_analises.json`] |
+| **Cenário C** | `video_recodificado_mensageiro_1.wav` | **sim** (120 Hz) | `4.292` (`4.287`) / **`8.966`** | `0.38102` / **`0.02633`** | `0` | `—` | `6.0` | `"ENF detectável"`, `0` descontinuidades [`results/analises/caso_c/resumo_analises.json`] |
 
 - Nos 4 vídeos em que o exame retornou `"ENF não detectável"`, **nenhum achado foi gerado**: sob mundo aberto (OWA), a ausência de ENF não permite inferir nem autenticidade nem adulteração [`results/analises/resumo_analises.md`].
 
-### 4.3 Metadados de contêiner — comparação com o original do caso A
+### 4.3 Metadados de contêiner — comparação com o original do Cenário A
 
-| Caso / Vídeo | Referência (Caso A) | `encoder` | Perfil/Nível | Resolução / FPS | `time_base` (V / A) | Bitrate V / A (bps) | Estrutura de GOP (`I/P/B`, `maxGOP`, padrão) | Indivíduos de achado gerados |
+| Caso / Vídeo | Referência (Cenário A) | `encoder` | Perfil/Nível | Resolução / FPS | `time_base` (V / A) | Bitrate V / A (bps) | Estrutura de GOP (`I/P/B`, `maxGOP`, padrão) | Indivíduos de achado gerados |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :--- | :--- |
-| **Caso A:** `video_original_1.mp4` | *(Ref. Conj. 1)* | `null` | `High/31` | `478x850` / `30/1` | `1/90000` / `1/48000` | `1577083` / `319352` | `1/216/0`, `217`, `IPPPPPPPPP…` | Nenhum (`0`) [`results/analises/caso_a/resumo_analises.json`] |
-| **Caso A:** `Video_original_2.mp4` | *(Ref. Conj. 2)* | `null` | `High/31` | `576x1024` / `30/1` | `1/15360` / `1/44100` | `699618` / `128002` | `8/547/1322`, `250`, `IBPBBPBBPB…` | Nenhum (`0`) [`results/analises/caso_a/resumo_analises.json`] |
-| **Caso B:** `video_sintetico_1_1.mp4` | `video_original_1.mp4` | `null` | `High/31` | `848x478` / `24/1` | `1/90000` / `1/48000` | `1560783` / `128282` | `1/239/0`, `240`, `IPPPPPPPPP…` | `oem:IndicioRecodificacao_video_sintetico_1_1_1_*` a `_4_*` [`cases/caso_b/caso_b.ttl`] |
-| **Caso B:** `video_sintetico_1_2.mp4` | `video_original_1.mp4` | `null` | `High/31` | `848x478` / `24/1` | `1/90000` / `1/48000` | `1570271` / `128305` | `1/239/0`, `240`, `IPPPPPPPPP…` | `oem:IndicioRecodificacao_video_sintetico_1_2_1_*` a `_4_*` [`cases/caso_b/caso_b.ttl`] |
-| **Caso B:** `video_sintetico_2_1.mp4` | `Video_original_2.mp4` | `null` | `High/31` | `478x850` / `30/1` | `1/90000` / `1/48000` (`44.1k`) | `1326996` / `128041` | `2/496/0`, `300`, `IPPPPPPPPP…` | `oem:IndicioRecodificacao_video_sintetico_2_1_1_*` a `_5_*` [`cases/caso_b/caso_b.ttl`] |
-| **Caso B:** `video_sintetico_2_2.mp4` | `Video_original_2.mp4` | `null` | `High/31` | `476x848` / `30/1` | `1/90000` / `1/48000` (`44.1k`) | `1426896` / `128282` | `2/385/0`, `300`, `IPPPPPPPPP…` | `oem:IndicioRecodificacao_video_sintetico_2_2_1_*` a `_5_*` [`cases/caso_b/caso_b.ttl`] |
-| **Caso C:** `video_recodificado_mensageiro_1.mp4` | `video_original_1.mp4` | `Lavf62.12.101` | `Main/31` | `476x848` / `30/1` | `1/15360` / `1/44100` | `916790` / `95586` | `1/63/153`, `217`, `IBBBPBBBPB…` | `oem:IndicioRecodificacao_caso_c_1_*` a `_4_*` [`cases/caso_c/caso_c.ttl`] |
+| **Cenário A:** `video_original_1.mp4` | *(Ref. Conj. 1)* | `null` | `High/31` | `478x850` / `30/1` | `1/90000` / `1/48000` | `1577083` / `319352` | `1/216/0`, `217`, `IPPPPPPPPP…` | Nenhum (`0`) [`results/analises/caso_a/resumo_analises.json`] |
+| **Cenário A:** `Video_original_2.mp4` | *(Ref. Conj. 2)* | `null` | `High/31` | `576x1024` / `30/1` | `1/15360` / `1/44100` | `699618` / `128002` | `8/547/1322`, `250`, `IBPBBPBBPB…` | Nenhum (`0`) [`results/analises/caso_a/resumo_analises.json`] |
+| **Cenário B:** `video_sintetico_1_1.mp4` | `video_original_1.mp4` | `null` | `High/31` | `848x478` / `24/1` | `1/90000` / `1/48000` | `1560783` / `128282` | `1/239/0`, `240`, `IPPPPPPPPP…` | `oem:IndicioRecodificacao_video_sintetico_1_1_1_*` a `_4_*` [`cases/caso_b/caso_b.ttl`] |
+| **Cenário B:** `video_sintetico_1_2.mp4` | `video_original_1.mp4` | `null` | `High/31` | `848x478` / `24/1` | `1/90000` / `1/48000` | `1570271` / `128305` | `1/239/0`, `240`, `IPPPPPPPPP…` | `oem:IndicioRecodificacao_video_sintetico_1_2_1_*` a `_4_*` [`cases/caso_b/caso_b.ttl`] |
+| **Cenário B:** `video_sintetico_2_1.mp4` | `Video_original_2.mp4` | `null` | `High/31` | `478x850` / `30/1` | `1/90000` / `1/48000` (`44.1k`) | `1326996` / `128041` | `2/496/0`, `300`, `IPPPPPPPPP…` | `oem:IndicioRecodificacao_video_sintetico_2_1_1_*` a `_5_*` [`cases/caso_b/caso_b.ttl`] |
+| **Cenário B:** `video_sintetico_2_2.mp4` | `Video_original_2.mp4` | `null` | `High/31` | `476x848` / `30/1` | `1/90000` / `1/48000` (`44.1k`) | `1426896` / `128282` | `2/385/0`, `300`, `IPPPPPPPPP…` | `oem:IndicioRecodificacao_video_sintetico_2_2_1_*` a `_5_*` [`cases/caso_b/caso_b.ttl`] |
+| **Cenário C:** `video_recodificado_mensageiro_1.mp4` | `video_original_1.mp4` | `Lavf62.12.101` | `Main/31` | `476x848` / `30/1` | `1/15360` / `1/44100` | `916790` / `95586` | `1/63/153`, `217`, `IBBBPBBBPB…` | `oem:IndicioRecodificacao_caso_c_1_*` a `_4_*` [`cases/caso_c/caso_c.ttl`] |
 
 ### 4.4 Achados gerados
 
@@ -127,14 +127,14 @@ Registros atestados pelo indivíduo `Agente (perito)` [`cases/caso_a/caso_a.ttl`
 
 | caso | classificação prevista (`cases/EXPECTED.md`) | obtida? (sim/não) | nº de justificações | tempo de classificação |
 | :--- | :--- | :---: | :---: | :---: |
-| **Caso A (Aberto)** | `oem:EvidenciaMultimidia` (não `oem:EvidenciaIntegra`); cópias em `oem:TransformacaoPreservadoraDeclarada` [`cases/EXPECTED.md`] | **sim** [`results/reasoning/caso_a_aberto_reasoned.ttl`] | `1` (`8` axiomas) [`results/explanations/explain_caso_a_aberto.md`] | `1234 ms` [`results/secao_3_4.md`] |
-| **Caso A (Fechado)** | `oem:EvidenciaIntegra` para vídeos e áudios fechados [`cases/EXPECTED.md`] | **sim** [`results/reasoning/caso_a_fechado_reasoned.ttl`] | `1` (`13` axiomas) [`results/explanations/explain_caso_a_fechado.md`] | `2836 ms` [`results/secao_3_4.md`] |
-| **Caso B** | `oem:EvidenciaComConteudoAlterado` (não `oem:EvidenciaIntegra`) [`cases/EXPECTED.md`] | **sim** [`results/reasoning/caso_b_reasoned.ttl`] | `1` (`5` axiomas) [`results/explanations/explain_caso_b.md`] | `1476 ms` [`results/secao_3_4.md`] |
-| **Caso C** | `oem:EvidenciaComCadeiaQuebrada` (não `oem:EvidenciaIntegra`) [`cases/EXPECTED.md`] | **sim** [`results/reasoning/caso_c_reasoned.ttl`] | `1` (`6` axiomas) [`results/explanations/explain_caso_c.md`] | `1119 ms` [`results/secao_3_4.md`] |
+| **Cenário A (Aberto)** | `oem:EvidenciaMultimidia` (não `oem:EvidenciaIntegra`); cópias em `oem:TransformacaoPreservadoraDeclarada` [`cases/EXPECTED.md`] | **sim** [`results/reasoning/caso_a_aberto_reasoned.ttl`] | `1` (`8` axiomas) [`results/explanations/explain_caso_a_aberto.md`] | `1234 ms` [`results/secao_3_4.md`] |
+| **Cenário A (Fechado)** | `oem:EvidenciaIntegra` para vídeos e áudios fechados [`cases/EXPECTED.md`] | **sim** [`results/reasoning/caso_a_fechado_reasoned.ttl`] | `1` (`13` axiomas) [`results/explanations/explain_caso_a_fechado.md`] | `2836 ms` [`results/secao_3_4.md`] |
+| **Cenário B** | `oem:EvidenciaComConteudoAlterado` (não `oem:EvidenciaIntegra`) [`cases/EXPECTED.md`] | **sim** [`results/reasoning/caso_b_reasoned.ttl`] | `1` (`5` axiomas) [`results/explanations/explain_caso_b.md`] | `1476 ms` [`results/secao_3_4.md`] |
+| **Cenário C** | `oem:EvidenciaComCadeiaQuebrada` (não `oem:EvidenciaIntegra`) [`cases/EXPECTED.md`] | **sim** [`results/reasoning/caso_c_reasoned.ttl`] | `1` (`6` axiomas) [`results/explanations/explain_caso_c.md`] | `1119 ms` [`results/secao_3_4.md`] |
 
 ### 5.2 Justificação mínima de cada classificação obtida, em Manchester e em notação DL
 
-- **Caso A (Aberto)** [`results/explanations/explain_caso_a_aberto.md`]:
+- **Cenário A (Aberto)** [`results/explanations/explain_caso_a_aberto.md`]:
 ```manchester
 TransformacaoIsomorfica SubClassOf: TransformacaoPreservadora
 TransformacaoDeclarada EquivalentTo: Transformacao and (registradaEm some RegistroDeCustodia)
@@ -148,7 +148,7 @@ CopiaForense_video_original_1 registradaEm RegistroCustodia_video_original_1
 ```
 Notação DL: $\{\mathsf{CopiaForense\_video\_original\_1} : \mathsf{TransformacaoIsomorfica},\; (\mathsf{CopiaForense\_video\_original\_1}, \mathsf{RegistroCustodia\_video\_original\_1}) : \mathsf{registradaEm},\; \mathsf{TransformacaoIsomorfica} \sqsubseteq \mathsf{TransformacaoPreservadora},\; \top \sqsubseteq \forall \mathsf{registradaEm}^{-}.\mathsf{Transformacao},\; \mathsf{TransformacaoDeclarada} \equiv \mathsf{Transformacao} \sqcap \exists \mathsf{registradaEm}.\mathsf{RegistroDeCustodia},\; \mathsf{TransformacaoPreservadoraDeclarada} \equiv \mathsf{TransformacaoPreservadora} \sqcap \mathsf{TransformacaoDeclarada}\} \models \mathsf{CopiaForense\_video\_original\_1} : \mathsf{TransformacaoPreservadoraDeclarada}$.
 
-- **Caso A (Fechado)** [`results/explanations/explain_caso_a_fechado.md`]:
+- **Cenário A (Fechado)** [`results/explanations/explain_caso_a_fechado.md`]:
 ```manchester
 EvidenciaIntegra EquivalentTo: EvidenciaMultimidia
     and (sofreu some TransformacaoPreservadoraDeclarada)
@@ -169,7 +169,7 @@ RegistroCustodia_video_original_1 Type: RegistroDeCustodia
 ```
 Notação DL: $\{\mathsf{Evidencia\_Original\_1\_Work} : \mathsf{EvidenciaMultimidia},\; (\mathsf{CopiaForense\_video\_original\_1}, \mathsf{Evidencia\_Original\_1\_Work}) : \mathsf{temSaida},\; \mathsf{sofreu} \equiv \mathsf{temSaida}^{-},\; \mathsf{Evidencia\_Original\_1\_Work} : \forall \mathsf{sofreu}.\{\mathsf{CopiaForense\_video\_original\_1}\},\; \mathsf{CopiaForense\_video\_original\_1} : \mathsf{TransformacaoPreservadoraDeclarada},\; \mathsf{EvidenciaIntegra} \equiv \mathsf{EvidenciaMultimidia} \sqcap \exists \mathsf{sofreu}.\mathsf{TransformacaoPreservadoraDeclarada} \sqcap \forall \mathsf{sofreu}.\mathsf{TransformacaoPreservadoraDeclarada}\} \models \mathsf{Evidencia\_Original\_1\_Work} : \mathsf{EvidenciaIntegra}$.
 
-- **Caso B** [`results/explanations/explain_caso_b.md`]:
+- **Cenário B** [`results/explanations/explain_caso_b.md`]:
 ```manchester
 EvidenciaComConteudoAlterado EquivalentTo: EvidenciaMultimidia and (sofreu some TransformacaoGenerativa)
 sofreu InverseOf: temSaida
@@ -180,7 +180,7 @@ SinteseDeepfake_1_1 temSaida Evidencia_Sintetico_1_1_Work
 ```
 Notação DL: $\{\mathsf{SinteseDeepfake\_1\_1} : \mathsf{TransformacaoGenerativa},\; (\mathsf{SinteseDeepfake\_1\_1}, \mathsf{Evidencia\_Sintetico\_1\_1\_Work}) : \mathsf{temSaida},\; \mathsf{sofreu} \equiv \mathsf{temSaida}^{-},\; \top \sqsubseteq \forall \mathsf{sofreu}^{-}.\mathsf{EvidenciaMultimidia},\; \mathsf{EvidenciaComConteudoAlterado} \equiv \mathsf{EvidenciaMultimidia} \sqcap \exists \mathsf{sofreu}.\mathsf{TransformacaoGenerativa}\} \models \mathsf{Evidencia\_Sintetico\_1\_1\_Work} : \mathsf{EvidenciaComConteudoAlterado}$.
 
-- **Caso C** [`results/explanations/explain_caso_c.md`]:
+- **Cenário C** [`results/explanations/explain_caso_c.md`]:
 ```manchester
 EvidenciaComCadeiaQuebrada EquivalentTo: EvidenciaMultimidia and (sofreu some TransformacaoNaoDeclarada)
 TransformacaoNaoDeclarada EquivalentTo: Transformacao and (registradaEm max 0 RegistroDeCustodia)
@@ -192,9 +192,9 @@ TransmissaoMensageiro_video_1 Type: registradaEm max 0 RegistroDeCustodia
 ```
 Notação DL: $\{\mathsf{Evidencia\_Recodificado\_Mensageiro\_1\_Work} : \mathsf{EvidenciaMultimidia},\; (\mathsf{Evidencia\_Recodificado\_Mensageiro\_1\_Work}, \mathsf{TransmissaoMensageiro\_video\_1}) : \mathsf{sofreu},\; \top \sqsubseteq \forall \mathsf{sofreu}.\mathsf{Transformacao},\; \mathsf{TransmissaoMensageiro\_video\_1} : (\leqslant 0\,\mathsf{registradaEm}.\mathsf{RegistroDeCustodia}),\; \mathsf{TransformacaoNaoDeclarada} \equiv \mathsf{Transformacao} \sqcap (\leqslant 0\,\mathsf{registradaEm}.\mathsf{RegistroDeCustodia}),\; \mathsf{EvidenciaComCadeiaQuebrada} \equiv \mathsf{EvidenciaMultimidia} \sqcap \exists \mathsf{sofreu}.\mathsf{TransformacaoNaoDeclarada}\} \models \mathsf{Evidencia\_Recodificado\_Mensageiro\_1\_Work} : \mathsf{EvidenciaComCadeiaQuebrada}$.
 
-### 5.3 Caso A com e sem axioma de fechamento
+### 5.3 Cenário A com e sem axioma de fechamento
 
-Sem o axioma de fechamento (`results/reasoning/caso_a_aberto_reasoned.ttl`), o HermiT **não inferiu** `oem:EvidenciaIntegra` para nenhuma evidência do Caso A, mantendo-as apenas como `oem:EvidenciaMultimidia`. Com o axioma de fechamento (`cases/caso_a/caso_a_fechado.ttl` $\rightarrow$ `results/reasoning/caso_a_fechado_reasoned.ttl`), o HermiT **inferiu** `oem:EvidenciaIntegra` para `oem:Evidencia_Original_1_Work`, `oem:Evidencia_Original_2_Work`, `oem:Evidencia_Audio_Original_1_Stereo` e `oem:Evidencia_Audio_Original_2_Stereo`. **A previsão central do artigo foi confirmada** [`results/secao_3_4.md`, `tests/test_reasoning.py`].
+Sem o axioma de fechamento (`results/reasoning/caso_a_aberto_reasoned.ttl`), o HermiT **não inferiu** `oem:EvidenciaIntegra` para nenhuma evidência do Cenário A, mantendo-as apenas como `oem:EvidenciaMultimidia`. Com o axioma de fechamento (`cases/caso_a/caso_a_fechado.ttl` $\rightarrow$ `results/reasoning/caso_a_fechado_reasoned.ttl`), o HermiT **inferiu** `oem:EvidenciaIntegra` para `oem:Evidencia_Original_1_Work`, `oem:Evidencia_Original_2_Work`, `oem:Evidencia_Audio_Original_1_Stereo` e `oem:Evidencia_Audio_Original_2_Stereo`. Nos cenários avaliados, as classificações obtidas coincidiram com as deduzidas dos axiomas (`cases/EXPECTED.md`). Esses resultados verificam a coerência do modelo com suas definições; não constituem validação empírica da classificação [`results/secao_3_4.md`, `tests/test_reasoning.py`].
 
 ### 5.4 Classificações previstas e NÃO obtidas, e classificações obtidas e NÃO previstas
 
@@ -249,17 +249,17 @@ SELECT DISTINCT ?evidencia ?transformacaoVioladora ?classificacaoEvidencia WHERE
 } ORDER BY ?evidencia ?transformacaoVioladora
 ```
 
-| PC | Caso A (Aberto) | Caso A (Fechado) | Caso B | Caso C |
+| PC | Cenário A (Aberto) | Cenário A (Fechado) | Cenário B | Cenário C |
 | :--- | :--- | :--- | :--- | :--- |
 | **PC1** | `0` linhas [`results/sparql/caso_a_aberto/pc1.csv`] | `4` indivíduos em `oem:EvidenciaIntegra` [`results/sparql/caso_a_fechado/pc1.csv`] | `8` indivíduos (`Raw` e `Work` de `1_1` a `2_2`) em `oem:EvidenciaComConteudoAlterado` [`results/sparql/caso_b/pc1.csv`] | `1` indivíduo (`Evidencia_Recodificado_Mensageiro_1_Work`) em `oem:EvidenciaComCadeiaQuebrada` [`results/sparql/caso_c/pc1.csv`] |
 | **PC2** | `12` transformações em `TransformacaoPreservadoraDeclarada` [`results/sparql/caso_a_aberto/pc2.csv`] | `12` transformações em `TransformacaoPreservadoraDeclarada` [`results/sparql/caso_a_fechado/pc2.csv`] | `18` `TransformacaoPreservadoraDeclarada` + `8` vínculos de `TransformacaoGenerativa` [`results/sparql/caso_b/pc2.csv`] | `1` `TransformacaoNaoDeclarada` (`TransmissaoMensageiro_video_1`) + `2` `TransformacaoPreservadoraDeclarada` [`results/sparql/caso_c/pc2.csv`] |
-| **PC3** | `4` exames: `original_1` `"ENF detectável"` (`8.995 dB`); `original_2` `"ENF não detectável"` [`results/sparql/caso_a_aberto/pc3.csv`] | Idêntico ao Caso A-aberto [`results/sparql/caso_a_fechado/pc3.csv`] | `8` exames: `1_1` `"ENF detectável"` (`10.418 dB`); `1_2`, `2_1`, `2_2` `"ENF não detectável"` [`results/sparql/caso_b/pc3.csv`] | `1` exame: `"ENF detectável"` (`snr60=4.292`, `snr120=8.966`, `limiar=6.0`) [`results/sparql/caso_c/pc3.csv`] |
+| **PC3** | `4` exames: `original_1` `"ENF detectável"` (`8.995 dB`); `original_2` `"ENF não detectável"` [`results/sparql/caso_a_aberto/pc3.csv`] | Idêntico ao Cenário A-aberto [`results/sparql/caso_a_fechado/pc3.csv`] | `8` exames: `1_1` `"ENF detectável"` (`10.418 dB`); `1_2`, `2_1`, `2_2` `"ENF não detectável"` [`results/sparql/caso_b/pc3.csv`] | `1` exame: `"ENF detectável"` (`snr60=4.292`, `snr120=8.966`, `limiar=6.0`) [`results/sparql/caso_c/pc3.csv`] |
 | **PC4** | `0` indícios [`results/sparql/caso_a_aberto/pc4.csv`] | `0` indícios [`results/sparql/caso_a_fechado/pc4.csv`] | `18` indícios de `oem:IndicioDeRecodificacao` [`results/sparql/caso_b/pc4.csv`] | `4` indícios de subclasse de `oem:IndicioDeRecodificacao` [`results/sparql/caso_c/pc4.csv`] |
 | **PC5** | `0` linhas [`results/sparql/caso_a_aberto/pc5.csv`] | `0` linhas [`results/sparql/caso_a_fechado/pc5.csv`] | `8` linhas (`SinteseDeepfake_1_1` a `_2_2` $\rightarrow$ `EvidenciaComConteudoAlterado`) [`results/sparql/caso_b/pc5.csv`] | `1` linha (`TransmissaoMensageiro_video_1` $\rightarrow$ `EvidenciaComCadeiaQuebrada`) [`results/sparql/caso_c/pc5.csv`] |
 
 ## 7. Testes automatizados
 
-- **Saída resumida do `pytest` (`tests/test_reasoning.py`):** `7` testes executados (`5` dos Casos A–C + `2` do Cenário D: D1 inconsistente e D2 consistente/classificado), `7` aprovados (`PASSED`), `0` falhos (`FAILED`) [`tests/test_reasoning.py`].
+- **Saída resumida do `pytest` (`tests/test_reasoning.py`):** `7` testes executados (`5` dos Cenários A–C + `2` do Cenário D: D1 inconsistente e D2 consistente/classificado), `7` aprovados (`PASSED`), `0` falhos (`FAILED`) [`tests/test_reasoning.py`].
 - **Testes que falharam:** `Nenhum` (`0`).
 
 ## Cenário D — Detecção de contradição (D1 e D2)
@@ -302,9 +302,9 @@ Notação DL: $\{\mathsf{t\_g} : \mathsf{TransformacaoGenerativa},\; (\mathsf{t\
 
 1. **Trilhas sem áudio:** `Nenhuma` (`0`); todos os vídeos continham áudio estéreo `AAC LC` [`results/inventario.csv`].
 2. **ENF ausente (`"ENF não detectável"`):** Ocorreu em `Video_original_2`, `video_sintetico_1_2`, `video_sintetico_2_1` e `video_sintetico_2_2` devido à variabilidade espectral da fala ($\sigma_{\text{norm}} > 0.15\text{ Hz}$) ou SNR $< 6.0\text{ dB}$; nenhum achado foi gerado para eles [`results/analises/resumo_analises.md`].
-3. **Ferramentas:** `git` e `make` ausentes no `PATH`; `exiftool` exigiu execução fora do sandbox por realocação de DLL no Windows; `ROBOT 1.9.4` executado com `OpenJDK 11.0.13`; consultas SPARQL rodadas via `robot query` devido a incompatibilidade de `pyparsing` com `rdflib.Graph.query()` [`results/sparql/`].
+3. **Ferramentas:** `git` e `make` ausentes no `PATH`; `exiftool` exigiu execução fora do sandbox por realocação de DLL no Windows; `ROBOT 1.9.4` executado em Java (Cenários A–C executados com OpenJDK `11.0.13`; Cenário D com OpenJDK `25.0.5`); consultas SPARQL rodadas via `robot query` devido a incompatibilidade de `pyparsing` com `rdflib.Graph.query()` [`results/sparql/`].
 4. **Limiares alterados:** `Nenhum` (`0`) [`analysis/config.yaml`].
-5. **Passos manuais:** Recodificação controlada do Caso C executada via `ffmpeg` sobre a cópia de trabalho do Caso A [`cases/caso_c/caso_c.ttl`].
+5. **Passos manuais:** Recodificação controlada do Cenário C executada via `ffmpeg` sobre a cópia de trabalho do Cenário A [`cases/caso_c/caso_c.ttl`].
 
 ## 9. Pendências para o artigo
 
