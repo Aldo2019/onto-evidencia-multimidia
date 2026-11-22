@@ -1,0 +1,87 @@
+CRIAÇÃO DE VÍDEO A PARTIR DA IMAGEM DE REFERÊNCIA
+
+Utilize a imagem anexada como referência visual obrigatória para criar um vídeo realista, reproduzindo a cena e a sequência de acontecimentos descritas abaixo.
+
+IMPORTANTE: O vídeo original não será fornecido. Portanto, utilize a imagem anexada como referência para reconstruir visualmente a cena, respeitando suas características e seguindo fielmente a descrição dos acontecimentos.
+
+1. Descrição da cena original
+
+O vídeo original é uma gravação vertical, feita com câmera de celular, apontada para baixo, em direção ao piso de um ambiente interno.
+
+O ambiente possui:
+
+Piso revestido com placas quadradas de granito ou cerâmica acinzentada, com textura manchada.
+
+Iluminação ambiente com tonalidades azuladas e arroxeadas em algumas regiões.
+
+Algumas cadeiras e elementos do ambiente aparecem parcialmente nas extremidades da imagem.
+
+A câmera permanece direcionada para o chão, com enquadramento semelhante ao da imagem de referência.
+
+No centro da cena aparece uma caneta marca-texto verde, posicionada verticalmente, com sua extremidade inferior próxima ao piso.
+
+Durante a gravação, uma pessoa fala claramente:
+
+"Veja essa caneta, veja essa caneta!"
+
+Logo após pronunciar a frase, a pessoa solta a caneta, que cai em direção ao chão, produzindo o movimento e o impacto naturais de um objeto caindo.
+
+2. Alteração solicitada: substituição da caneta por uma garrafa
+
+Recrie a mesma situação, mas substitua completamente a caneta marca-texto verde por uma garrafa de água.
+
+Características da substituição:
+
+A garrafa deve ser uma garrafa plástica transparente de água mineral, com tampa.
+
+Deve ocupar a posição central da cena, onde originalmente aparece a caneta.
+
+Deve apresentar dimensões e proporções realistas.
+
+A garrafa deverá ser manipulada pela pessoa da mesma maneira que a caneta era manipulada no vídeo original.
+
+Preserve a perspectiva da câmera e a orientação visual do objeto.
+
+3. Diálogo e sequência de movimentos
+
+A pessoa deverá pronunciar, com voz natural e entonação espontânea, exatamente a seguinte frase:
+
+"Veja essa garrafa, veja essa garrafa!"
+
+A fala deverá ser sincronizada com a apresentação da garrafa.
+
+Imediatamente após terminar a frase, a pessoa deverá soltar a garrafa, permitindo que ela caia livremente em direção ao piso.
+
+A queda deverá apresentar física realista, considerando o peso, o formato e o comportamento de uma garrafa plástica contendo água.
+
+A garrafa deverá atingir o piso, sofrer o impacto e apresentar uma reação física compatível com o material e a quantidade de água em seu interior.
+
+4. Diretrizes de produção
+
+Formato vertical 9:16.
+
+Estética de gravação casual feita por celular.
+
+Aparência de vídeo real, sem aspecto de animação ou computação gráfica.
+
+Reproduzir o enquadramento, a perspectiva, o piso, a iluminação e os elementos ambientais da imagem de referência.
+
+Manter a câmera apontada para baixo, sem mudanças bruscas de enquadramento.
+
+Não adicionar pessoas, objetos ou acontecimentos desnecessários.
+
+Não inserir legendas, textos ou efeitos visuais.
+
+O áudio deverá ser natural e perfeitamente sincronizado com a ação.
+
+5. Resultado final esperado
+
+O resultado deverá parecer uma gravação real do mesmo acontecimento apresentado no vídeo original, mas com as seguintes substituições:
+
+Onde originalmente havia uma caneta marca-texto verde, agora deverá existir uma garrafa de água.
+
+Onde originalmente era pronunciada a frase "Veja essa caneta, veja essa caneta!", agora deverá ser pronunciada a frase "Veja essa garrafa, veja essa garrafa!".
+
+A sequência narrativa deverá permanecer a mesma: apresentação do objeto, pronúncia da frase e soltura do objeto, que cai no chão.
+
+Prioridade máxima: realismo visual, coerência dos movimentos, fidelidade ao enquadramento da imagem de referência e sincronização entre fala e ação.
