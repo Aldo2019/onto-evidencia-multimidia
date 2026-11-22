@@ -1,8 +1,8 @@
 # Relatório de resultados — ontologia de evidência multimídia
 
-- **Data de geração:** `2026-11-17` [`results/analises/resumo_geral_analises.json`]
-- **Commit atual do git (hash curto):** `e4ddc6d` [`.gitignore`]
-- **Versões:** Java `OpenJDK 11.0.13+8-LTS` (e `1.8.0_511`), ROBOT `1.9.4` (`tools/robot.jar`), HermiT `1.4.3.456`, Python `3.12.5` (`NumPy 1.26.4`, `SciPy 1.17.1`, `Matplotlib 3.8.4`, `rdflib 7.6.0`, `pytest 7.4.4`), `ffmpeg`/`ffprobe` `8.1.1-full_build-www.gyan.dev`, `exiftool` `13.59` [`results/inventario.md`, `results/secao_3_4.md`, `tests/test_reasoning.py`].
+- **Data de geração:** `2026-11-22` (análises iniciais em `2026-11-17`; Cenário D e consolidação em `2026-11-22`) [`results/analises/resumo_geral_analises.json`]
+- **Release / Commit de referência:** tag `v1.0-isko2027` (base anterior: `69c3791`)
+- **Versões:** Java `OpenJDK 11.0.13+8-LTS` (Cenários A–C) e `OpenJDK 25.0.5+8-LTS` (Cenário D), ROBOT `1.9.4` (`tools/robot.jar`), HermiT `1.4.3.456`, Python `3.12.5` (`NumPy 1.26.4`, `SciPy 1.17.1`, `Matplotlib 3.8.4`, `rdflib 7.6.0`, `pytest 7.4.4`; suíte D validada em Python `3.13.17` / `pytest 9.2.0`), `ffmpeg`/`ffprobe` `8.1.1-full_build-www.gyan.dev`, `exiftool` `13.59` [`results/inventario.md`, `results/secao_3_4.md`, `tests/test_reasoning.py`].
 
 ## 1. Corpus de casos
 
